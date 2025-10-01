@@ -1,0 +1,19 @@
+name: Plan
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Plan
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create Plan
+    redirect: aero/clouds/plans/update/:id
+    redirectClose: aero/clouds/plans
+
+update:
+    title: Edit Plan
+    redirect: aero/clouds/plans
+    redirectClose: aero/clouds/plans
+
+preview:
+    title: Preview Plan

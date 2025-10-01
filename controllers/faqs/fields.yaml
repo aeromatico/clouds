@@ -1,0 +1,45 @@
+fields:
+    question:
+        label: Question
+        type: text
+        span: full
+        required: true
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: full
+        default: true
+
+    answer:
+        label: Answer
+        type: richeditor
+        size: huge
+        toolbarButtons: bold|italic|underline|strikeThrough|paragraphFormat|align|formatOL|formatUL|insertLink|insertTable|insertImage
+        required: true
+        comment: Detailed answer to the question
+
+    links:
+        label: Related Links
+        type: repeater
+        span: full
+        prompt: Add a link
+        form:
+            fields:
+                name:
+                    label: Link Name
+                    type: text
+                    span: left
+                    required: true
+                url:
+                    label: URL
+                    type: text
+                    span: right
+                    required: true
+                    placeholder: https://

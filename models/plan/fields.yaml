@@ -1,0 +1,183 @@
+fields:
+    name:
+        label: Plan Name
+        type: text
+        span: left
+        required: true
+
+    description:
+        label: Description
+        type: textarea
+        size: small
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: left
+        default: true
+
+    is_featured:
+        label: Featured Plan
+        type: switch
+        span: right
+        comment: Featured plans are highlighted in listings
+
+    promo:
+        label: Promotional Plan
+        type: switch
+        span: left
+        default: false
+        comment: Mark this plan as promotional
+
+    free_domain:
+        label: Free Domain Included
+        type: switch
+        span: right
+        default: false
+        comment: This plan includes a free domain registration
+
+    ssh:
+        label: SSH Access
+        type: switch
+        span: left
+        default: false
+        comment: SSH shell access included
+
+    ssl:
+        label: SSL Certificate
+        type: switch
+        span: right
+        default: false
+        comment: Free SSL certificate included
+
+    dedicated_ip:
+        label: Dedicated IP
+        type: switch
+        span: full
+        default: false
+        comment: Dedicated IP address included
+
+tabs:
+    fields:
+        pricing:
+            label: Pricing Options
+            type: repeater
+            tab: Pricing
+            span: full
+            prompt: Add Pricing Option
+            form:
+                fields:
+                    price:
+                        label: Price
+                        type: number
+                        step: 0.01
+                        span: left
+                        required: true
+
+                    currency:
+                        label: Currency
+                        type: dropdown
+                        span: right
+                        default: BOB
+                        required: true
+                        options:
+                            BOB: Boliviano (BOB)
+                            USD: US Dollar (USD)
+                            EUR: Euro (EUR)
+
+                    billing_cycle:
+                        label: Billing Cycle
+                        type: dropdown
+                        span: left
+                        required: true
+                        default: monthly
+                        options:
+                            monthly: Monthly
+                            quarterly: Quarterly
+                            semi_annually: Semi-Annually
+                            annually: Annually
+                            biennially: Biennially
+                            triennially: Triennially
+
+                    setup_fee:
+                        label: Setup Fee
+                        type: number
+                        step: 0.01
+                        span: right
+                        default: 0
+                        comment: Leave empty or 0 for no setup fee
+
+        features:
+            label: Features
+            type: repeater
+            tab: Features
+            span: full
+            prompt: Add Feature
+            form:
+                fields:
+                    name:
+                        label: Feature Name
+                        type: text
+                        span: left
+                        required: true
+                        placeholder: e.g., Storage, Bandwidth, Support
+
+                    description:
+                        label: Description
+                        type: textarea
+                        span: right
+                        size: small
+                        placeholder: Describe this feature in detail
+
+                    icon:
+                        label: Icon
+                        type: text
+                        span: left
+                        placeholder: e.g., fa-database, fa-wifi, fa-headset
+                        comment: Font Awesome icon class (optional)
+
+                    featured:
+                        label: Featured
+                        type: switch
+                        span: right
+                        default: false
+                        comment: Highlight this feature
+
+        limits:
+            label: Resource Limits
+            type: repeater
+            tab: Limits
+            span: full
+            prompt: Add Limit
+            form:
+                fields:
+                    type:
+                        label: Type
+                        type: dropdown
+                        span: left
+                        required: true
+                        options:
+                            domains: Domains
+                            email_storage: Email Storage
+                            email_accounts: Email Accounts
+                            bandwidth: Bandwidth
+                            storage: Storage
+                            subdomain: Subdomain
+                            databases: Databases
+                            memory: Memory
+                            cpu: CPU
+                        default: domains
+
+                    value:
+                        label: Value
+                        type: text
+                        span: right
+                        required: true
+                        placeholder: e.g., 10, 50GB, unlimited, 4GB, 2 cores
+                        comment: Enter the limit value according to the selected type

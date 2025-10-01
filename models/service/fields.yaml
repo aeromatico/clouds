@@ -1,0 +1,31 @@
+fields:
+    name:
+        label: Service Name
+        type: text
+        span: left
+        required: true
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+
+    description:
+        label: Description
+        type: textarea
+        size: small
+
+    is_active:
+        label: Active
+        type: switch
+        default: true
+        comment: Enable or disable this service
+
+tabs:
+    fields:
+        plans:
+            type: relation
+            label: Plans
+            tab: Plans
+            span: full

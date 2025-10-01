@@ -1,0 +1,118 @@
+fields:
+    name:
+        label: Service Name
+        type: text
+        span: left
+        required: true
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        preset:
+            field: name
+            type: slug
+        comment: Auto-generated from name
+
+    short_description:
+        label: Short Description
+        type: text
+        span: full
+        comment: Brief description for cards and previews
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: left
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: right
+        default: true
+        comment: Enable or disable this service
+
+    icon:
+        label: Icon
+        type: text
+        span: full
+        comment: Icon class (e.g., fa-server) or SVG code
+
+    description:
+        label: Description
+        type: textarea
+        size: large
+        tab: Content
+
+    menu_description:
+        label: Menu Description
+        type: textarea
+        size: small
+        tab: Content
+        comment: Description shown in navigation menus
+
+    html_description:
+        label: HTML Description
+        type: codeeditor
+        language: html
+        size: huge
+        tab: Content
+        comment: Rich HTML content for the service page
+
+    img:
+        label: Featured Image
+        type: fileupload
+        mode: image
+        imageHeight: 300
+        imageWidth: 300
+        tab: Media
+
+    gallery:
+        label: Gallery
+        type: fileupload
+        mode: image
+        imageHeight: 200
+        imageWidth: 200
+        tab: Media
+
+tabs:
+    fields:
+        plans:
+            type: relation
+            label: Plans
+            tab: Plans
+            span: full
+            comment: Select plans associated with this service
+
+        features:
+            type: relation
+            label: Features
+            tab: Features
+            span: full
+            nameFrom: name
+            comment: Select features associated with this service
+
+        addons:
+            type: relation
+            label: Addons
+            tab: Addons
+            span: full
+            nameFrom: name
+            comment: Select addons available for this service
+
+        faqs:
+            type: relation
+            label: FAQs
+            tab: FAQs
+            span: full
+            nameFrom: question
+            comment: Select FAQs associated with this service
+
+        docs:
+            type: relation
+            label: Documentation
+            tab: Documentation
+            span: full
+            nameFrom: title
+            comment: Select docs associated with this service

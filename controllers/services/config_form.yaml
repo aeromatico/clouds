@@ -1,0 +1,19 @@
+name: Service
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Service
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create Service
+    redirect: aero/clouds/services/update/:id
+    redirectClose: aero/clouds/services
+
+update:
+    title: Edit Service
+    redirect: aero/clouds/services
+    redirectClose: aero/clouds/services
+
+preview:
+    title: Preview Service

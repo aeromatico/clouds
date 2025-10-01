@@ -1,0 +1,35 @@
+scopes:
+    active:
+        label: Status
+        type: switch
+        conditions: is_active = :filtered
+
+    featured:
+        label: Featured Only
+        type: switch
+        conditions: is_featured = 1
+
+    promo:
+        label: Promotional Plans
+        type: switch
+        conditions: promo = 1
+
+    free_domain:
+        label: Free Domain
+        type: switch
+        conditions: free_domain = 1
+
+    ssh:
+        label: SSH Access
+        type: switch
+        conditions: ssh = 1
+
+    ssl:
+        label: SSL Certificate
+        type: switch
+        conditions: ssl = 1
+
+    dedicated_ip:
+        label: Dedicated IP
+        type: switch
+        conditions: dedicated_ip = 1

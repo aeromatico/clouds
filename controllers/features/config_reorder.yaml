@@ -1,0 +1,4 @@
+title: Reorder Features
+modelClass: Aero\Clouds\Models\Feature
+toolbar:
+    buttons: reorder_toolbar

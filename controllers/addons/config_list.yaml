@@ -1,0 +1,17 @@
+title: Addons
+modelClass: Aero\Clouds\Models\Addon
+list: columns.yaml
+defaultSort:
+    column: sort_order
+    direction: asc
+
+recordUrl: aero/clouds/addons/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+recordsPerPage: 20
+
+showCheckboxes: true

@@ -1,0 +1,16 @@
+columns:
+    question:
+        label: Question
+        type: text
+        searchable: true
+        sortable: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    sort_order:
+        label: Order
+        type: number
+        sortable: true

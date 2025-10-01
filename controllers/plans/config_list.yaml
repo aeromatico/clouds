@@ -1,0 +1,27 @@
+title: Plans
+modelClass: Aero\Clouds\Models\Plan
+list: columns.yaml
+defaultSort:
+    column: sort_order
+    direction: asc
+
+recordUrl: aero/clouds/plans/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+recordsPerPage: 20
+
+filter: scopes.yaml
+
+# Enable bulk selection and actions
+showCheckboxes: true
+showSorting: true
+
+bulkActions:
+    delete:
+        label: Delete Selected
+        class: btn-secondary
+        data-request-confirm: Are you sure you want to delete the selected plans?

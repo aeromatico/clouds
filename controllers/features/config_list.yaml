@@ -1,0 +1,17 @@
+title: Features
+modelClass: Aero\Clouds\Models\Feature
+list: columns.yaml
+defaultSort:
+    column: sort_order
+    direction: asc
+
+recordUrl: aero/clouds/features/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+recordsPerPage: 20
+
+showCheckboxes: true

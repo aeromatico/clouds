@@ -1,0 +1,7 @@
+title: Reorder Plans
+modelClass: Aero\Clouds\Models\Plan
+toolbar:
+    buttons: reorder_toolbar
+
+nameFrom: name
+sortColumn: sort_order

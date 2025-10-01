@@ -1,0 +1,4 @@
+title: Reorder Addons
+modelClass: Aero\Clouds\Models\Addon
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,63 @@
+columns:
+    name:
+        label: Plan Name
+        type: text
+        searchable: true
+        sortable: true
+
+    slug:
+        label: Slug
+        type: text
+        searchable: true
+        sortable: true
+
+    description:
+        label: Description
+        type: text
+        searchable: true
+        sortable: false
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true
+
+    promo:
+        label: Promo
+        type: switch
+        sortable: true
+
+    free_domain:
+        label: Free Domain
+        type: switch
+        sortable: true
+
+    ssh:
+        label: SSH
+        type: switch
+        sortable: true
+
+    ssl:
+        label: SSL
+        type: switch
+        sortable: true
+
+    dedicated_ip:
+        label: Dedicated IP
+        type: switch
+        sortable: true
+
+    is_featured:
+        label: Featured
+        type: switch
+        sortable: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    sort_order:
+        label: Order
+        type: number
+        sortable: true

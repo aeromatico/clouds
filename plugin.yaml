@@ -1,0 +1,6 @@
+plugin:
+    name: 'Clouds Hosting Manager'
+    description: 'Complete hosting management system for clouds.com.bo'
+    author: 'Aero'
+    icon: 'icon-cloud'
+    homepage: 'https://clouds.com.bo'

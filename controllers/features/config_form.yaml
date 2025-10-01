@@ -1,0 +1,19 @@
+name: Feature
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Feature
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create Feature
+    redirect: aero/clouds/features/update/:id
+    redirectClose: aero/clouds/features
+
+update:
+    title: Edit Feature
+    redirect: aero/clouds/features
+    redirectClose: aero/clouds/features
+
+preview:
+    title: Preview Feature

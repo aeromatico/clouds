@@ -1,0 +1,44 @@
+fields:
+    name:
+        label: Addon Name
+        type: text
+        span: left
+        required: true
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        preset:
+            field: name
+            type: slug
+        comment: Auto-generated from name
+
+    pricing:
+        label: Pricing
+        type: number
+        span: left
+        step: 0.01
+        min: 0
+        default: 0
+        required: true
+        comment: Price in USD
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: full
+        default: true
+
+    description:
+        label: Description
+        type: richeditor
+        size: large
+        toolbarButtons: bold|italic|underline|strikeThrough|paragraphFormat|align|formatOL|formatUL|insertLink|insertTable
+        comment: Full description of the addon

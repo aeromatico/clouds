@@ -1,0 +1,48 @@
+fields:
+    name:
+        label: Feature Name
+        type: text
+        span: left
+        required: true
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        preset:
+            field: name
+            type: slug
+        comment: Auto-generated from name
+
+    icon:
+        label: Icon
+        type: text
+        span: left
+        placeholder: e.g., fa-check, fa-star, fa-bolt
+        comment: Font Awesome icon class
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: left
+        default: true
+
+    is_highlighted:
+        label: Highlighted
+        type: switch
+        span: right
+        default: false
+        comment: Highlight this feature in lists
+
+    description:
+        label: Description
+        type: richeditor
+        size: large
+        toolbarButtons: bold|italic|underline|strikeThrough|paragraphFormat|align|formatOL|formatUL|insertLink|insertTable
+        comment: Full description of the feature

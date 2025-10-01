@@ -1,0 +1,17 @@
+title: FAQs
+modelClass: Aero\Clouds\Models\Faq
+list: columns.yaml
+defaultSort:
+    column: sort_order
+    direction: asc
+
+recordUrl: aero/clouds/faqs/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+recordsPerPage: 20
+
+showCheckboxes: true

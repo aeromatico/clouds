@@ -1,0 +1,42 @@
+1.0.1:
+    - Initialize plugin
+1.0.2:
+    - Create services table
+    - create_services_table.php
+1.0.3:
+    - Create plans table
+    - create_plans_table.php
+1.0.4:
+    - Update plans table structure for new features
+    - update_plans_table_v2.php
+1.0.7:
+    - Add slug field to plans table
+    - add_slug_to_plans_table.php
+1.0.8:
+    - Add service_id back to plans table
+    - add_service_id_back_to_plans.php
+1.0.9:
+    - Add new fields to services table
+    - add_fields_to_services_table.php
+1.1.0:
+    - Create features table
+    - create_features_table.php
+1.1.1:
+    - Create FAQs table
+    - create_faqs_table.php
+1.1.2:
+    - Create documentation table
+    - create_docs_table.php
+1.1.3:
+    - Create pivot tables for many-to-many relationships
+    - create_feature_service_pivot_table.php
+    - create_faq_service_pivot_table.php
+    - create_doc_service_pivot_table.php
+1.1.4:
+    - Remove service_id from features, faqs, and docs tables
+    - remove_service_id_from_features_faqs_docs.php
+1.1.5:
+    - Create addons table
+    - create_addons_table.php
+    - Create addon-service pivot table
+    - create_addon_service_pivot_table.php

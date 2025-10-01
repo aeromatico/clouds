@@ -1,0 +1,19 @@
+name: Documentation
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Doc
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create Documentation
+    redirect: aero/clouds/docs/update/:id
+    redirectClose: aero/clouds/docs
+
+update:
+    title: Edit Documentation
+    redirect: aero/clouds/docs
+    redirectClose: aero/clouds/docs
+
+preview:
+    title: Preview Documentation

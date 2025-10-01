@@ -1,0 +1,79 @@
+fields:
+    title:
+        label: Title
+        type: text
+        span: left
+        required: true
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        preset:
+            field: title
+            type: slug
+        comment: Auto-generated from title
+
+    category:
+        label: Category
+        type: text
+        span: left
+        placeholder: e.g., Getting Started, API, Tutorials
+        comment: Group docs by category
+
+    author:
+        label: Author
+        type: text
+        span: right
+        placeholder: e.g., John Doe
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: left
+        default: 0
+
+    is_active:
+        label: Active
+        type: switch
+        span: right
+        default: true
+
+    is_featured:
+        label: Featured
+        type: switch
+        span: left
+        default: false
+        comment: Feature this doc in lists
+
+    excerpt:
+        label: Excerpt
+        type: textarea
+        size: small
+        span: full
+        comment: Brief summary of the documentation
+
+tabs:
+    fields:
+        content:
+            label: Content
+            type: richeditor
+            size: huge
+            tab: Content
+            toolbarButtons: bold|italic|underline|strikeThrough|paragraphFormat|align|formatOL|formatUL|insertLink|insertTable|insertImage|insertVideo|quote|html
+            required: true
+
+        tags:
+            label: Tags
+            type: taglist
+            tab: Meta
+            span: full
+            comment: Add tags for better searchability
+
+        attachments:
+            label: Attachments
+            type: fileupload
+            mode: file
+            tab: Attachments
+            span: full
+            comment: Upload files, PDFs, or other attachments

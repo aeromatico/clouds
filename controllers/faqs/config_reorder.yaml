@@ -1,0 +1,4 @@
+title: Reorder FAQs
+modelClass: Aero\Clouds\Models\Faq
+toolbar:
+    buttons: reorder_toolbar

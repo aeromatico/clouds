@@ -1,0 +1,17 @@
+title: Services
+modelClass: Aero\Clouds\Models\Service
+list: columns.yaml
+defaultSort:
+    column: sort_order
+    direction: asc
+
+recordUrl: aero/clouds/services/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+recordsPerPage: 20
+
+showCheckboxes: true

@@ -1,0 +1,39 @@
+columns:
+    title:
+        label: Title
+        type: text
+        searchable: true
+        sortable: true
+
+    service:
+        label: Service
+        type: relation
+        select: name
+        searchable: true
+        sortable: true
+
+    category:
+        label: Category
+        type: text
+        searchable: true
+        sortable: true
+
+    author:
+        label: Author
+        type: text
+        sortable: true
+
+    is_featured:
+        label: Featured
+        type: switch
+        sortable: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    sort_order:
+        label: Order
+        type: number
+        sortable: true

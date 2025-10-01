@@ -1,0 +1,7 @@
+title: Reorder Services
+modelClass: Aero\Clouds\Models\Service
+toolbar:
+    buttons: reorder_toolbar
+
+nameFrom: name
+sortColumn: sort_order

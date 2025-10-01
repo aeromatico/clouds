@@ -1,0 +1,19 @@
+name: Addon
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Addon
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create Addon
+    redirect: aero/clouds/addons/update/:id
+    redirectClose: aero/clouds/addons
+
+update:
+    title: Edit Addon
+    redirect: aero/clouds/addons
+    redirectClose: aero/clouds/addons
+
+preview:
+    title: Preview Addon

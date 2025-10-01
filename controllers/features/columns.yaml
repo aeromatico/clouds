@@ -1,0 +1,33 @@
+columns:
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+
+    services:
+        label: Services
+        type: partial
+        path: $/aero/clouds/controllers/features/_services_column.php
+        searchable: false
+        sortable: false
+
+    icon:
+        label: Icon
+        type: text
+        sortable: false
+
+    is_highlighted:
+        label: Highlighted
+        type: switch
+        sortable: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    sort_order:
+        label: Order
+        type: number
+        sortable: true

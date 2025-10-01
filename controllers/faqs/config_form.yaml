@@ -1,0 +1,19 @@
+name: FAQ
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Faq
+
+toolbar:
+    buttons: form_toolbar
+
+create:
+    title: Create FAQ
+    redirect: aero/clouds/faqs/update/:id
+    redirectClose: aero/clouds/faqs
+
+update:
+    title: Edit FAQ
+    redirect: aero/clouds/faqs
+    redirectClose: aero/clouds/faqs
+
+preview:
+    title: Preview FAQ

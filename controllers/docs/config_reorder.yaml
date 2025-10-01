@@ -1,0 +1,4 @@
+title: Reorder Documentation
+modelClass: Aero\Clouds\Models\Doc
+toolbar:
+    buttons: reorder_toolbar
