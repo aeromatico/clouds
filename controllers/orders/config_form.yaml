@@ -1,0 +1,14 @@
+name: Order
+modelClass: Aero\Clouds\Models\Order
+form: $/aero/clouds/controllers/orders/fields.yaml
+defaultRedirect: aero/clouds/orders
+
+create:
+    title: Create Order
+    redirect: aero/clouds/orders/update/:id
+    redirectClose: aero/clouds/orders
+
+update:
+    title: Edit Order
+    redirect: aero/clouds/orders
+    redirectClose: aero/clouds/orders

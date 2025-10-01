@@ -1,0 +1,108 @@
+fields:
+    invoice@update:
+        label: Invoice Number
+        type: relation
+        nameFrom: invoice_number
+        span: left
+        disabled: true
+        context: update
+        comment: Auto-generated invoice
+
+    user_id:
+        label: Customer
+        type: dropdown
+        required: true
+        comment: Select the customer for this order
+
+    user_id@update:
+        label: Customer
+        type: dropdown
+        span: right
+        required: true
+        comment: Select the customer for this order
+        context: update
+
+    user_id@create:
+        label: Customer
+        type: dropdown
+        span: left
+        required: true
+        comment: Select the customer for this order
+        context: create
+
+    order_date:
+        label: Order Date
+        type: datepicker
+        mode: datetime
+        span: right
+        required: true
+        default: now
+
+    status:
+        label: Order Status
+        type: dropdown
+        span: left
+        required: true
+        default: pending
+
+    total_amount:
+        label: Total Amount
+        type: number
+        step: 0.01
+        span: right
+        disabled: true
+        comment: Auto-calculated from order items
+
+    notes:
+        label: Notes
+        type: textarea
+        size: small
+        span: full
+        comment: Internal notes about this order
+
+tabs:
+    fields:
+        items:
+            label: Order Items
+            type: repeater
+            tab: Items
+            span: full
+            prompt: Add Item
+            form:
+                fields:
+                    plan_id:
+                        label: Plan
+                        type: dropdown
+                        span: left
+                        required: true
+                        placeholder: Select a plan
+
+                    quantity:
+                        label: Quantity
+                        type: number
+                        span: right
+                        default: 1
+                        min: 1
+                        required: true
+
+                    billing_cycle:
+                        label: Billing Cycle
+                        type: dropdown
+                        span: left
+                        required: true
+                        default: monthly
+                        options:
+                            monthly: Monthly
+                            quarterly: Quarterly
+                            semi_annually: Semi-Annually
+                            annually: Annually
+                            biennially: Biennially
+                            triennially: Triennially
+
+                    price:
+                        label: Price
+                        type: number
+                        step: 0.01
+                        span: right
+                        required: true
+                        comment: Enter the price for this item

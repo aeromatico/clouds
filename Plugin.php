@@ -20,7 +20,7 @@ class Plugin extends PluginBase
     {
         return [
             'clouds' => [
-                'label'       => 'Hosting Manager',
+                'label'       => 'Clouds Manager',
                 'url'         => Backend::url('aero/clouds/services'),
                 'icon'        => 'icon-cloud',
                 'iconSvg'     => 'plugins/aero/clouds/assets/images/icon.svg',
@@ -63,6 +63,28 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-book',
                         'url'         => Backend::url('aero/clouds/docs'),
                         // 'permissions' => ['aero.clouds.access_docs']
+                    ]
+                ]
+            ],
+            'commerce' => [
+                'label'       => 'Cloud Commerce',
+                'url'         => Backend::url('aero/clouds/orders'),
+                'icon'        => 'icon-shopping-cart',
+                // 'permissions' => ['aero.clouds.access_commerce'],
+                'order'       => 501,
+
+                'sideMenu' => [
+                    'orders' => [
+                        'label'       => 'Orders',
+                        'icon'        => 'icon-file-text',
+                        'url'         => Backend::url('aero/clouds/orders'),
+                        // 'permissions' => ['aero.clouds.access_orders']
+                    ],
+                    'invoices' => [
+                        'label'       => 'Invoices',
+                        'icon'        => 'icon-file-invoice',
+                        'url'         => Backend::url('aero/clouds/invoices'),
+                        // 'permissions' => ['aero.clouds.access_invoices']
                     ]
                 ]
             ]

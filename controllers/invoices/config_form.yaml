@@ -1,0 +1,14 @@
+name: Invoice
+modelClass: Aero\Clouds\Models\Invoice
+form: $/aero/clouds/controllers/invoices/fields.yaml
+defaultRedirect: aero/clouds/invoices
+
+create:
+    title: Create Invoice
+    redirect: aero/clouds/invoices/update/:id
+    redirectClose: aero/clouds/invoices
+
+update:
+    title: Edit Invoice
+    redirect: aero/clouds/invoices
+    redirectClose: aero/clouds/invoices

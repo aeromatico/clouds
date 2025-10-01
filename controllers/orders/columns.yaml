@@ -1,0 +1,30 @@
+columns:
+    id:
+        label: Order #
+        searchable: true
+        sortable: true
+
+    user_id:
+        label: Customer
+        relation: user
+        useController: false
+        searchable: false
+        sortable: true
+
+    order_date:
+        label: Order Date
+        type: datetime
+        sortable: true
+
+    status:
+        label: Status
+        sortable: true
+
+    total_amount:
+        label: Total
+        sortable: true
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true

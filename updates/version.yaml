@@ -40,3 +40,12 @@
     - create_addons_table.php
     - Create addon-service pivot table
     - create_addon_service_pivot_table.php
+1.2.0:
+    - Create orders table for Cloud Commerce
+    - create_orders_table.php
+1.2.1:
+    - Create invoices table for Cloud Commerce
+    - create_invoices_table.php
+1.2.2:
+    - Add invoice relationship to orders
+    - add_invoice_id_to_orders.php

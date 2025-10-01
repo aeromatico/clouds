@@ -1,0 +1,35 @@
+columns:
+    invoice_number:
+        label: Invoice #
+        searchable: true
+        sortable: true
+
+    user_id:
+        label: Customer
+        relation: user
+        useController: false
+        searchable: false
+        sortable: true
+
+    invoice_date:
+        label: Invoice Date
+        type: date
+        sortable: true
+
+    due_date:
+        label: Due Date
+        type: date
+        sortable: true
+
+    status:
+        label: Status
+        sortable: true
+
+    total_amount:
+        label: Total
+        sortable: true
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true

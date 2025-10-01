@@ -1,0 +1,127 @@
+fields:
+    invoice_number:
+        label: Invoice Number
+        type: text
+        span: left
+        placeholder: Auto-generated
+        comment: Leave empty to auto-generate
+
+    user_id:
+        label: Customer
+        type: dropdown
+        span: right
+        required: true
+        comment: Select the customer for this invoice
+
+    invoice_date:
+        label: Invoice Date
+        type: datepicker
+        mode: date
+        span: left
+        required: true
+        default: now
+
+    due_date:
+        label: Due Date
+        type: datepicker
+        mode: date
+        span: right
+        required: true
+        comment: Payment due date
+
+    status:
+        label: Status
+        type: dropdown
+        span: left
+        required: true
+        default: draft
+
+    payment_method:
+        label: Payment Method
+        type: dropdown
+        span: right
+        comment: How the invoice was/will be paid
+
+    payment_date:
+        label: Payment Date
+        type: datepicker
+        mode: datetime
+        span: left
+        comment: Date when payment was received
+
+    notes:
+        label: Notes
+        type: textarea
+        size: small
+        span: full
+        comment: Internal notes or payment instructions
+
+tabs:
+    fields:
+        items:
+            label: Invoice Items
+            type: repeater
+            tab: Items
+            span: full
+            prompt: Add Item
+            form:
+                fields:
+                    description:
+                        label: Description
+                        type: text
+                        span: full
+                        required: true
+                        placeholder: Item or service description
+
+                    quantity:
+                        label: Quantity
+                        type: number
+                        span: left
+                        default: 1
+                        min: 1
+                        required: true
+
+                    unit_price:
+                        label: Unit Price
+                        type: number
+                        step: 0.01
+                        span: right
+                        required: true
+                        comment: Price per unit
+
+        subtotal:
+            label: Subtotal
+            type: number
+            step: 0.01
+            tab: Totals
+            span: left
+            comment: Leave empty to auto-calculate from items
+
+        tax_rate:
+            label: Tax Rate (%)
+            type: number
+            step: 0.01
+            tab: Totals
+            span: right
+            default: 0
+            min: 0
+            max: 100
+            comment: Tax percentage to apply
+
+        tax_amount:
+            label: Tax Amount
+            type: number
+            step: 0.01
+            tab: Totals
+            span: left
+            disabled: true
+            comment: Auto-calculated based on subtotal and tax rate
+
+        total_amount:
+            label: Total Amount
+            type: number
+            step: 0.01
+            tab: Totals
+            span: right
+            disabled: true
+            comment: Auto-calculated (Subtotal + Tax)

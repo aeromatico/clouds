@@ -1,0 +1,11 @@
+title: Invoices
+modelClass: Aero\Clouds\Models\Invoice
+list: $/aero/clouds/controllers/invoices/columns.yaml
+recordUrl: aero/clouds/invoices/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showPageNumbers: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
