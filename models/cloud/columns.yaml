@@ -1,0 +1,97 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+        width: 80px
+
+    name:
+        label: Server Name
+        type: text
+        searchable: true
+        sortable: true
+
+    user_id:
+        label: Customer
+        relation: user
+        select: email
+        searchable: false
+        sortable: true
+
+    domain:
+        label: Domain
+        type: text
+        searchable: true
+        sortable: true
+
+    ip_address:
+        label: IP Address
+        type: text
+        searchable: true
+        sortable: false
+
+    service_id:
+        label: Service
+        relation: service
+        select: name
+        searchable: false
+        sortable: true
+
+    plan_id:
+        label: Plan
+        relation: plan
+        select: name
+        searchable: false
+        sortable: true
+
+    server_type:
+        label: Type
+        type: text
+        sortable: true
+        invisible: true
+
+    status:
+        label: Status
+        type: partial
+        path: $/aero/clouds/models/cloud/_status_column.htm
+        sortable: true
+        searchable: false
+
+    panel_url:
+        label: Panel URL
+        type: text
+        sortable: false
+        invisible: true
+
+    created_date:
+        label: Created
+        type: date
+        sortable: true
+
+    expiration_date:
+        label: Expires
+        type: date
+        sortable: true
+
+    last_renewal_date:
+        label: Last Renewed
+        type: date
+        sortable: true
+        invisible: true
+
+    auto_renew:
+        label: Auto Renew
+        type: switch
+        sortable: true
+        invisible: true
+
+    updated_at:
+        label: Updated
+        type: datetime
+        sortable: true
+        invisible: true

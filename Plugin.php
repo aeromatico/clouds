@@ -2,6 +2,8 @@
 
 use System\Classes\PluginBase;
 use Backend;
+use Event;
+use Aero\Clouds\Models\ActivityLog;
 
 class Plugin extends PluginBase
 {
@@ -63,6 +65,12 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-book',
                         'url'         => Backend::url('aero/clouds/docs'),
                         // 'permissions' => ['aero.clouds.access_docs']
+                    ],
+                    'activitylogs' => [
+                        'label'       => 'Activity Logs',
+                        'icon'        => 'icon-history',
+                        'url'         => Backend::url('aero/clouds/activitylogs'),
+                        // 'permissions' => ['aero.clouds.access_logs']
                     ]
                 ]
             ],
@@ -85,9 +93,28 @@ class Plugin extends PluginBase
                         'icon'        => 'icon-file-invoice',
                         'url'         => Backend::url('aero/clouds/invoices'),
                         // 'permissions' => ['aero.clouds.access_invoices']
+                    ],
+                    'paymentgateways' => [
+                        'label'       => 'Payment Gateways',
+                        'icon'        => 'icon-credit-card',
+                        'url'         => Backend::url('aero/clouds/paymentgateways'),
+                        // 'permissions' => ['aero.clouds.access_payment_gateways']
+                    ],
+                    'cloudservers' => [
+                        'label'       => 'Cloud Servers',
+                        'icon'        => 'icon-server',
+                        'url'         => Backend::url('aero/clouds/clouds'),
+                        // 'permissions' => ['aero.clouds.access_cloud_servers']
                     ]
                 ]
             ]
+        ];
+    }
+
+    public function registerComponents()
+    {
+        return [
+            'Aero\Clouds\Components\InvoicePDF' => 'invoicePDF'
         ];
     }
 
@@ -103,5 +130,58 @@ class Plugin extends PluginBase
                 'label' => 'Access Plans'
             ]
         ];
+    }
+
+    public function boot()
+    {
+        // Log backend user authentication events
+        Event::listen('backend.user.login', function ($user) {
+            ActivityLog::create([
+                'log_name' => 'authentication',
+                'description' => 'User logged in',
+                'causer_type' => get_class($user),
+                'causer_id' => $user->id,
+                'event' => 'login',
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'properties' => [
+                    'user_email' => $user->email,
+                    'login_time' => now()->toDateTimeString()
+                ]
+            ]);
+        });
+
+        Event::listen('backend.user.logout', function ($user) {
+            ActivityLog::create([
+                'log_name' => 'authentication',
+                'description' => 'User logged out',
+                'causer_type' => get_class($user),
+                'causer_id' => $user->id,
+                'event' => 'logout',
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'properties' => [
+                    'user_email' => $user->email,
+                    'logout_time' => now()->toDateTimeString()
+                ]
+            ]);
+        });
+
+        // Log file uploads
+        Event::listen('system.file.upload', function ($path, $file) {
+            ActivityLog::create([
+                'log_name' => 'file_operations',
+                'description' => 'File uploaded',
+                'event' => 'file_upload',
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'properties' => [
+                    'path' => $path,
+                    'filename' => $file->getClientOriginalName(),
+                    'size' => $file->getSize(),
+                    'mime_type' => $file->getMimeType()
+                ]
+            ]);
+        });
     }
 }

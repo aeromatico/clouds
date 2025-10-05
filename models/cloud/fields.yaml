@@ -1,0 +1,199 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        # Basic Information Tab
+        name:
+            label: Server Name
+            type: text
+            span: left
+            required: true
+            tab: Basic Info
+            placeholder: e.g., Production Server 01
+
+        domain:
+            label: Domain
+            type: text
+            span: right
+            tab: Basic Info
+            placeholder: e.g., example.com
+
+        user_id:
+            label: Customer
+            type: dropdown
+            span: left
+            required: true
+            tab: Basic Info
+            comment: Select the customer who owns this server
+
+        status:
+            label: Status
+            type: dropdown
+            span: right
+            required: true
+            tab: Basic Info
+            default: pending
+            options:
+                pending: Pending
+                active: Active
+                suspended: Suspended
+                terminated: Terminated
+                expired: Expired
+
+        service_id:
+            label: Service
+            type: dropdown
+            span: left
+            tab: Basic Info
+            emptyOption: Select a service
+
+        plan_id:
+            label: Plan
+            type: dropdown
+            span: right
+            tab: Basic Info
+            emptyOption: Select a plan
+
+        order_id:
+            label: Related Order
+            type: dropdown
+            span: left
+            tab: Basic Info
+            emptyOption: No order linked
+            comment: Link this server to an order
+
+        server_type:
+            label: Server Type
+            type: dropdown
+            span: right
+            tab: Basic Info
+            emptyOption: Select type
+            options:
+                shared: Shared Hosting
+                vps: VPS
+                dedicated: Dedicated Server
+                cloud: Cloud Server
+                reseller: Reseller Hosting
+                email: Email Hosting
+                other: Other
+
+        # Panel Access Tab
+        panel_url:
+            label: Control Panel URL
+            type: text
+            span: full
+            tab: Panel Access
+            placeholder: https://panel.example.com
+            comment: URL to the server control panel
+
+        panel_user:
+            label: Panel Username
+            type: text
+            span: left
+            tab: Panel Access
+            placeholder: admin
+
+        panel_password:
+            label: Panel Password
+            type: text
+            span: right
+            tab: Panel Access
+            comment: Will be encrypted automatically
+
+        ip_address:
+            label: IP Address
+            type: text
+            span: left
+            tab: Panel Access
+            placeholder: 192.168.1.1
+
+        # Dates Tab
+        created_date:
+            label: Creation Date
+            type: datepicker
+            mode: datetime
+            span: left
+            required: true
+            tab: Dates
+            default: now
+            comment: When the server was created
+
+        expiration_date:
+            label: Expiration Date
+            type: datepicker
+            mode: date
+            span: right
+            tab: Dates
+            comment: When the server subscription expires
+
+        last_renewal_date:
+            label: Last Renewal Date
+            type: datepicker
+            mode: datetime
+            span: left
+            tab: Dates
+            disabled: true
+            comment: Auto-updated when renewed
+
+        auto_renew:
+            label: Auto Renew
+            type: checkbox
+            span: right
+            tab: Dates
+            default: false
+            comment: Automatically renew before expiration
+
+        # Suspension Info Tab
+        suspension_date:
+            label: Suspension Date
+            type: datepicker
+            mode: datetime
+            span: left
+            tab: Suspension Info
+            disabled: true
+            comment: When the server was suspended
+
+        suspension_reason:
+            label: Suspension Reason
+            type: textarea
+            size: small
+            span: full
+            tab: Suspension Info
+            comment: Reason for suspension
+
+        # Termination Info Tab
+        termination_date:
+            label: Termination Date
+            type: datepicker
+            mode: datetime
+            span: left
+            tab: Termination Info
+            disabled: true
+            comment: When the server was terminated
+
+        termination_reason:
+            label: Termination Reason
+            type: textarea
+            size: small
+            span: full
+            tab: Termination Info
+            comment: Reason for termination
+
+        # Notes Tab
+        notes:
+            label: Internal Notes
+            type: richeditor
+            size: huge
+            span: full
+            tab: Notes
+            toolbarButtons: bold|italic|underline|link|insertTable
+            comment: Internal notes about this server
+
+secondaryTabs:
+    fields:
+        _server_info:
+            type: partial
+            path: $/aero/clouds/models/cloud/_server_info.htm
+            tab: Server Info

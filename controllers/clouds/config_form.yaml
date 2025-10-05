@@ -1,0 +1,20 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Cloud Server
+form: $/aero/clouds/models/cloud/fields.yaml
+modelClass: Aero\Clouds\Models\Cloud
+
+create:
+    title: Create Cloud Server
+    redirect: aero/clouds/clouds/update/:id
+    redirectClose: aero/clouds/clouds
+
+update:
+    title: Edit Cloud Server
+    redirect: aero/clouds/clouds
+    redirectClose: aero/clouds/clouds
+
+preview:
+    title: Preview Cloud Server

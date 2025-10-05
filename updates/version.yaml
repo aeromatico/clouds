@@ -49,3 +49,18 @@
 1.2.2:
     - Add invoice relationship to orders
     - add_invoice_id_to_orders.php
+1.3.0:
+    - Create activity logs table for comprehensive event tracking
+    - create_activity_logs_table.php
+1.4.0:
+    - Create payment gateways table for payment processing
+    - create_payment_gateways_table.php
+1.4.1:
+    - Add payment gateway relationship to invoices
+    - add_payment_gateway_to_invoices.php
+1.5.0:
+    - Create cloud servers table for server management
+    - create_clouds_servers_table.php
+1.5.1:
+    - Change icon field in addons to text type for HTML support
+    - add_icon_html_to_addons.php

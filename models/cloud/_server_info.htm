@@ -1,0 +1,61 @@
+<div class="callout callout-info">
+    <div class="header">
+        <i class="icon-info-circle"></i>
+        <h3>Server Information</h3>
+    </div>
+    <div class="content">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Server ID:</strong></td>
+                    <td><?= $formModel->id ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Status:</strong></td>
+                    <td>
+                        <span class="label label-<?= $formModel->status === 'active' ? 'success' : ($formModel->status === 'suspended' ? 'danger' : 'warning') ?>">
+                            <?= ucfirst($formModel->status) ?>
+                        </span>
+                    </td>
+                </tr>
+                <?php if ($formModel->expiration_date): ?>
+                <tr>
+                    <td><strong>Days Until Expiration:</strong></td>
+                    <td>
+                        <?php
+                            $days = $formModel->days_until_expiration;
+                            if ($days !== null) {
+                                if ($days < 0) {
+                                    echo '<span class="label label-danger">Expired ' . abs($days) . ' days ago</span>';
+                                } elseif ($days <= 7) {
+                                    echo '<span class="label label-warning">' . $days . ' days</span>';
+                                } else {
+                                    echo '<span class="label label-success">' . $days . ' days</span>';
+                                }
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <?php endif ?>
+                <tr>
+                    <td><strong>Created:</strong></td>
+                    <td><?= $formModel->created_at ? $formModel->created_at->format('Y-m-d H:i:s') : 'N/A' ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Last Updated:</strong></td>
+                    <td><?= $formModel->updated_at ? $formModel->updated_at->format('Y-m-d H:i:s') : 'N/A' ?></td>
+                </tr>
+                <?php if ($formModel->panel_url): ?>
+                <tr>
+                    <td><strong>Panel Access:</strong></td>
+                    <td>
+                        <a href="<?= e($formModel->panel_url) ?>" target="_blank" class="btn btn-sm btn-primary">
+                            <i class="icon-external-link"></i> Open Panel
+                        </a>
+                    </td>
+                </tr>
+                <?php endif ?>
+            </tbody>
+        </table>
+    </div>
+</div>

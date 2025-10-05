@@ -1,0 +1,38 @@
+<?php
+    $statusColors = [
+        'pending' => 'warning',
+        'active' => 'success',
+        'suspended' => 'danger',
+        'terminated' => 'default',
+        'expired' => 'danger'
+    ];
+
+    $statusIcons = [
+        'pending' => 'icon-clock-o',
+        'active' => 'icon-check-circle',
+        'suspended' => 'icon-pause-circle',
+        'terminated' => 'icon-times-circle',
+        'expired' => 'icon-exclamation-triangle'
+    ];
+
+    $status = $record->status;
+    $color = $statusColors[$status] ?? 'default';
+    $icon = $statusIcons[$status] ?? 'icon-circle';
+    $label = ucfirst($status);
+?>
+
+<span class="label label-<?= $color ?>">
+    <i class="<?= $icon ?>"></i> <?= e($label) ?>
+</span>
+
+<?php if ($record->is_expired && $status === 'active'): ?>
+    <span class="label label-danger" style="margin-left: 5px;">
+        <i class="icon-exclamation-triangle"></i> Expired
+    </span>
+<?php endif ?>
+
+<?php if ($record->days_until_expiration !== null && $record->days_until_expiration > 0 && $record->days_until_expiration <= 7): ?>
+    <span class="label label-warning" style="margin-left: 5px;">
+        <i class="icon-clock-o"></i> <?= $record->days_until_expiration ?> days
+    </span>
+<?php endif ?>

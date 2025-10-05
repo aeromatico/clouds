@@ -1,0 +1,130 @@
+<?= Form::open(['class' => 'layout']) ?>
+
+    <div class="layout-row">
+        <?= $this->formRender() ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+                type="submit"
+                data-request="onSave"
+                data-hotkey="ctrl+s, cmd+s"
+                data-load-indicator="Saving Cloud Server..."
+                class="btn btn-primary">
+                <u>S</u>ave
+            </button>
+            <button
+                type="button"
+                data-request="onSave"
+                data-request-data="close:1"
+                data-hotkey="ctrl+enter, cmd+enter"
+                data-load-indicator="Saving Cloud Server..."
+                class="btn btn-default">
+                Save and Close
+            </button>
+            <button
+                type="button"
+                class="oc-icon-trash-o btn-icon danger pull-right"
+                data-request="onDelete"
+                data-load-indicator="Deleting Cloud Server..."
+                data-request-confirm="Delete this cloud server?">
+            </button>
+            <span class="btn-text">
+                or <a href="<?= Backend::url('aero/clouds/clouds') ?>">Cancel</a>
+            </span>
+        </div>
+    </div>
+
+<?= Form::close() ?>
+
+<!-- Action Buttons Section -->
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item title-value">
+            <h4>Server Management Actions</h4>
+        </div>
+    </div>
+</div>
+
+<div class="form-buttons" style="margin-top: 20px;">
+    <div class="loading-indicator-container">
+        <?php if ($formModel->status === 'pending'): ?>
+            <button
+                type="button"
+                class="btn btn-success oc-icon-check"
+                data-request="onActivate"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Activate this server?"
+                data-load-indicator="Activating...">
+                Activate Server
+            </button>
+        <?php endif ?>
+
+        <?php if ($formModel->status === 'active'): ?>
+            <button
+                type="button"
+                class="btn btn-warning oc-icon-pause"
+                data-request="onSuspend"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Suspend this server? Please provide a reason in the next step."
+                data-load-indicator="Suspending...">
+                Suspend Server
+            </button>
+        <?php endif ?>
+
+        <?php if ($formModel->status === 'suspended'): ?>
+            <button
+                type="button"
+                class="btn btn-info oc-icon-refresh"
+                data-request="onReactivate"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Reactivate this suspended server?"
+                data-load-indicator="Reactivating...">
+                Reactivate Server
+            </button>
+        <?php endif ?>
+
+        <?php if (in_array($formModel->status, ['active', 'suspended', 'expired'])): ?>
+            <button
+                type="button"
+                class="btn btn-primary oc-icon-calendar-plus-o"
+                data-request="onRenew"
+                data-request-data="id: <?= $formModel->id ?>, months: 1"
+                data-request-confirm="Renew this server for 1 month?"
+                data-load-indicator="Renewing...">
+                Renew (1 Month)
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary oc-icon-calendar-plus-o"
+                data-request="onRenew"
+                data-request-data="id: <?= $formModel->id ?>, months: 3"
+                data-request-confirm="Renew this server for 3 months?"
+                data-load-indicator="Renewing...">
+                Renew (3 Months)
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary oc-icon-calendar-plus-o"
+                data-request="onRenew"
+                data-request-data="id: <?= $formModel->id ?>, months: 12"
+                data-request-confirm="Renew this server for 12 months?"
+                data-load-indicator="Renewing...">
+                Renew (12 Months)
+            </button>
+        <?php endif ?>
+
+        <?php if ($formModel->status !== 'terminated'): ?>
+            <button
+                type="button"
+                class="btn btn-danger oc-icon-times-circle pull-right"
+                data-request="onTerminate"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="TERMINATE this server permanently? This action cannot be undone!"
+                data-load-indicator="Terminating...">
+                Terminate Server
+            </button>
+        <?php endif ?>
+    </div>
+</div>

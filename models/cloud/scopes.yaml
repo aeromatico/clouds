@@ -1,0 +1,44 @@
+# ===================================
+#  Filter Scope Definitions
+# ===================================
+
+scopes:
+    status:
+        label: Status
+        type: group
+        conditions: status = :value
+        options:
+            pending: Pending
+            active: Active
+            suspended: Suspended
+            terminated: Terminated
+            expired: Expired
+
+    service:
+        label: Service
+        type: group
+        conditions: service_id = :value
+        modelClass: Aero\Clouds\Models\Service
+        nameFrom: name
+
+    plan:
+        label: Plan
+        type: group
+        conditions: plan_id = :value
+        modelClass: Aero\Clouds\Models\Plan
+        nameFrom: name
+
+    server_type:
+        label: Server Type
+        type: group
+        conditions: server_type = :value
+
+    expiration:
+        label: Expiration Date
+        type: daterange
+        conditions: expiration_date >= ':after' AND expiration_date <= ':before'
+
+    auto_renew:
+        label: Auto Renew
+        type: checkbox
+        conditions: auto_renew = true

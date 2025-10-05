@@ -1,0 +1,21 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: Cloud Servers
+list: $/aero/clouds/models/cloud/columns.yaml
+modelClass: Aero\Clouds\Models\Cloud
+recordUrl: aero/clouds/clouds/update/:id
+recordsPerPage: 20
+showPageNumbers: true
+defaultSort:
+    column: created_date
+    direction: desc
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+filter:
+    scopes: $/aero/clouds/models/cloud/scopes.yaml
