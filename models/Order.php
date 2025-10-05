@@ -5,6 +5,7 @@ use Model;
 class Order extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\LogsActivity;
 
     protected $table = 'aero_clouds_orders';
 
@@ -231,5 +232,104 @@ class Order extends Model
         // Link the invoice to the order
         $this->invoice_id = $invoice->id;
         $this->save();
+    }
+
+    /**
+     * After update hook - detect status change to processing
+     */
+    public function afterUpdate()
+    {
+        // Check if status changed to 'processing'
+        if ($this->status === 'processing' && $this->getOriginal('status') !== 'processing') {
+            $this->provisionCloudServers();
+        }
+    }
+
+    /**
+     * Provision cloud servers from order items
+     */
+    public function provisionCloudServers()
+    {
+        if (!is_array($this->items)) {
+            return;
+        }
+
+        foreach ($this->items as $item) {
+            // Skip if no plan_id
+            if (!isset($item['plan_id'])) {
+                continue;
+            }
+
+            $plan = Plan::find($item['plan_id']);
+            if (!$plan) {
+                continue;
+            }
+
+            // Get quantity (default to 1)
+            $quantity = $item['quantity'] ?? 1;
+
+            // Get billing cycle to calculate expiration
+            $billingCycle = $item['billing_cycle'] ?? 'monthly';
+            $expirationDate = $this->calculateExpirationDate($billingCycle);
+
+            // Create cloud servers based on quantity
+            for ($i = 0; $i < $quantity; $i++) {
+                // Generate server name
+                $serverName = $this->generateServerName($plan, $i + 1, $quantity);
+
+                Cloud::create([
+                    'user_id' => $this->user_id,
+                    'order_id' => $this->id,
+                    'plan_id' => $plan->id,
+                    'service_id' => $plan->service_id ?? null,
+                    'name' => $serverName,
+                    'status' => 'pending',
+                    'created_date' => now(),
+                    'expiration_date' => $expirationDate,
+                    'auto_renew' => false,
+                    'notes' => 'Auto-provisioned from Order #' . $this->id
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Calculate expiration date based on billing cycle
+     */
+    protected function calculateExpirationDate($billingCycle)
+    {
+        $now = now();
+
+        switch ($billingCycle) {
+            case 'monthly':
+                return $now->addMonth();
+            case 'quarterly':
+                return $now->addMonths(3);
+            case 'semi_annually':
+                return $now->addMonths(6);
+            case 'annually':
+                return $now->addYear();
+            case 'biennially':
+                return $now->addYears(2);
+            case 'triennially':
+                return $now->addYears(3);
+            default:
+                return $now->addMonth();
+        }
+    }
+
+    /**
+     * Generate server name
+     */
+    protected function generateServerName($plan, $index, $total)
+    {
+        $baseName = $plan->name;
+
+        // If multiple servers, add index
+        if ($total > 1) {
+            return $baseName . ' #' . $index;
+        }
+
+        return $baseName;
     }
 }
