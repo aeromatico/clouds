@@ -6,18 +6,18 @@
     "isEntry": true
   },
   "src/css/app-legacy.css": {
-    "file": "js/style-legacy.CgKWnY_A.js",
+    "file": "js/style-legacy.CG5JSOi7.js",
     "name": "style",
     "src": "src/css/app-legacy.css",
     "isEntry": true
   },
   "src/css/app.css": {
-    "file": "css/style.C7oSGzdB.css",
+    "file": "css/style.CnE38345.css",
     "src": "src/css/app.css",
     "isEntry": true
   },
   "src/js/app-legacy.js": {
-    "file": "js/app-legacy.CVlg457P.js",
+    "file": "js/app-legacy.CeyEc4HX.js",
     "name": "app",
     "src": "src/js/app-legacy.js",
     "isEntry": true,
@@ -26,12 +26,12 @@
     ]
   },
   "src/js/app.js": {
-    "file": "js/app.CZxRcPEq.js",
+    "file": "js/app.BiX0DONf.js",
     "name": "app",
     "src": "src/js/app.js",
     "isEntry": true,
     "css": [
-      "css/style.C7oSGzdB.css"
+      "css/style.CnE38345.css"
     ]
   }
 }
