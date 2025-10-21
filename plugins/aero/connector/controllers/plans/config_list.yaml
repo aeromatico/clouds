@@ -1,0 +1,11 @@
+list: $/aero/connector/models/plan/columns.yaml
+modelClass: Aero\Connector\Models\Plan
+title: Plans
+noRecordsMessage: backend::lang.list.no_records
+defaultSort:
+    column: sort_order
+    direction: asc
+toolbar:
+    buttons: _list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

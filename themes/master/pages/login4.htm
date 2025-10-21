@@ -1,0 +1,92 @@
+title = "login4"
+url = "/login4"
+==
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - DaisyUI Azul</title>
+  <!-- Tailwind + DaisyUI desde CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: {
+              light: "#3b82f6",  /* Azul vivo */
+              DEFAULT: "#1d4ed8", /* Azul fuerte */
+              dark: "#0f172a"     /* Azul oscuro casi negro */
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-brandBlue-dark via-brandBlue to-brandBlue-light">
+
+  <div class="card w-full max-w-sm shadow-2xl bg-white/95 backdrop-blur-md border border-brandBlue-light">
+    <div class="card-body">
+      <!-- Encabezado -->
+      <h2 class="text-3xl font-extrabold text-center text-brandBlue-dark">
+        Bienvenido 👋
+      </h2>
+      <p class="text-sm text-center text-gray-600 mb-6">
+        Inicia sesión para continuar
+      </p>
+      
+      <!-- Formulario -->
+      <form>
+        <!-- Email -->
+        <div class="form-control mb-4">
+          <label class="label">
+            <span class="label-text font-semibold text-brandBlue-dark">Correo electrónico</span>
+          </label>
+          <input type="email" placeholder="ejemplo@mail.com" class="input input-bordered w-full focus:border-brandBlue focus:ring-2 focus:ring-brandBlue-light" required />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-control mb-2">
+          <label class="label">
+            <span class="label-text font-semibold text-brandBlue-dark">Contraseña</span>
+          </label>
+          <input type="password" placeholder="••••••••" class="input input-bordered w-full focus:border-brandBlue focus:ring-2 focus:ring-brandBlue-light" required />
+          <label class="label">
+            <a href="#" class="label-text-alt link link-hover text-brandBlue">¿Olvidaste tu contraseña?</a>
+          </label>
+        </div>
+
+        <!-- Botón login -->
+        <div class="form-control mt-4">
+          <button class="btn w-full bg-brandBlue text-white hover:bg-brandBlue-dark transition duration-300 font-semibold">
+            Ingresar
+          </button>
+        </div>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider text-gray-500">o</div>
+
+      <!-- Login social -->
+      <div class="grid grid-cols-2 gap-3">
+        <button class="btn bg-white text-brandBlue border border-brandBlue hover:bg-brandBlue-light hover:text-white transition duration-300 font-medium">
+          Google
+        </button>
+        <button class="btn bg-gray-800 text-white hover:bg-gray-700 transition duration-300 font-medium">
+          GitHub
+        </button>
+      </div>
+
+      <!-- Registro -->
+      <p class="text-sm text-center mt-6 text-gray-600">
+        ¿No tienes cuenta?
+        <a href="#" class="link font-semibold text-brandBlue">Regístrate</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

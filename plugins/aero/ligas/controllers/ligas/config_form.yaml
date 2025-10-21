@@ -1,0 +1,10 @@
+name: Ligas
+form: $/aero/ligas/models/clubes/fields.yaml
+modelClass: Aero\Ligas\Models\Clubes
+defaultRedirect: aero/ligas/ligas
+create:
+    redirect: 'aero/ligas/ligas/update/:id'
+    redirectClose: aero/ligas/ligas
+update:
+    redirect: aero/ligas/ligas
+    redirectClose: aero/ligas/ligas

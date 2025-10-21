@@ -1,0 +1,88 @@
+# Show filters
+showSetup: true
+showCheckboxes: true
+showSorting: true
+
+# Filter configuration
+filter:
+    showSearch: true
+    scopes:
+        pendiente:
+            label: Show pending quotes
+            modelClass: Aero\Manager\Models\ExchangeQuote
+            type: checkbox
+            conditions: status = 'Pendiente'
+        
+        new_chat:
+            label: Show new chats
+            modelClass: Aero\Manager\Models\ExchangeQuote
+            type: checkbox
+            conditions: chat_alert = true
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    from_id:
+        label: From
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: from
+    to_id:
+        label: To
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: to
+    user_id:
+        label: User
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    amount:
+        label: 'Amount $'
+        type: text
+        searchable: true
+        sortable: true
+    fee:
+        label: 'Own fee $'
+        type: text
+        searchable: true
+        sortable: true
+    fee_gateway:
+        label: 'Gateway fee $'
+        type: text
+        searchable: true
+        sortable: true        
+    status:
+        label: Status
+        type: text
+        searchable: true
+        sortable: true
+    chat_alert:
+        label: 'New chat'
+        type: switch
+        searchable: true
+        sortable: true
+    created_at:
+        label: Created
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: Updated
+        type: datetime
+        searchable: true
+        sortable: true
+    preview_button:
+        label: Preview
+        type: partial
+        path: $/aero/manager/models/exchangequotes/partials/_preview_button.htm
+        sortable: false
+        searchable: false

@@ -1,0 +1,12 @@
+list: $/arnold/school/models/courses/columns.yaml
+modelClass: Arnold\School\Models\Courses
+title: Courses
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'arnold/school/courses/update/:id'

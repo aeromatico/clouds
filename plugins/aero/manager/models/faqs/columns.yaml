@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    question:
+        label: question
+        type: text
+        searchable: true
+        sortable: true
+    answer:
+        label: answer
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: created_at
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: updated_at
+        type: datetime
+        searchable: true
+        sortable: true
+    deleted_at:
+        label: deleted_at
+        type: datetime
+        searchable: true
+        sortable: true

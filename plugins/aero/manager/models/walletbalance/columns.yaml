@@ -1,0 +1,22 @@
+columns:
+    id:
+        label: id
+        type: number
+    user_id:
+        label: user_id
+        type: number
+    total_credits:
+        label: total_credits
+        type: text
+    total_debits:
+        label: total_debits
+        type: text
+    total:
+        label: total
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

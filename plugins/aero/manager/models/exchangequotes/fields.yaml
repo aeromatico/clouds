@@ -1,0 +1,165 @@
+fields:
+    partial1:
+        label: ''
+        span: auto
+        path: $/aero/manager/models/exchangequotes/partials/_preview_button.htm
+        type: partial
+    status:
+        label: Status
+        options:
+            Pendiente: Pendiente
+            Activa: Activa
+            'En proceso': 'En proceso'
+            Rechazada: Rechazada
+            Cancelada: Cancelada
+            'Cancelada y reembolsada': 'Cancelada y reembolsada'
+            Declinada: Declinada
+        span: full
+        default: Pendiente
+        type: balloon-selector
+    from:
+        label: From
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    to:
+        label: To
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    amount:
+        label: Amount
+        span: auto
+        type: number
+    endtime:
+        label: 'Process time'
+        span: auto
+        default: '1'
+        type: number
+        comment: 'Value in hours'
+    user:
+        label: User
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        readOnly: 1
+        type: relation
+    note:
+        label: Nota
+        size: ''
+        span: auto
+        type: textarea
+tabs:
+    fields:
+        fee:
+            label: 'Own fee'
+            span: auto
+            readOnly: 1
+            type: number
+            comment: 'Automatically calculated after saving.'
+            tab: Fees
+        fee_gateway:
+            label: 'Gateway fee'
+            span: auto
+            readOnly: 1
+            type: number
+            comment: 'Automatically calculated after saving.'
+            tab: Fees
+        fee_ext_detail:
+            label: 'External fees'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Fees
+            form:
+                fields:
+                    type:
+                        label: Type
+                        options:
+                            'Cambio de moneda': 'Cambio de moneda'
+                            'Emisor de tarjeta': 'Emisor de tarjeta'
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    amount:
+                        label: Amount
+                        span: auto
+                        type: number
+                    description:
+                        label: Description
+                        size: ''
+                        span: auto
+                        type: textarea
+        identifier:
+            label: Identifier
+            span: full
+            readOnly: 1
+            hidden: 0
+            type: text
+            tab: Info
+        instructions:
+            label: Instructions
+            size: large
+            span: auto
+            type: richeditor
+            tab: Info
+        observations:
+            label: Observations
+            size: large
+            span: auto
+            type: richeditor
+            tab: Info
+        chat_on:
+            label: 'Enable chat for user'
+            span: full
+            default: 1
+            type: switch
+            tab: Chat
+        chat:
+            label: Chat
+            prompt: 'Add new message'
+            style: default
+            span: full
+            trigger:
+                action: show
+                field: chat_on
+                condition: checked
+            type: repeater
+            tab: Chat
+            form:
+                fields:
+                    message:
+                        label: Chat
+                        size: ''
+                        span: full
+                        trigger:
+                            action: hide
+                            field: predefined_on
+                            condition: checked
+                        type: richeditor
+                    message_predefined:
+                        label: 'Predefined message'
+                        options:
+                            'Estas son nuestras cuentas bancarias': 'Cuentas bancarias'
+                            'Esta es una respuesta predefinida': 'Respuesta 1'
+                        showSearch: true
+                        span: left
+                        trigger:
+                            action: show
+                            field: predefined_on
+                            condition: checked
+                        type: dropdown
+                    predefined_on:
+                        label: Predefined
+                        span: left
+                        type: switch
+                    customer_on:
+                        label: 'Is customer'
+                        span: left
+                        default: 0
+                        disabled: 0
+                        readOnly: 1
+                        type: switch

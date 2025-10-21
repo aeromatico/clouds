@@ -1,0 +1,58 @@
+==
+{# PWA Install Prompt Partial #}
+{# Configuration from Settings plugin aero/clouds #}
+
+function onStart() {
+    try {
+        $this['settings'] = \Aero\Clouds\Models\Setting::getCurrentSettings();
+    } catch (\Exception $e) {
+        $this['settings'] = null;
+    }
+}
+==
+{% set pwaEnabled = settings ? settings.pwa_enabled : true %}
+{% set pwaShowPrompt = settings ? settings.pwa_show_install_prompt : true %}
+{% set pwaDelay = settings ? settings.pwa_install_prompt_delay : 3000 %}
+
+<!-- PWA Install Prompt - Bottom left position -->
+{% if pwaEnabled and pwaShowPrompt %}
+<div
+    x-data="pwaInstall"
+    x-show="show"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 transform translate-y-full"
+    x-transition:enter-end="opacity-100 transform translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 transform translate-y-0"
+    x-transition:leave-end="opacity-0 transform translate-y-full"
+    class="fixed bottom-4 left-4 z-40 bg-card border border-border rounded-lg shadow-lg p-3 max-w-sm"
+>
+    <div class="flex items-start space-x-3">
+        <div class="flex-shrink-0">
+            <i class="fas fa-mobile-alt text-primary text-sm"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <p class="text-xs font-medium text-card-foreground">
+                Install App
+            </p>
+            <p class="text-xs text-muted-foreground mt-1">
+                Quick and offline access
+            </p>
+        </div>
+        <div class="flex items-center space-x-1">
+            <button
+                @click="install()"
+                class="text-xs bg-primary text-primary-foreground px-2 py-1 rounded hover:bg-primary/90 transition-colors"
+            >
+                Install
+            </button>
+            <button
+                @click="dismiss()"
+                class="text-muted-foreground hover:text-foreground p-1 transition-colors"
+            >
+                <i class="fas fa-times text-xs"></i>
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}

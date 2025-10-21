@@ -1,0 +1,212 @@
+title = "Carrito de Compras"
+url = "/cart"
+layout = "dashboard"
+is_hidden = 0
+
+[cart]
+==
+<!-- Cart Page (localStorage managed) -->
+<div class="container mx-auto px-4 py-12" x-data="{
+    items: {},
+    init() {
+        this.loadCart();
+        window.addEventListener('cart-updated', () => this.loadCart());
+    },
+    loadCart() {
+        this.items = window.cart.getItems();
+    },
+    get itemsArray() {
+        return Object.entries(this.items).map(([key, item]) => ({ key, ...item }));
+    },
+    get count() {
+        return Object.keys(this.items).length;
+    },
+    get total() {
+        return Object.values(this.items).reduce((sum, item) => {
+            return sum + (item.price * item.quantity);
+        }, 0);
+    },
+    removeItem(key) {
+        window.cart.removeItem(key);
+        this.loadCart();
+    },
+    updateQuantity(key, quantity) {
+        window.cart.updateQuantity(key, parseInt(quantity));
+        this.loadCart();
+    },
+    clearCart() {
+        if (confirm('¿Estás seguro de vaciar el carrito?')) {
+            window.cart.clear();
+            this.loadCart();
+        }
+    },
+    getBillingCycleLabel(cycle) {
+        const labels = {
+            'monthly': 'Mensual',
+            'quarterly': 'Trimestral',
+            'semi_annually': 'Semestral',
+            'annually': 'Anual',
+            'biennially': 'Bienal'
+        };
+        return labels[cycle] || cycle;
+    }
+}">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            Carrito de Compras
+        </h1>
+        <div class="text-sm breadcrumbs text-base-content">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/shop">Shop</a></li>
+                <li>Carrito</li>
+            </ul>
+        </div>
+    </div>
+
+    <template x-if="count > 0">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items -->
+            <div class="lg:col-span-2">
+                <div class="card bg-base-100 shadow-xl border border-base-300">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Productos (<span x-text="count"></span>)</h2>
+
+                        <div class="space-y-4">
+                            <template x-for="item in itemsArray" :key="item.key">
+                                <div class="card bg-base-200 border border-base-300">
+                                    <div class="card-body p-4">
+                                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                                            <!-- Product Info -->
+                                            <div class="flex-1">
+                                                <h3 class="font-semibold text-lg text-gray-900 dark:text-white" x-text="item.plan_name"></h3>
+                                                <p class="text-sm text-gray-600 dark:text-gray-400" x-text="item.service_name"></p>
+                                                <div class="badge badge-outline badge-sm mt-2" x-text="getBillingCycleLabel(item.billing_cycle)"></div>
+                                            </div>
+
+                                            <!-- Quantity Controls -->
+                                            <div class="flex items-center gap-3">
+                                                <label class="text-sm font-medium">Cantidad:</label>
+                                                <div class="join">
+                                                    <button
+                                                        class="btn btn-sm join-item"
+                                                        @click="updateQuantity(item.key, item.quantity - 1)"
+                                                        :disabled="item.quantity <= 1">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                    <input
+                                                        type="number"
+                                                        :value="item.quantity"
+                                                        class="input input-sm input-bordered join-item w-16 text-center"
+                                                        min="1"
+                                                        readonly>
+                                                    <button
+                                                        class="btn btn-sm join-item"
+                                                        @click="updateQuantity(item.key, item.quantity + 1)">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Price -->
+                                            <div class="text-right">
+                                                <div class="text-lg font-bold text-primary">
+                                                    $<span x-text="(item.price * item.quantity).toFixed(2)"></span>
+                                                </div>
+                                                <div class="text-xs text-gray-500">
+                                                    $<span x-text="item.price.toFixed(2)"></span> x <span x-text="item.quantity"></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Remove Button -->
+                                            <button
+                                                class="btn btn-ghost btn-sm btn-circle"
+                                                @click="removeItem(item.key)"
+                                                title="Eliminar">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <!-- Clear Cart Button -->
+                        <div class="divider"></div>
+                        <button
+                            @click="clearCart()"
+                            class="btn btn-ghost btn-sm">
+                            <i class="fas fa-trash mr-2"></i>
+                            Vaciar Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="lg:col-span-1">
+                <div class="card bg-base-100 shadow-xl border border-base-300 sticky top-4">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Resumen de Orden</h2>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
+                                <span class="font-semibold">$<span x-text="total.toFixed(2)"></span></span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Impuestos</span>
+                                <span class="font-semibold">$0.00</span>
+                            </div>
+
+                            <div class="divider my-2"></div>
+
+                            <div class="flex justify-between text-lg font-bold">
+                                <span>Total</span>
+                                <span class="text-primary">$<span x-text="total.toFixed(2)"></span></span>
+                            </div>
+                        </div>
+
+                        <!-- Checkout Button -->
+                        <a href="/checkout" class="btn btn-primary w-full mt-6">
+                            <i class="fas fa-lock mr-2"></i>
+                            Proceder al Pago
+                        </a>
+
+                        <a href="/shop" class="btn btn-outline w-full mt-2">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Continuar Comprando
+                        </a>
+
+                        <!-- Security Badge -->
+                        <div class="alert alert-info mt-4">
+                            <i class="fas fa-shield-alt"></i>
+                            <span class="text-xs">Transacción segura</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template x-if="count === 0">
+        <!-- Empty Cart State -->
+        <div class="text-center py-16">
+            <div class="w-32 h-32 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shopping-cart text-6xl text-base-content/30"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Tu carrito está vacío
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-8">
+                Agrega algunos planes para empezar
+            </p>
+            <a href="/shop" class="btn btn-primary">
+                <i class="fas fa-store mr-2"></i>
+                Explorar Servicios
+            </a>
+        </div>
+    </template>
+</div>

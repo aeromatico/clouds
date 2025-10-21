@@ -1,0 +1,10 @@
+columns:
+    id:
+        label: id
+        type: number
+    plan_id:
+        label: plan_id
+        type: number
+    name:
+        label: name
+        type: text

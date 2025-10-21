@@ -1,0 +1,21 @@
+fields:
+    user_id:
+        label: 'User ID'
+        span: auto
+        type: text
+    order_id:
+        label: 'Order ID'
+        span: auto
+        type: text
+    payment_titular_name:
+        label: 'Titular name'
+        span: auto
+        type: text
+    payment_titular_email:
+        label: 'titular email'
+        span: auto
+        type: text
+    payment_titular_note:
+        label: 'titular note'
+        span: full
+        type: text

@@ -1,0 +1,10 @@
+name: CargoQuotes
+form: $/aero/manager/models/cargoquotes/fields.yaml
+modelClass: Aero\Manager\Models\CargoQuotes
+defaultRedirect: aero/manager/cargoquotes
+create:
+    redirect: 'aero/manager/cargoquotes/update/:id'
+    redirectClose: aero/manager/cargoquotes
+update:
+    redirect: aero/manager/cargoquotes
+    redirectClose: aero/manager/cargoquotes

@@ -1,0 +1,13 @@
+<div class="preview-button-container">
+    <a 
+        href="https://pay.com.bo/dashboard/cotizacion/exchange/<?= isset($record) ? $record->identifier : $model->identifier ?>"
+        target="_blank"
+        class="btn btn-default"
+        onclick="event.stopPropagation();"
+    >
+        <i class="icon-eye"></i>
+        <?php if (!isset($record)): ?>
+            <span>Preview as customer</span>
+        <?php endif ?>
+    </a>
+</div>

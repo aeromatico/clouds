@@ -1,0 +1,225 @@
+title = "Registro"
+layout = "default"
+url = "/register"
+
+[session]
+security = "guest"
+redirect = "dashboard"
+==
+<?php
+use RainLab\User\Models\User;
+use RainLab\User\Models\UserLog;
+use RainLab\User\Helpers\User as UserHelper;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
+function onRegister()
+{
+    $input = post();
+
+    // If the password confirmation field is absent, add it
+    if (!array_key_exists('password_confirmation', $input)) {
+        $input['password_confirmation'] = $input['password'] ?? '';
+    }
+
+    // Validate input
+    Validator::make($input, [
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => UserHelper::passwordRules(),
+    ])->validate();
+
+    // Create user
+    $user = User::create([
+        'first_name' => $input['first_name'],
+        'last_name' => $input['last_name'],
+        'email' => $input['email'],
+        'password' => $input['password'],
+        'password_confirmation' => $input['password_confirmation'],
+    ]);
+
+    // ACTIVATE USER IMMEDIATELY
+    $user->activated_at = Carbon::now();
+    $user->save();
+
+    // Send welcome email (user:welcome_email) instead of verification
+    try {
+        $setting = \RainLab\User\Models\Setting::instance();
+        $notificationVars = $user->getNotificationVars();
+
+        \Log::info('Attempting to send welcome email to: ' . $user->email);
+        \Log::info('notify_user: ' . ($setting->notify_user ? 'true' : 'false'));
+        \Log::info('Template: ' . $setting->user_message_template);
+
+        // Force send the welcome email
+        if ($setting->notify_user && \System\Models\MailTemplate::canSendTemplate($setting->user_message_template)) {
+            \Mail::send($setting->user_message_template, $notificationVars, function($message) use ($user) {
+                $message->to($user->email, $user->full_name);
+            });
+            \Log::info('Welcome email sent successfully to: ' . $user->email);
+        } else {
+            \Log::warning('Welcome email not sent - conditions not met');
+        }
+    } catch (\Exception $e) {
+        // Log error but don't stop registration
+        \Log::error('Welcome email failed: ' . $e->getMessage());
+    }
+
+    // Log the new user
+    UserLog::createRecord($user->getKey(), UserLog::TYPE_NEW_USER, [
+        'user_full_name' => $user->full_name,
+    ]);
+
+    // Login the user
+    Auth::login($user);
+
+    // Return redirect will be handled by data-request-success
+}
+?>
+==
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-bold text-gray-900 dark:text-white">
+                Crear cuenta
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                Solo necesitamos algunos datos básicos
+            </p>
+        </div>
+
+        <div class="flex items-center justify-center p-4">
+            <div class="card w-full max-w-sm bg-base-100 shadow-xl">
+                <div class="card-body p-6">
+                    <form
+                        data-request="onRegister"
+                        data-request-success="window.location = '{{ 'dashboard'|page }}'"
+                        data-request-flash
+                        class="w-full"
+                    >
+                        <!-- Mensajes de error y éxito -->
+                        {% if flashBag.exists('error') %}
+                            <div role="alert" class="alert alert-error mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{{ flashBag.get('error') }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if flashBag.exists('success') %}
+                            <div role="alert" class="alert alert-success mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{{ flashBag.get('success') }}</span>
+                            </div>
+                        {% endif %}
+
+                        <!-- Campo de Email -->
+                        <div class="form-control w-full mb-3">
+                            <label class="label pb-1" for="userEmail">
+                                <span class="label-text text-sm font-medium">Email</span>
+                            </label>
+                            <input
+                                id="userEmail"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                required
+                                placeholder="correo@ejemplo.com"
+                                value="{{ form_value('email') }}"
+                                class="input input-bordered w-full focus:input-primary"
+                            >
+                        </div>
+
+                        <!-- Campo de Nombre -->
+                        <div class="form-control w-full mb-3">
+                            <label class="label pb-1" for="userFirstName">
+                                <span class="label-text text-sm font-medium">Nombre</span>
+                            </label>
+                            <input
+                                id="userFirstName"
+                                name="first_name"
+                                type="text"
+                                autocomplete="given-name"
+                                required
+                                placeholder="Tu nombre"
+                                value="{{ form_value('first_name') }}"
+                                class="input input-bordered w-full focus:input-primary"
+                            >
+                        </div>
+
+                        <!-- Campo de Apellido -->
+                        <div class="form-control w-full mb-3">
+                            <label class="label pb-1" for="userLastName">
+                                <span class="label-text text-sm font-medium">Apellido</span>
+                            </label>
+                            <input
+                                id="userLastName"
+                                name="last_name"
+                                type="text"
+                                autocomplete="family-name"
+                                required
+                                placeholder="Tu apellido"
+                                value="{{ form_value('last_name') }}"
+                                class="input input-bordered w-full focus:input-primary"
+                            >
+                        </div>
+
+                        <!-- Campo de Contraseña -->
+                        <div class="form-control w-full mb-3">
+                            <label class="label pb-1" for="userPassword">
+                                <span class="label-text text-sm font-medium">Contraseña</span>
+                            </label>
+                            <input
+                                id="userPassword"
+                                name="password"
+                                type="password"
+                                autocomplete="new-password"
+                                required
+                                placeholder="••••••••"
+                                class="input input-bordered w-full focus:input-primary"
+                            >
+                        </div>
+
+                        <!-- Campo de Confirmar Contraseña -->
+                        <div class="form-control w-full mb-6">
+                            <label class="label pb-1" for="userPasswordConfirm">
+                                <span class="label-text text-sm font-medium">Confirmar Contraseña</span>
+                            </label>
+                            <input
+                                id="userPasswordConfirm"
+                                name="password_confirmation"
+                                type="password"
+                                autocomplete="new-password"
+                                required
+                                placeholder="••••••••"
+                                class="input input-bordered w-full focus:input-primary"
+                            >
+                        </div>
+
+                        <!-- Botón de crear cuenta -->
+                        <button
+                            type="submit"
+                            class="btn btn-primary w-full mb-6"
+                        >
+                            Crear cuenta
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="divider text-sm text-base-content/60">¿Ya tienes cuenta?</div>
+
+                        <!-- Botón de iniciar sesión -->
+                        <a href="{{ 'login'|page }}" class="btn btn-outline w-full">
+                            Iniciar sesión
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+columns:
+    id:
+        label: id
+        type: number
+    user_id:
+        label: user_id
+        type: text
+        select: name
+        relation: user
+    type_shipment:
+        label: type_shipment
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

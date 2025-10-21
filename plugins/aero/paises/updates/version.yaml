@@ -1,0 +1,17 @@
+v1.0.1:
+    - 'Initialize plugin'
+v1.0.2:
+    - 'Created table aero_paises_paises'
+    - builder_table_create_aero_paises_paises.php
+v1.0.3:
+    - 'Updated table aero_paises_paises'
+    - builder_table_update_aero_paises_paises.php
+v1.0.4:
+    - 'Updated table aero_paises_paises'
+    - builder_table_update_aero_paises_paises_2.php
+v1.0.5:
+    - 'Updated table aero_paises_paises'
+    - builder_table_update_aero_paises_paises_3.php
+v1.0.6:
+    - 'Updated table aero_paises_paises'
+    - builder_table_update_aero_paises_paises_4.php

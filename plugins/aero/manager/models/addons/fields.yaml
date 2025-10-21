@@ -1,0 +1,42 @@
+fields:
+    plan_id:
+        label: 'Plan ID'
+        span: auto
+        type: text
+    name:
+        label: Name
+        span: auto
+        type: text
+    description:
+        label: Description
+        span: full
+        type: text
+    pricing:
+        label: Pricing
+        prompt: 'Add price'
+        style: default
+        span: full
+        type: repeater
+        form:
+            fields:
+                price:
+                    label: Price
+                    span: auto
+                    type: number
+                price_period:
+                    label: 'Price predios'
+                    options:
+                        mensual: Mensual
+                        trimestral: Trimestral
+                        semestras: Semestral
+                        anual: Anual
+                    span: auto
+                    type: balloon-selector
+                price_currency:
+                    label: 'Price currency'
+                    options:
+                        bolivianos: Bolivianos
+                        dolares: Dolares
+                    showSearch: true
+                    span: auto
+                    type: dropdown

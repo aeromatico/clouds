@@ -1,0 +1,27 @@
+plugin:
+    name: 'aero.test::lang.plugin.name'
+    description: 'aero.test::lang.plugin.description'
+    author: aero
+    icon: oc-icon-adjust
+    homepage: ''
+permissions:
+    test_students:
+        tab: Students
+        label: 'Agregar estudiantes'
+    test_curses:
+        tab: Students
+        label: 'Gestionar cursos'
+navigation:
+    students:
+        label: 'Manage students'
+        url: /aero/test/students
+        icon: icon-life-ring
+        sideMenu:
+            students_students:
+                label: 'Manage students'
+                url: /aero/test/students
+                icon: icon-sitemap
+            students_curses:
+                label: 'Manage curses'
+                url: aero/test/curses
+                icon: icon-sitemap

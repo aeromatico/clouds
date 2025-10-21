@@ -1,0 +1,38 @@
+{
+  "name": "master-theme",
+  "version": "1.0.0",
+  "description": "Modern October CMS theme with Vite, Tailwind CSS, Alpine.js, and PWA support",
+  "author": "aero",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tailwind:watch": "tailwindcss -i ./assets/src/css/app.css -o ./assets/dist/css/app.css --watch",
+    "tailwind:build": "tailwindcss -i ./assets/src/css/app.css -o ./assets/dist/css/app.css --minify"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
+    "alpinejs": "^3.14.1",
+    "animate.css": "^4.1.1",
+    "daisyui": "^5.0.50"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/alpinejs": "^3.13.10",
+    "@vitejs/plugin-legacy": "^5.4.2",
+    "autoprefixer": "^10.4.20",
+    "chokidar": "^4.0.3",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.12",
+    "vite": "^5.4.8",
+    "vite-plugin-pwa": "^0.20.5",
+    "workbox-window": "^7.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

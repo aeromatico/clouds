@@ -1,0 +1,35 @@
+title = "test1"
+url = "/test1"
+==
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boilerplate DaisyUI</title>
+  <!-- Tailwind + DaisyUI desde CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      plugins: [daisyui],
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.js"></script>
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+
+<div class="avatar">
+  <div class="w-24 rounded">
+    <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
+  </div>
+</div>
+
+<span class="countdown">
+  <span style="--value:59;" aria-live="polite" aria-label="59">59</span>
+</span>
+
+
+
+
+</body>
+</html>

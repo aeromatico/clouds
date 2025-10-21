@@ -1,0 +1,11 @@
+name: StoreCollections
+modelClass: Aero\Manager\Models\StoreCollections
+form: $/aero/manager/models/storecollections/fields.yaml
+defaultRedirect: aero/manager/storecollections
+create:
+    redirect: 'aero/manager/storecollections/update/:id'
+    redirectClose: aero/manager/storecollections
+update:
+    redirect: aero/manager/storecollections
+    redirectClose: aero/manager/storecollections
+preview: {  }

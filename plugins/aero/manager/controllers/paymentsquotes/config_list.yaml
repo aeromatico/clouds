@@ -1,0 +1,51 @@
+list: $/aero/manager/models/paymentsquotes/columns.yaml
+modelClass: Aero\Manager\Models\PaymentsQuotes
+title: PaymentsQuotes
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'aero/manager/paymentsquotes/update/:id'
+# ===================================
+#  List Behavior Config
+# ===================================
+
+# Model List Column configuration
+list: $/aero/manager/models/paymentsquotes/columns.yaml
+
+# Model Class name
+modelClass: Aero\Manager\Models\PaymentsQuotes
+
+# List Title
+title: Manage Exchange Quotes
+
+# Link URL for each record
+recordUrl: aero/manager/paymentsquotes/update/:id
+
+# Message to display if the list is empty
+noRecordsMessage: backend::lang.list.no_records
+
+# Records to display per page
+recordsPerPage: 20
+
+# Display page numbers with pagination, disable to improve performance
+showPageNumbers: true
+
+# Displays the list column set up button
+showSetup: true
+
+# Filter widget configuration
+filter: 
+    scopes:
+        pendiente:
+            label: Show pending quotes
+            type: checkbox
+            conditions: status = 'Pendiente'
+        new_chat:
+            label: Show new chats
+            type: checkbox
+            conditions: chat_alert = true

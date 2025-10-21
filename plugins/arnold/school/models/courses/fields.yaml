@@ -1,0 +1,71 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    description:
+        label: Description
+        span: auto
+        type: text
+    mode:
+        label: Mode
+        span: auto
+        type: text
+    start_date:
+        label: 'Start date'
+        mode: datetime
+        span: auto
+        type: datepicker
+    end_date:
+        label: 'End date'
+        span: auto
+        type: datepicker
+    active:
+        label: Active
+        span: auto
+        type: switch
+    student:
+        label: Student
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    photo:
+        label: Classroom
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    listStudents:
+        label: 'List Students'
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    galleryClassroom:
+        label: 'Classroom Gallery'
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    webpage:
+        label: 'Web Page'
+        prompt: 'Add new item'
+        displayMode: accordion
+        span: auto
+        type: repeater
+        form:
+            fields:
+                link:
+                    label: Link
+                    span: auto
+                    type: text

@@ -1,0 +1,101 @@
+title = "login5"
+url = "/login5"
+==
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - DaisyUI Azul</title>
+  <!-- Tailwind + DaisyUI desde CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.js"></script>
+
+  <!-- Fuente amigable (Poppins) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: {
+              bg: "#0d47a1",    /* Azul fuerte para el card */
+              light: "#3b82f6", /* Azul vivo */
+              DEFAULT: "#1d4ed8", /* Azul intermedio */
+              dark: "#0f172a"   /* Azul muy oscuro */
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-brandBlue-dark via-brandBlue to-brandBlue-light">
+
+  <!-- Card de login en azul -->
+  <div class="card w-full max-w-sm shadow-2xl bg-brandBlue-bg text-white">
+    <div class="card-body">
+      <!-- Encabezado -->
+      <h2 class="text-3xl font-bold text-center">Bienvenido 👋</h2>
+      <p class="text-sm text-center text-blue-100 mb-6">
+        Inicia sesión para continuar
+      </p>
+      
+      <!-- Formulario -->
+      <form>
+        <!-- Email -->
+        <div class="form-control mb-4">
+          <label class="label">
+            <span class="label-text text-blue-100 font-medium">Correo electrónico</span>
+          </label>
+          <input type="email" placeholder="ejemplo@mail.com" class="input w-full bg-white text-black focus:border-brandBlue-light focus:ring-2 focus:ring-brandBlue-light" required />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-control mb-2">
+          <label class="label">
+            <span class="label-text text-blue-100 font-medium">Contraseña</span>
+          </label>
+          <input type="password" placeholder="••••••••" class="input w-full bg-white text-black focus:border-brandBlue-light focus:ring-2 focus:ring-brandBlue-light" required />
+          <label class="label">
+            <a href="#" class="label-text-alt link link-hover text-blue-200">¿Olvidaste tu contraseña?</a>
+          </label>
+        </div>
+
+        <!-- Botón login -->
+        <div class="form-control mt-4">
+          <button class="btn w-full bg-white text-brandBlue-bg font-semibold hover:bg-blue-100 hover:text-brandBlue-dark transition duration-300">
+            Ingresar
+          </button>
+        </div>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider text-blue-200">o</div>
+
+      <!-- Login social -->
+      <div class="grid grid-cols-2 gap-3">
+        <button class="btn bg-white text-brandBlue-bg hover:bg-blue-100 transition duration-300 font-medium">
+          Google
+        </button>
+        <button class="btn bg-gray-900 text-white hover:bg-gray-700 transition duration-300 font-medium">
+          GitHub
+        </button>
+      </div>
+
+      <!-- Registro -->
+      <p class="text-sm text-center mt-6 text-blue-100">
+        ¿No tienes cuenta?
+        <a href="#" class="link font-semibold text-white">Regístrate</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

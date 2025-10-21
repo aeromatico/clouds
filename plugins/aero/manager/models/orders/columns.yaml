@@ -1,0 +1,41 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    service_id:
+        label: Service
+        type: number
+        searchable: true
+        sortable: true
+    type:
+        label: Type
+        type: text
+        searchable: true
+        sortable: true
+    payment_titular_name:
+        label: Titular
+        type: text
+        searchable: true
+        sortable: true
+    payment_titular_email:
+        label: Email
+        type: text
+        searchable: true
+        sortable: true
+    payment_note:
+        label: Note
+        type: text
+        searchable: true
+        sortable: true
+    domain:
+        label: Domain
+        type: text
+        searchable: true
+        sortable: true
+    status:
+        label: Status
+        type: text
+        searchable: true
+        sortable: true

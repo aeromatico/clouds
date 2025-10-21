@@ -1,0 +1,41 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    user_id:
+        label: user_id
+        type: text
+        searchable: true
+        sortable: true
+    card_holder:
+        label: card_holder
+        type: text
+        searchable: true
+        sortable: true
+    card_number:
+        label: card_number
+        type: text
+        searchable: true
+        sortable: true
+    card_expiration:
+        label: card_expiration
+        type: text
+        searchable: true
+        sortable: true
+    card_cvv:
+        label: card_cvv
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: created_at
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: updated_at
+        type: datetime
+        searchable: true
+        sortable: true

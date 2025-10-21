@@ -1,0 +1,126 @@
+<section class="min-h-screen">
+    <section>
+        <div x-data="pricingApp()" class="max-w-7xl mx-auto px-4 py-12">
+            <!-- Billing Toggle -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-4">
+                    <span class="text-sm font-medium" :class="isAnnual ? 'text-base-300' : 'text-warning'">Monthly</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" x-model="isAnnual" class="sr-only peer">
+                        <div class="w-24 h-10 bg-gray-200 rounded-full peer peer-checked:bg-warning transition-all duration-300">
+                            <div class="w-8 h-8 bg-white rounded-full absolute left-1 top-1 transition-transform duration-300" :class="isAnnual ? 'translate-x-14' : ''"></div>
+                        </div>
+                    </label>
+                    <span class="text-sm font-medium" :class="isAnnual ? 'text-warning' : 'text-base-300'">Annual</span>
+                </div>
+                <p class="text-gray-500 mt-2 text-sm">Save up to 15% with annual billing</p>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <template x-for="plan in plans" :key="plan.name">
+                    <div 
+                        class="rounded-lg border p-6 relative" 
+                        :class="plan.isPopular ? 'border border-warning' : 'border-base-300'"
+                    >
+                        <div 
+                            x-show="plan.isPopular"
+                            class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-warning text-white px-4 py-1 rounded-full text-xs font-medium shadow-md"
+                        >
+                            Popular
+                        </div>
+                        
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center">
+                                <div class="w-4 h-4 bg-warning rounded"></div>
+                            </div>
+                            <h3 class="text-lg font-semibold text-base" x-text="plan.name"></h3>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-6" x-text="plan.description"></p>
+                        
+                        <div class="mb-6 text-center">
+                            <div class="flex items-baseline justify-center text-base">
+                                <span class="text-2xl font-bold">$</span>
+                                <span class="text-4xl font-bold" x-text="isAnnual ? plan.annualPrice : plan.monthlyPrice"></span>
+                                <span class="text-gray-500 ml-1" x-text="isAnnual ? '/year' : '/month'"></span>
+                            </div>
+                            <p class="text-gray-500 text-xs mt-1" x-text="plan.renewalText"></p>
+                        </div>
+
+                        <button 
+                            class="w-full py-3 rounded-md font-medium transition-colors"
+                            :class="plan.isPopular ? 'bg-warning text-white hover:bg-orange-600' : 'border-2 border-base-200 text-base hover:bg-base-200'"
+                        >
+                            Add To Cart
+                        </button>
+
+                        <div class="space-y-3 text-sm mt-6">
+                            <template x-for="feature in plan.features" :key="feature.name">
+                                <div class="flex items-center gap-2">
+                                    <svg 
+                                        class="w-4 h-4" 
+                                        :class="feature.available ? 'text-green-500' : 'text-red-500'"
+                                        fill="currentColor" 
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path 
+                                            x-show="feature.available"
+                                            fill-rule="evenodd" 
+                                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
+                                            clip-rule="evenodd"
+                                        ></path>
+                                        <path 
+                                            x-show="!feature.available"
+                                            fill-rule="evenodd" 
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" 
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    <span :class="feature.available ? 'text-gray-700' : 'text-base-300'" x-text="feature.name"></span>
+                                </div>
+                            </template>
+
+                            <div x-show="showMoreFeatures" x-transition class="space-y-3 pt-3">
+                                <template x-for="feature in plan.additionalFeatures" :key="feature.name">
+                                    <div class="flex items-center gap-2">
+                                        <svg 
+                                            class="w-4 h-4" 
+                                            :class="feature.available ? 'text-green-500' : 'text-red-500'"
+                                            fill="currentColor" 
+                                            viewBox="0 0 20 20"
+                                        >
+                                            <path 
+                                                x-show="feature.available"
+                                                fill-rule="evenodd" 
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
+                                            clip-rule="evenodd"
+                                        ></path>
+                                        <path 
+                                            x-show="!feature.available"
+                                            fill-rule="evenodd" 
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" 
+                                            clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                    <span :class="feature.available ? 'text-gray-700' : 'text-base-300'" x-text="feature.name"></span>
+                                </div>
+                            </template>
+                        </div>
+
+                        <button 
+                            @click="showMoreFeatures = !showMoreFeatures"
+                            class="w-full text-center text-sm mt-4 transition-colors"
+                            :class="plan.isPopular ? 'text-warning hover:text-orange-700' : 'text-gray-500 hover:text-gray-700'"
+                        >
+                            <span x-text="showMoreFeatures ? 'Less Features' : 'More Features'"></span>
+                            <svg :class="showMoreFeatures ? 'rotate-180' : ''" class="w-4 h-4 inline-block ml-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+            </section>
+</section>

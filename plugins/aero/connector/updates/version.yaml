@@ -1,0 +1,4 @@
+1.0.1:
+    - Initialize plugin tables
+    - create_services_table.php
+    - create_plans_table.php

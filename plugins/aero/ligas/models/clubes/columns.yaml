@@ -1,0 +1,7 @@
+columns:
+    nombre:
+        label: nombre
+        type: text
+    fundacion:
+        label: fundacion
+        type: date

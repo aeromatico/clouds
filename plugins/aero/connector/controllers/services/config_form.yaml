@@ -1,0 +1,14 @@
+name: Service
+modelClass: Aero\Connector\Models\Service
+defaultRedirect: aero/connector/services
+create:
+    title: Create Service
+    redirect: aero/connector/services/update/:id
+    redirectClose: aero/connector/services
+update:
+    title: Edit Service
+    redirect: aero/connector/services
+    redirectClose: aero/connector/services
+preview:
+    title: Preview Service
+form: $/aero/connector/models/service/fields.yaml

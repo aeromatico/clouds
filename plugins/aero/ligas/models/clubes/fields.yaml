@@ -1,0 +1,55 @@
+fields:
+    nombre:
+        label: nombre
+        span: auto
+        type: text
+    liga:
+        label: liga
+        span: auto
+        type: text
+    estadio:
+        label: estadio
+        span: auto
+        type: text
+    pais:
+        label: pais
+        span: auto
+        type: text
+    trofeos:
+        label: trofeos
+        span: auto
+        type: text
+    fundacion:
+        label: fundacion
+        span: auto
+        mode: date
+        minDate: 01/01/1900
+        type: datepicker
+    color:
+        label: color
+        span: auto
+        allowEmpty: true
+        allowCustom: true
+        type: colorpicker
+    descenso:
+        label: descenso
+        span: auto
+        type: switch
+    escudo:
+        label: escudo
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    fotos:
+        label: fotos
+        span: auto
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        type: fileupload

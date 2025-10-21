@@ -1,0 +1,83 @@
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-primary/5 via-background to-secondary/5 overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-4">
+        <div class="text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-medium mb-8 animate-fade-in">
+                <i class="fas fa-rocket mr-2"></i>
+                Experiencia optimizada + IA
+            </div>
+<!-- Title -->
+<h1 class="text-4xl md:text-6xl lg:text-7xl font-base-300 animate-fade-in mb-2">
+    <span class="text-base-content">
+        HOST<span class="text-primary">MANIA</span>
+    </span>
+</h1>
+
+<!-- Subtitle -->
+<h2 class="text-sm md:text-2xl font-normal text-gray-600 dark:text-gray-300 animate-fade-in mb-8">
+    Premium Cloud Servers para proyectos serios
+</h2>
+
+
+            <div class="flex justify-center mb-8">
+                <img 
+                    src="https://cdn.dribbble.com/userupload/22553452/file/original-bef4c9d5b9e203e1595b4caee2cb1008.gif" 
+                    alt="Master Theme" 
+                    class="max-w-full h-auto rounded-xl shadow-lg"
+                >
+            </div>
+                
+
+            <!-- description -->
+            <p class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-10 mb-12 animate-fade-in">
+                Mira las novedades de esta semana.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-fade-in">
+                <button 
+                    @click="$store.toast.success('¡Bienvenido al Master Theme!')" 
+                    class="btn btn-primary btn-lg px-8 py-4 text-lg"
+                >
+                    <i class="fas fa-play mr-2"></i>
+                    Comenzar
+                </button>
+                <a 
+                    href="{{ url('/components') }}" 
+                    class="btn btn-outline btn-lg px-8 py-4 text-lg"
+                >
+                    <i class="fas fa-palette mr-2"></i>
+                    Ver catálogo
+                </a>
+            </div>
+
+            <!-- Tech Stack Icons -->
+            <div class="flex flex-wrap justify-center items-center gap-8 text-muted-foreground animate-fade-in">
+                <div class="flex items-center space-x-2 text-sm">
+                    <i class="fab fa-laravel text-red-500 text-xl"></i>
+                    <span>Promociones</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <i class="fas fa-bolt text-yellow-500 text-xl"></i>
+                    <span>Vite 5</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <i class="fas fa-wind text-cyan-500 text-xl"></i>
+                    <span>Distribuidores</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <i class="fas fa-mountain text-green-500 text-xl"></i>
+                    <span>Resellers</span>
+                </div>
+                <div class="flex items-center space-x-2 text-sm">
+                    <i class="fas fa-mobile-alt text-blue-500 text-xl"></i>
+                    <span>PWA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

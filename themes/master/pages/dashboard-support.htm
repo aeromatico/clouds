@@ -1,0 +1,182 @@
+title = "Soporte"
+url = "/dashboard/support"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+
+[tickets]
+==
+<?php
+use Aero\Clouds\Models\Ticket;
+
+function onStart()
+{
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    // Get tickets with stats
+    $this['openTickets'] = Ticket::forUser($user->id)->open()->count();
+    $this['closedTickets'] = Ticket::forUser($user->id)->closed()->count();
+    $this['totalTickets'] = Ticket::forUser($user->id)->count();
+
+    // Get all tickets
+    $this['tickets'] = Ticket::forUser($user->id)
+        ->with(['department', 'replies'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+}
+?>
+==
+<!-- Support Tickets Page -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                Soporte Técnico
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400">
+                Gestiona tus tickets de soporte
+            </p>
+        </div>
+        <a href="/dashboard/support/new" class="btn btn-primary">
+            <i class="fas fa-plus mr-2"></i>
+            Nuevo Ticket
+        </a>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="card bg-base-100 shadow-xl border border-base-300">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Total</p>
+                        <p class="text-3xl font-bold">{{ totalTickets }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-ticket text-primary text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl border border-base-300">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Abiertos</p>
+                        <p class="text-3xl font-bold text-success">{{ openTickets }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-success/10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-folder-open text-success text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl border border-base-300">
+            <div class="card-body">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Cerrados</p>
+                        <p class="text-3xl font-bold text-gray-500">{{ closedTickets }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gray-500/10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-gray-500 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tickets List -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title mb-4">Mis Tickets</h2>
+
+            {% if tickets|length > 0 %}
+                <div class="overflow-x-auto">
+                    <table class="table w-full">
+                        <thead>
+                            <tr>
+                                <th>Número</th>
+                                <th>Asunto</th>
+                                <th>Departamento</th>
+                                <th>Prioridad</th>
+                                <th>Estado</th>
+                                <th>Respuestas</th>
+                                <th>Creado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ticket in tickets %}
+                                <tr class="hover">
+                                    <td>
+                                        <a href="/dashboard/support/{{ ticket.ticket_number }}" class="link link-primary font-mono">
+                                            {{ ticket.ticket_number }}
+                                        </a>
+                                    </td>
+                                    <td>{{ ticket.subject }}</td>
+                                    <td>
+                                        <span class="badge badge-outline">{{ ticket.department.name }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ ticket.priority_badge }}">
+                                            {% if ticket.priority == 'low' %}Baja
+                                            {% elseif ticket.priority == 'normal' %}Normal
+                                            {% elseif ticket.priority == 'high' %}Alta
+                                            {% elseif ticket.priority == 'urgent' %}Urgente
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ ticket.status_badge }}">
+                                            {% if ticket.status == 'open' %}Abierto
+                                            {% elseif ticket.status == 'in_progress' %}En Progreso
+                                            {% elseif ticket.status == 'waiting_on_customer' %}Esperando respuesta
+                                            {% elseif ticket.status == 'waiting_on_staff' %}Esperando staff
+                                            {% elseif ticket.status == 'closed' %}Cerrado
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-ghost">{{ ticket.replies_count }}</span>
+                                    </td>
+                                    <td>{{ ticket.created_at|date('d/m/Y H:i') }}</td>
+                                    <td>
+                                        <a href="/dashboard/support/{{ ticket.ticket_number }}" class="btn btn-ghost btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <!-- Empty State -->
+                <div class="text-center py-12">
+                    <div class="w-24 h-24 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-ticket text-4xl text-base-content/30"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">No tienes tickets</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Crea un ticket si necesitas ayuda con tu servicio
+                    </p>
+                    <a href="/dashboard/support/new" class="btn btn-primary">
+                        <i class="fas fa-plus mr-2"></i>
+                        Crear Ticket
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

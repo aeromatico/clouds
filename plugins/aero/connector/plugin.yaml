@@ -1,0 +1,6 @@
+plugin:
+    name: 'aero.connector::lang.plugin.name'
+    description: 'aero.connector::lang.plugin.description'
+    author: Aero
+    icon: oc-icon-plug
+    homepage: ''

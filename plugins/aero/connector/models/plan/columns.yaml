@@ -1,0 +1,39 @@
+columns:
+    name:
+        label: Plan Name
+        type: text
+        searchable: true
+        sortable: true
+    service_name:
+        label: Service
+        type: text
+        relation: service
+        select: name
+        searchable: true
+        sortable: true
+    price:
+        label: Price
+        type: money
+        sortable: true
+    setup_fee:
+        label: Setup Fee
+        type: money
+        sortable: true
+    billing_cycle:
+        label: Billing Cycle
+        type: text
+        sortable: true
+    is_popular:
+        label: Popular
+        type: switch
+    is_active:
+        label: Active
+        type: switch
+    sort_order:
+        label: Sort Order
+        type: number
+        sortable: true
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true

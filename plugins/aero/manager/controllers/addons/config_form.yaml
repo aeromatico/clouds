@@ -1,0 +1,11 @@
+name: Addons
+modelClass: Aero\Manager\Models\Addons
+form: $/aero/manager/models/addons/fields.yaml
+defaultRedirect: aero/manager/addons
+create:
+    redirect: 'aero/manager/addons/update/:id'
+    redirectClose: aero/manager/addons
+update:
+    redirect: aero/manager/addons
+    redirectClose: aero/manager/addons
+preview: {  }

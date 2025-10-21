@@ -1,0 +1,23 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        default: ''
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    public_on:
+        label: 'Public on'
+        span: auto
+        type: switch
+    items:
+        label: Items
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation

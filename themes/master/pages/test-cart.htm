@@ -1,0 +1,94 @@
+title = "Test Cart"
+url = "/test-cart"
+layout = "dashboard"
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart Test</title>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold mb-6">Shopping Cart Test</h1>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test Plan Card Component</h2>
+
+            <div class="card bg-base-100 shadow-xl border border-base-300 max-w-md"
+                 x-data="planCard({
+                    defaultCycle: 'monthly',
+                    pricingOptions: [
+                        { cycle: 'monthly', label: 'Mensual', price: 10.00, setup_fee: 0 },
+                        { cycle: 'annual', label: 'Anual', price: 100.00, setup_fee: 0 }
+                    ],
+                    planId: 1,
+                    planName: 'Test Plan',
+                    serviceName: 'Test Service',
+                    features: ['Feature 1', 'Feature 2', 'Feature 3']
+                 })">
+
+                <div class="card-body">
+                    <h3 class="card-title text-2xl mb-4">Test Plan</h3>
+
+                    <div class="mb-4">
+                        <div class="flex gap-2 mb-4">
+                            <button @click="selectedCycle = 'monthly'"
+                                    :class="selectedCycle === 'monthly' ? 'btn-primary' : 'btn-outline'"
+                                    class="btn btn-sm">
+                                Mensual
+                            </button>
+                            <button @click="selectedCycle = 'annual'"
+                                    :class="selectedCycle === 'annual' ? 'btn-primary' : 'btn-outline'"
+                                    class="btn btn-sm">
+                                Anual
+                            </button>
+                        </div>
+
+                        <div class="text-center py-4 bg-primary/10 rounded-lg mb-4">
+                            <div class="text-4xl font-bold text-primary">
+                                $<span x-text="getCurrentPrice()"></span>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <span x-text="getCycleLabel()"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button @click="addToCart()"
+                            class="btn btn-primary w-full">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4">Cart Status</h2>
+            <div class="stats shadow">
+                <div class="stat">
+                    <div class="stat-title">Cart Items</div>
+                    <div class="stat-value" x-data x-text="window.cart ? window.cart.getCount() : 0"></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Total Quantity</div>
+                    <div class="stat-value" x-data x-text="window.cart ? window.cart.getTotalQuantity() : 0"></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Total Price</div>
+                    <div class="stat-value" x-data>$<span x-text="window.cart ? window.cart.getTotal().toFixed(2) : '0.00'"></span></div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-semibold mb-4">Debug Info</h2>
+            <div class="mockup-code">
+                <pre><code>Alpine available: <span x-data x-text="typeof Alpine !== 'undefined'"></span></code></pre>
+                <pre><code>Cart available: <span x-data x-text="typeof window.cart !== 'undefined'"></span></code></pre>
+                <pre><code>planCard component: <span x-data x-text="typeof Alpine.data !== 'undefined' && Alpine.data._x_dataStack ? 'registered' : 'not found'"></span></code></pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

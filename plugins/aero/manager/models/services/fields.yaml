@@ -1,0 +1,788 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: left
+        preset:
+            field: name
+            type: slug
+        type: text
+    slug_override:
+        label: 'Slug Override'
+        span: auto
+        type: text
+    menu_description:
+        label: 'Menu description'
+        size: ''
+        span: auto
+        type: textarea
+    short_description:
+        label: 'Short description'
+        size: ''
+        span: auto
+        type: textarea
+    description:
+        label: Description
+        size: large
+        span: full
+        type: richeditor
+    description_html:
+        label: 'HTML description'
+        size: ''
+        language: php
+        span: full
+        type: codeeditor
+    public:
+        label: Public
+        span: auto
+        default: 1
+        type: switch
+    domain_search_on:
+        label: 'Domain search box'
+        span: auto
+        default: 1
+        type: switch
+    templates_on:
+        label: 'Templates gallery'
+        span: auto
+        default: 1
+        type: switch
+    enterprise_on:
+        label: 'Enterprise service'
+        span: auto
+        type: switch
+    trial_on:
+        label: Trial
+        span: auto
+        type: switch
+    dealers_on:
+        label: 'Avalaible for dealers'
+        span: auto
+        type: switch
+    dark_on:
+        label: 'Dark mode'
+        span: auto
+        type: switch
+    order:
+        label: Order
+        span: auto
+        default: '10'
+        type: number
+tabs:
+    fields:
+        features_on:
+            label: 'Enable section'
+            span: auto
+            type: switch
+            tab: Features
+        features_special_on:
+            label: 'Enable features special section'
+            span: auto
+            type: switch
+            tab: Features
+        section3:
+            label: Features
+            span: full
+            type: section
+            tab: Features
+        features_title:
+            label: Title
+            span: auto
+            type: text
+            tab: Features
+        features_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: Features
+        features_description:
+            label: Description
+            size: ''
+            span: full
+            type: textarea
+            tab: Features
+        features_theme:
+            label: Theme
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Features
+        section4:
+            label: 'Special Features'
+            span: full
+            type: section
+            tab: Features
+        features_special_title:
+            label: Title
+            span: auto
+            type: text
+            tab: Features
+        features_special_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: Features
+        features_special_description:
+            label: Description
+            size: ''
+            span: full
+            type: textarea
+            tab: Features
+        features:
+            label: Features
+            nameFrom: name
+            descriptionFrom: description
+            span: full
+            type: relation
+            tab: Features
+        features_special_theme:
+            label: Theme
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Features
+        features_sections:
+            label: 'Features sections'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Features
+            form:
+                fields:
+                    public:
+                        label: 'Enable section'
+                        span: auto
+                        type: switch
+                    theme:
+                        label: Theme
+                        options:
+                            1: '1'
+                            2: '2'
+                            3: '3'
+                            4: '4'
+                            5: '5'
+                            6: '6'
+                            7: '7'
+                            8: '8'
+                            9: '9'
+                            10: '10'
+                        span: auto
+                        default: '1'
+                        type: balloon-selector
+                    title:
+                        label: Title
+                        span: auto
+                        type: text
+                    subtitle:
+                        label: Subtitle
+                        span: auto
+                        type: text
+                    description:
+                        label: Description
+                        size: ''
+                        span: full
+                        type: textarea
+                    class:
+                        label: class
+                        span: auto
+                        type: text
+                    accent:
+                        label: Accent
+                        span: auto
+                        type: text
+                    buttondivider:
+                        label: Button
+                        span: full
+                        type: section
+                    action_text:
+                        label: Text
+                        span: auto
+                        type: text
+                    action_link:
+                        label: Link
+                        span: auto
+                        type: text
+                    action_css:
+                        label: Class
+                        span: auto
+                        type: text
+        categories:
+            label: Categories
+            nameFrom: name
+            descriptionFrom: description
+            span: full
+            type: relation
+            tab: Categories
+        pricing_on:
+            label: 'Enable section'
+            span: full
+            type: switch
+            tab: Plans
+        pricing_title:
+            label: Title
+            span: auto
+            type: text
+            tab: Plans
+        pricing_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: Plans
+        pricing_descripion:
+            label: Description
+            size: ''
+            span: full
+            type: textarea
+            tab: Plans
+        pricing_theme:
+            label: Theme
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Plans
+        plans:
+            label: Plans
+            nameFrom: name
+            descriptionFrom: domain
+            span: full
+            type: relation
+            tab: Plans
+        gallery_on:
+            label: 'Enable section'
+            span: auto
+            default: 0
+            type: switch
+            tab: Media
+        gallery_theme:
+            label: 'Gallery theme'
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Media
+        gallery_title:
+            label: Title
+            span: auto
+            type: text
+            tab: Media
+        gallery_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: Media
+        gallery_description:
+            label: Description
+            size: ''
+            span: full
+            type: textarea
+            tab: Media
+        gallery:
+            label: Gallery
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Media
+        gallery_complex:
+            label: 'Complex gallery'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Media
+            form:
+                fields:
+                    title:
+                        label: Title
+                        span: auto
+                        type: text
+                    subtitle:
+                        label: Subtitle
+                        span: auto
+                        type: text
+                    description:
+                        label: Description
+                        span: left
+                        type: text
+                    identifier:
+                        label: Identifier
+                        span: auto
+                        type: text
+                    img:
+                        label: Image
+                        mode: image
+                        span: auto
+                        type: mediafinder
+                    file:
+                        label: File
+                        mode: file
+                        span: auto
+                        type: mediafinder
+        img:
+            label: Image
+            mode: image
+            fileTypes: 'jpg,png,webp,svg,webp,gif,jpeg'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Media
+        img_og:
+            label: 'OG Image'
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            fileTypes: 'jpg,png,webp,svg,webp,gif,jpeg'
+            type: fileupload
+            tab: Media
+        presentation_mobile:
+            label: 'Presentation for mobile'
+            size: small
+            span: auto
+            type: textarea
+            tab: Media
+        presentation:
+            label: Presentation
+            size: small
+            span: auto
+            type: textarea
+            tab: Media
+        video_embed:
+            label: 'Embed video service'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Media
+        faqs_on:
+            label: 'Enable section'
+            span: full
+            type: switch
+            tab: FAQs
+        faqs_title:
+            label: Title
+            span: auto
+            type: text
+            tab: FAQs
+        faqs_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: FAQs
+        faqs_description:
+            label: Description
+            size: ''
+            span: full
+            type: textarea
+            tab: FAQs
+        faqs_themes:
+            label: 'faqs theme'
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: FAQs
+        faqs:
+            label: FAQs
+            nameFrom: question
+            descriptionFrom: description
+            span: full
+            type: relation
+            tab: FAQs
+        docs_on:
+            label: 'Enable section'
+            span: full
+            type: switch
+            tab: Docs
+        docs:
+            label: Docs
+            nameFrom: title
+            descriptionFrom: description
+            span: full
+            type: relation
+            tab: Docs
+        addons_on:
+            label: 'Enable secion'
+            span: auto
+            type: switch
+            tab: Addons
+        addons:
+            label: Addons
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Addons
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    icon:
+                        label: Icon
+                        span: auto
+                        type: text
+                    description:
+                        label: Description
+                        size: ''
+                        span: full
+                        type: textarea
+                    plans:
+                        label: Plans
+                        span: auto
+                        type: text
+                    whmcs_id:
+                        label: 'WHMCS ID'
+                        span: auto
+                        type: number
+                    price:
+                        label: Price
+                        span: auto
+                        type: number
+                    price_period:
+                        label: 'Period pricing'
+                        options:
+                            Gratis: Gratis
+                            'Un solo pago': 'Un solo pago'
+                            Mensual: Mensual
+                            Trimestral: Trimestral
+                            Semestral: Semestral
+                            Anual: Anual
+                        span: auto
+                        type: balloon-selector
+        comparison_on:
+            label: 'Enable section'
+            span: auto
+            type: switch
+            tab: Comparison
+        comparison_title:
+            label: Title
+            span: left
+            type: text
+            tab: Comparison
+        comparison_subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: Comparison
+        comparison:
+            label: 'Services comparison'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Comparison
+            form:
+                fields:
+                    type:
+                        label: Type
+                        options:
+                            group: group
+                            parameteres: parameteres
+                            values: values
+                        span: left
+                        type: balloon-selector
+                    parameter:
+                        label: Parameter
+                        span: left
+                        trigger:
+                            action: hide
+                            field: type
+                            condition: 'value[parameters]'
+                        type: text
+                    values:
+                        label: Values
+                        prompt: 'Add new value'
+                        style: default
+                        span: right
+                        trigger:
+                            action: hide
+                            field: type
+                            condition: 'value[group]'
+                        type: repeater
+                        form:
+                            fields:
+                                value:
+                                    label: Value
+                                    span: auto
+                                    type: text
+        comparison_html:
+            label: 'HTML comparison code'
+            span: auto
+            type: textarea
+            tab: Comparison
+        header_theme:
+            label: 'Header theme'
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Appareance
+        theme:
+            label: 'Service theme'
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            default: '1'
+            type: balloon-selector
+            tab: Appareance
+        icon:
+            label: Icon
+            span: auto
+            type: textarea
+            tab: Appareance
+        class:
+            label: Class
+            span: auto
+            type: text
+            tab: Appareance
+        accent:
+            label: Accent
+            span: auto
+            type: text
+            tab: Appareance
+        buttons:
+            label: Buttons
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Appareance
+            form:
+                fields:
+                    text:
+                        label: Text
+                        span: auto
+                        type: text
+                    link:
+                        label: Link
+                        span: auto
+                        type: text
+                    class:
+                        label: Class
+                        span: auto
+                        type: text
+                    blank:
+                        label: 'New window'
+                        span: auto
+                        type: switch
+        software:
+            label: Software
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Software
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    description:
+                        label: Description
+                        span: auto
+                        type: text
+                    img_software:
+                        label: Image
+                        mode: image
+                        span: auto
+                        type: mediafinder
+        parameters:
+            label: Parameters
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Parameters
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    link:
+                        label: Link
+                        span: auto
+                        type: text
+                    description:
+                        label: Description
+                        span: auto
+                        type: text
+                    img:
+                        label: Image
+                        mode: image
+                        span: auto
+                        type: mediafinder
+                    collection:
+                        label: Collection
+                        options:
+                            1: '1'
+                            2: '2'
+                            3: '3'
+                            4: '4'
+                            5: '5'
+                        span: auto
+                        type: balloon-selector
+        reviews:
+            label: Reviews
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Reviews
+            form:
+                fields:
+                    title:
+                        label: Title
+                        span: auto
+                        type: text
+                    content:
+                        label: Content
+                        size: large
+                        span: full
+                        type: richeditor
+        ai_train:
+            label: message
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: 'Ai Train'
+            form:
+                fields:
+                    content:
+                        label: Content
+                        size: large
+                        span: full
+                        type: markdown
+        landscape_plans_on:
+            label: 'Show plans in landscape'
+            span: auto
+            default: 1
+            type: switch
+            tab: Deprecated
+        type:
+            label: Type
+            options:
+                saas: SaaS
+                freelance: Freelance
+                cloud: Cloud
+                promo: Promo
+                development: Development
+                resellers: Resellers
+            span: auto
+            type: balloon-selector
+            tab: Deprecated
+        img_mobile:
+            label: 'Image for mobile'
+            mode: image
+            fileTypes: 'jpg,png,webp,svg,webp,gif,jpeg'
+            mimeTypes: 'jpg,png,webp,svg,webp,gif,jpeg'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Deprecated
+        banner:
+            label: Banner
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Deprecated
+        docs_category:
+            label: 'Docs category'
+            span: auto
+            default: '1'
+            type: text
+            tab: Deprecated
+        class_top:
+            label: 'Top class'
+            span: auto
+            type: text
+            tab: Deprecated
+        section1:
+            label: 'Button 1'
+            span: full
+            type: section
+            tab: Deprecated
+        button1_text:
+            label: Text
+            span: auto
+            type: text
+            tab: Deprecated
+        button1_link:
+            label: Link
+            span: auto
+            type: text
+            tab: Deprecated
+        section2:
+            label: 'Button 2'
+            span: full
+            type: section
+            tab: Deprecated
+        button2_text:
+            label: Text
+            span: auto
+            type: text
+            tab: Deprecated
+        button2_link:
+            label: Link
+            span: auto
+            type: text
+            tab: Deprecated

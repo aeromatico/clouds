@@ -1,0 +1,10 @@
+name: Courses
+form: $/arnold/school/models/courses/fields.yaml
+modelClass: Arnold\School\Models\Courses
+defaultRedirect: arnold/school/courses
+create:
+    redirect: 'arnold/school/courses/update/:id'
+    redirectClose: arnold/school/courses
+update:
+    redirect: arnold/school/courses
+    redirectClose: arnold/school/courses

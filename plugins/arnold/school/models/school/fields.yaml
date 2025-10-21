@@ -1,0 +1,25 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    adress:
+        label: Adress
+        span: auto
+        type: text
+    turn:
+        label: Turn
+        span: auto
+        type: text
+    phone:
+        label: Phone
+        span: auto
+        type: number
+    mail:
+        label: Mail
+        span: auto
+        type: text
+    active:
+        label: Active
+        span: auto
+        type: checkbox

@@ -1,0 +1,300 @@
+url = "/dashboard"
+layout = "dashboard"
+title = "Dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+function onStart()
+{
+    // Get authenticated user
+    $this['user'] = Auth::getUser();
+}
+?>
+==
+<!-- Page Header -->
+<div class="mb-6">
+    <h1 class="text-3xl font-bold mb-2">
+        Bienvenido de vuelta, {{ user.name }}
+    </h1>
+    <p class="text-base-content/70">
+        Gestiona tus servicios de hosting desde un solo lugar
+    </p>
+</div>
+
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    <!-- Active Services -->
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-figure text-primary">
+                <i class="fas fa-server text-3xl"></i>
+            </div>
+            <div class="stat-title">Servicios Activos</div>
+            <div class="stat-value text-primary">3</div>
+            <div class="stat-desc"><i class="fas fa-arrow-up"></i> 12% más que el mes pasado</div>
+        </div>
+    </div>
+
+    <!-- Storage Used -->
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-figure text-secondary">
+                <i class="fas fa-database text-3xl"></i>
+            </div>
+            <div class="stat-title">Almacenamiento Usado</div>
+            <div class="stat-value text-secondary">45.2 GB</div>
+            <div class="stat-desc"><i class="fas fa-arrow-up"></i> 8% más esta semana</div>
+        </div>
+    </div>
+
+    <!-- Domains -->
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-figure text-success">
+                <i class="fas fa-globe text-3xl"></i>
+            </div>
+            <div class="stat-title">Dominios Registrados</div>
+            <div class="stat-value text-success">7</div>
+            <div class="stat-desc">2 nuevos este mes</div>
+        </div>
+    </div>
+
+    <!-- Support Tickets -->
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-figure text-warning">
+                <i class="fas fa-headset text-3xl"></i>
+            </div>
+            <div class="stat-title">Tickets Abiertos</div>
+            <div class="stat-value text-warning">0</div>
+            <div class="stat-desc"><i class="fas fa-check"></i> Todo resuelto</div>
+        </div>
+    </div>
+</div>
+
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- Recent Activity -->
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Actividad Reciente</h2>
+
+            <div class="space-y-4">
+                <div class="flex items-start gap-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-primary text-primary-content rounded-full w-12">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium">Backup completado</p>
+                        <p class="text-sm text-base-content/70">clouds.com.bo - Hace 2 horas</p>
+                    </div>
+                </div>
+
+                <div class="divider my-2"></div>
+
+                <div class="flex items-start gap-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-success text-success-content rounded-full w-12">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium">SSL renovado automáticamente</p>
+                        <p class="text-sm text-base-content/70">clouds.com.bo - Hace 5 horas</p>
+                    </div>
+                </div>
+
+                <div class="divider my-2"></div>
+
+                <div class="flex items-start gap-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-secondary text-secondary-content rounded-full w-12">
+                            <i class="fas fa-database"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium">Base de datos creada</p>
+                        <p class="text-sm text-base-content/70">wp_production - Ayer</p>
+                    </div>
+                </div>
+
+                <div class="divider my-2"></div>
+
+                <div class="flex items-start gap-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-accent text-accent-content rounded-full w-12">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-medium">Cuenta de email creada</p>
+                        <p class="text-sm text-base-content/70">soporte@clouds.com.bo - Hace 2 días</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-actions justify-end mt-4">
+                <a href="#" class="btn btn-ghost btn-sm">
+                    Ver toda la actividad <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Acciones Rápidas</h2>
+
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <a href="/dashboard/hosting" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-server text-2xl text-primary"></i>
+                    <span>Nuevo Hosting</span>
+                </a>
+
+                <a href="/dashboard/domains" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-globe text-2xl text-success"></i>
+                    <span>Buscar Dominio</span>
+                </a>
+
+                <a href="/dashboard/emails" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-envelope text-2xl text-secondary"></i>
+                    <span>Nueva Cuenta Email</span>
+                </a>
+
+                <a href="/dashboard/support" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-headset text-2xl text-warning"></i>
+                    <span>Abrir Ticket</span>
+                </a>
+
+                <a href="/dashboard/databases" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-database text-2xl text-error"></i>
+                    <span>Nueva Base de Datos</span>
+                </a>
+
+                <a href="/dashboard/files" class="btn btn-outline gap-2 h-auto py-6 flex-col">
+                    <i class="fas fa-folder text-2xl text-info"></i>
+                    <span>Gestor de Archivos</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services Overview -->
+<div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="card-title">Mis Servicios</h2>
+            <a href="/dashboard/hosting" class="btn btn-ghost btn-sm">
+                Ver todos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table table-zebra">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Dominio</th>
+                        <th>Estado</th>
+                        <th>Próximo Pago</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar placeholder">
+                                    <div class="bg-primary text-primary-content rounded-lg w-12">
+                                        <i class="fas fa-server"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">Shared X3</div>
+                                    <div class="text-sm opacity-50">WordPress Hosting</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            clouds.com.bo
+                        </td>
+                        <td>
+                            <span class="badge badge-success gap-2">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                Activo
+                            </span>
+                        </td>
+                        <td>15 Dic 2025</td>
+                        <td>
+                            <a href="#" class="btn btn-ghost btn-sm">Gestionar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar placeholder">
+                                    <div class="bg-secondary text-secondary-content rounded-lg w-12">
+                                        <i class="fas fa-cloud"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">Cloud X3</div>
+                                    <div class="text-sm opacity-50">Cloud Hosting</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            app.clouds.com.bo
+                        </td>
+                        <td>
+                            <span class="badge badge-success gap-2">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                Activo
+                            </span>
+                        </td>
+                        <td>20 Dic 2025</td>
+                        <td>
+                            <a href="#" class="btn btn-ghost btn-sm">Gestionar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="avatar placeholder">
+                                    <div class="bg-accent text-accent-content rounded-lg w-12">
+                                        <i class="fab fa-wordpress"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-bold">WordPress L</div>
+                                    <div class="text-sm opacity-50">WordPress Hosting</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            blog.clouds.com.bo
+                        </td>
+                        <td>
+                            <span class="badge badge-warning gap-2">
+                                <i class="fas fa-circle text-[6px]"></i>
+                                Por vencer
+                            </span>
+                        </td>
+                        <td>05 Nov 2025</td>
+                        <td>
+                            <a href="#" class="btn btn-ghost btn-sm">Gestionar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

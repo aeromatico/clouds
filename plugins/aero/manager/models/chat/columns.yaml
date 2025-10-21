@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    chatbot_on:
+        label: chatbot_on
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    room:
+        label: room
+        type: text
+    user_id_from:
+        label: user_id_from
+        type: text
+    type:
+        label: type
+        type: text

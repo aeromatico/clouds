@@ -1,0 +1,29 @@
+==
+{# PWA Meta Tags Partial #}
+{# Configuration from Settings plugin aero/clouds #}
+
+function onStart() {
+    try {
+        $this['settings'] = \Aero\Clouds\Models\Setting::getCurrentSettings();
+    } catch (\Exception $e) {
+        $this['settings'] = null;
+    }
+}
+==
+{% set pwaEnabled = settings ? settings.pwa_enabled : true %}
+{% set pwaName = settings ? settings.pwa_name : 'Clouds Hosting' %}
+{% set pwaThemeColor = settings ? settings.pwa_theme_color : '#0ea5e9' %}
+
+{% if pwaEnabled %}
+<!-- PWA Meta Tags -->
+<meta name="theme-color" content="{{ pwaThemeColor }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="{{ pwaName }}">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="msapplication-TileColor" content="{{ pwaThemeColor }}">
+<meta name="msapplication-tap-highlight" content="no">
+
+<!-- PWA Icons -->
+<link rel="manifest" href="{{ 'assets/dist/manifest.webmanifest' | theme }}">
+{% endif %}

@@ -1,0 +1,19 @@
+<?php
+$url = $record->url ?? '';
+$displayUrl = preg_replace('#^https?://#', '', $url);
+$shortUrl = strlen($displayUrl) > 20 ? substr($displayUrl, 0, 20) . '...' : $displayUrl;
+?>
+
+<div class="preview-button-container">
+    <a 
+        href="<?= isset($record) ? $record->url : $model->url ?>"
+        target="_blank"
+        onclick="event.stopPropagation();"
+        title="Visitar: <?= isset($record) ? $record->url : $model->url ?>"
+    >
+        <i class="icon-link"></i>
+
+            <span>View URL</span>
+
+    </a>
+</div>

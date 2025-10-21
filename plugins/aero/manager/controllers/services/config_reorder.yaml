@@ -1,0 +1,5 @@
+title: Services
+modelClass: Aero\Manager\Models\Services
+nameFrom: name
+toolbar:
+    buttons: reorder_toolbar

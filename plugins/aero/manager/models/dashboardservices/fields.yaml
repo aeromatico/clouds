@@ -1,0 +1,45 @@
+fields:
+    type:
+        label: Type
+        options:
+            account: Account
+            ssh: 'SSH Access'
+        span: auto
+        type: balloon-selector
+    wallet:
+        label: 'Wallet Invoice ID'
+        nameFrom: id
+        descriptionFrom: description
+        span: auto
+        type: relation
+    username:
+        label: Username
+        span: auto
+        type: text
+    password:
+        label: Password
+        span: auto
+        type: text
+tabs:
+    fields:
+        panel:
+            label: Panel
+            span: auto
+            trigger:
+                action: show
+                field: type
+                condition: 'value[account]'
+            type: text
+            tab: Account
+        ip:
+            label: 'IP Server'
+            span: auto
+            type: text
+            tab: Server
+        docs:
+            label: 'Getting started guide'
+            nameFrom: title
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Guide

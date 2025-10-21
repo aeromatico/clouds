@@ -1,0 +1,35 @@
+<?php namespace Aero\Manager\Updates;
+
+use Schema;
+use October\Rain\Database\Updates\Migration;
+
+class BuilderTableUpdateAeroManagerOrders8 extends Migration
+{
+    public function up()
+    {
+        Schema::table('aero_manager_orders', function($table)
+        {
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
+            $table->string('status')->change();
+            $table->string('panel')->change();
+            $table->string('username')->change();
+            $table->string('password')->change();
+        });
+    }
+    
+    public function down()
+    {
+        Schema::table('aero_manager_orders', function($table)
+        {
+            $table->dropColumn('created_at');
+            $table->dropColumn('updated_at');
+            $table->dropColumn('deleted_at');
+            $table->string('status', 191)->change();
+            $table->string('panel', 191)->change();
+            $table->string('username', 191)->change();
+            $table->string('password', 191)->change();
+        });
+    }
+}

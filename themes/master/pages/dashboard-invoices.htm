@@ -1,0 +1,270 @@
+title = "Mis Facturas"
+url = "/dashboard/invoices"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Aero\Clouds\Models\Invoice;
+
+function onStart()
+{
+    // Get authenticated user
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    // Get user's invoices ordered by most recent
+    $this['invoices'] = Invoice::where('user_id', $user->id)
+        ->orderBy('invoice_date', 'desc')
+        ->get();
+
+    $this['user'] = $user;
+}
+?>
+==
+<!-- Page Header -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                Mis Facturas
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400">
+                Gestiona y descarga tus facturas
+            </p>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-600 dark:text-gray-400">
+                Total: <span class="font-semibold text-gray-900 dark:text-white">{{ invoices|length }}</span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Invoices Table -->
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+    {% if invoices|length > 0 %}
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Número
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Fecha
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Vencimiento
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Estado
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Total
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for invoice in invoices %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center mr-3">
+                                    <i class="fas fa-file-invoice text-blue-600 dark:text-blue-400 text-sm"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">
+                                    #{{ invoice.invoice_number }}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {{ invoice.invoice_date|date('d/m/Y') }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {{ invoice.due_date|date('d/m/Y') }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if invoice.status == 'paid' %}
+                                <span class="badge badge-success gap-1 text-xs">
+                                    <i class="fas fa-check-circle"></i> Pagado
+                                </span>
+                            {% elseif invoice.status == 'sent' %}
+                                <span class="badge badge-info gap-1 text-xs">
+                                    <i class="fas fa-paper-plane"></i> Enviado
+                                </span>
+                            {% elseif invoice.status == 'overdue' or invoice.is_overdue %}
+                                <span class="badge badge-error gap-1 text-xs">
+                                    <i class="fas fa-exclamation-circle"></i> Vencido
+                                </span>
+                            {% elseif invoice.status == 'cancelled' %}
+                                <span class="badge badge-ghost gap-1 text-xs">
+                                    <i class="fas fa-times-circle"></i> Cancelado
+                                </span>
+                            {% elseif invoice.status == 'refunded' %}
+                                <span class="badge badge-warning gap-1 text-xs">
+                                    <i class="fas fa-undo"></i> Reembolsado
+                                </span>
+                            {% else %}
+                                <span class="badge badge-ghost gap-1 text-xs">
+                                    <i class="fas fa-file"></i> Borrador
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                                Bs {{ invoice.total_amount|number_format(2, '.', ',') }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <div class="dropdown dropdown-end">
+                                <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </label>
+                                <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 w-52 z-10">
+                                    <li>
+                                        <a href="/invoice/{{ invoice.invoice_number }}" target="_blank" class="text-sm">
+                                            <i class="fas fa-eye text-gray-400"></i>
+                                            Ver PDF
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/invoice/{{ invoice.invoice_number }}?mode=download" class="text-sm">
+                                            <i class="fas fa-download text-gray-400"></i>
+                                            Descargar PDF
+                                        </a>
+                                    </li>
+                                    {% if invoice.status != 'paid' and invoice.status != 'cancelled' %}
+                                    <li>
+                                        <a href="#" class="text-sm">
+                                            <i class="fas fa-credit-card text-gray-400"></i>
+                                            Pagar ahora
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
+            {% for invoice in invoices %}
+            <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded flex items-center justify-center">
+                            <i class="fas fa-file-invoice text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                                #{{ invoice.invoice_number }}
+                            </div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                {{ invoice.invoice_date|date('d/m/Y') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown dropdown-end">
+                        <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </label>
+                        <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 w-52 z-10">
+                            <li>
+                                <a href="/invoice/{{ invoice.invoice_number }}" target="_blank" class="text-sm">
+                                    <i class="fas fa-eye text-gray-400"></i>
+                                    Ver PDF
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/invoice/{{ invoice.invoice_number }}?mode=download" class="text-sm">
+                                    <i class="fas fa-download text-gray-400"></i>
+                                    Descargar PDF
+                                </a>
+                            </li>
+                            {% if invoice.status != 'paid' and invoice.status != 'cancelled' %}
+                            <li>
+                                <a href="#" class="text-sm">
+                                    <i class="fas fa-credit-card text-gray-400"></i>
+                                    Pagar ahora
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-2 mb-3">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500 dark:text-gray-400">Vencimiento:</span>
+                        <span class="text-gray-900 dark:text-white font-medium">{{ invoice.due_date|date('d/m/Y') }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500 dark:text-gray-400">Total:</span>
+                        <span class="text-gray-900 dark:text-white font-semibold">Bs {{ invoice.total_amount|number_format(2, '.', ',') }}</span>
+                    </div>
+                </div>
+
+                <div>
+                    {% if invoice.status == 'paid' %}
+                        <span class="badge badge-success badge-sm gap-1">
+                            <i class="fas fa-check-circle text-xs"></i> Pagado
+                        </span>
+                    {% elseif invoice.status == 'sent' %}
+                        <span class="badge badge-info badge-sm gap-1">
+                            <i class="fas fa-paper-plane text-xs"></i> Enviado
+                        </span>
+                    {% elseif invoice.status == 'overdue' or invoice.is_overdue %}
+                        <span class="badge badge-error badge-sm gap-1">
+                            <i class="fas fa-exclamation-circle text-xs"></i> Vencido
+                        </span>
+                    {% elseif invoice.status == 'cancelled' %}
+                        <span class="badge badge-ghost badge-sm gap-1">
+                            <i class="fas fa-times-circle text-xs"></i> Cancelado
+                        </span>
+                    {% elseif invoice.status == 'refunded' %}
+                        <span class="badge badge-warning badge-sm gap-1">
+                            <i class="fas fa-undo text-xs"></i> Reembolsado
+                        </span>
+                    {% else %}
+                        <span class="badge badge-ghost badge-sm gap-1">
+                            <i class="fas fa-file text-xs"></i> Borrador
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-12 px-4">
+            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-file-invoice text-2xl text-gray-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                No tienes facturas
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                Cuando realices compras, tus facturas aparecerán aquí
+            </p>
+            <a href="/dashboard" class="btn btn-primary btn-sm">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Volver al Dashboard
+            </a>
+        </div>
+    {% endif %}
+</div>

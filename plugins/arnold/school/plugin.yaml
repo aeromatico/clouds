@@ -1,0 +1,27 @@
+plugin:
+    name: 'arnold.school::lang.plugin.name'
+    description: 'arnold.school::lang.plugin.description'
+    author: arnold
+    icon: oc-icon-adjust
+    homepage: ''
+permissions:
+    ts_students:
+        tab: students
+        label: Agregar
+    ts_courses:
+        tab: courses
+        label: 'Agregar Cursos'
+navigation:
+    main-menu-item:
+        label: 'Manage School'
+        url: /arnold/school/students
+        icon: icon-life-ring
+        sideMenu:
+            side-menu-item:
+                label: 'Manage Students'
+                url: arnold/school/students
+                icon: icon-sitemap
+            side-menu-item2:
+                label: 'Manage Courses'
+                url: arnold/school/courses
+                icon: icon-sitemap

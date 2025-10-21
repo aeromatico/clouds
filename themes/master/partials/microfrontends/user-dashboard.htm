@@ -1,0 +1,127 @@
+<!-- Microfrontend: User Dashboard -->
+<div 
+    x-data="userDashboard" 
+    x-init="init()" 
+    data-component="user-dashboard"
+    class="bg-card rounded-lg shadow-lg p-6 space-y-6"
+>
+    <!-- Header con loading state -->
+    <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-card-foreground">Dashboard</h2>
+        <div class="flex items-center space-x-2">
+            <!-- Indicador de loading -->
+            <div x-show="loading" class="flex items-center space-x-2 text-muted-foreground">
+                <div class="spinner"></div>
+                <span class="text-sm">Cargando...</span>
+            </div>
+            
+            <!-- Botón de refresh -->
+            <button 
+                @click="refresh()"
+                :disabled="loading"
+                class="btn btn-outline btn-sm"
+                title="Actualizar datos"
+            >
+                <i class="fas fa-sync-alt" :class="{ 'animate-spin': loading }"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Error state -->
+    <div x-show="error" x-transition class="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+        <div class="flex items-center space-x-2 text-destructive">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class="font-medium">Error:</span>
+            <span x-text="error"></span>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div x-show="!loading && !error" x-transition class="space-y-6">
+        
+        <!-- User Info Card -->
+        <div x-show="user" class="bg-muted/30 rounded-lg p-4">
+            <div class="flex items-center space-x-4">
+                <!-- Avatar -->
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold">
+                    <span x-text="userInitials"></span>
+                </div>
+                
+                <!-- User Details -->
+                <div class="flex-1">
+                    <h3 class="font-semibold text-foreground" x-text="user?.name"></h3>
+                    <p class="text-sm text-muted-foreground" x-text="user?.email"></p>
+                </div>
+                
+                <!-- Notification Badge -->
+                <div x-show="unreadNotifications.length > 0" class="relative">
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-destructive text-destructive-foreground">
+                        <span x-text="unreadNotifications.length"></span>
+                        <span class="ml-1">nuevas</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div x-show="stats" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <template x-for="stat in Object.entries(stats || {})" :key="stat[0]">
+                <div class="bg-background border border-border rounded-lg p-4 text-center">
+                    <div class="text-2xl font-bold text-primary" x-text="stat[1]"></div>
+                    <div class="text-sm text-muted-foreground capitalize" x-text="stat[0].replace('_', ' ')"></div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Recent Notifications -->
+        <div x-show="notifications.length > 0" class="space-y-3">
+            <h4 class="font-semibold text-foreground">Notificaciones Recientes</h4>
+            <div class="space-y-2 max-h-64 overflow-y-auto">
+                <template x-for="notification in notifications.slice(0, 5)" :key="notification.id">
+                    <div 
+                        class="flex items-start space-x-3 p-3 rounded-lg border transition-colors"
+                        :class="{
+                            'bg-muted/30 border-border': notification.read,
+                            'bg-primary/5 border-primary/20': !notification.read
+                        }"
+                    >
+                        <!-- Icon -->
+                        <div class="flex-shrink-0 mt-1">
+                            <i 
+                                class="text-sm"
+                                :class="{
+                                    'fas fa-info-circle text-blue-500': notification.type === 'info',
+                                    'fas fa-exclamation-triangle text-yellow-500': notification.type === 'warning',
+                                    'fas fa-times-circle text-red-500': notification.type === 'error',
+                                    'fas fa-check-circle text-green-500': notification.type === 'success'
+                                }"
+                            ></i>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-foreground" x-text="notification.title"></p>
+                            <p class="text-xs text-muted-foreground" x-text="notification.message"></p>
+                            <p class="text-xs text-muted-foreground mt-1" x-text="new Date(notification.created_at).toLocaleString()"></p>
+                        </div>
+                        
+                        <!-- Mark as read button -->
+                        <button 
+                            x-show="!notification.read"
+                            @click="markNotificationRead(notification.id)"
+                            class="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                            title="Marcar como leída"
+                        >
+                            <i class="fas fa-check text-xs"></i>
+                        </button>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer con última actualización -->
+    <div x-show="lastUpdate" class="text-xs text-muted-foreground text-center pt-4 border-t border-border">
+        Última actualización: <span x-text="new Date(lastUpdate).toLocaleString()"></span>
+    </div>
+</div>

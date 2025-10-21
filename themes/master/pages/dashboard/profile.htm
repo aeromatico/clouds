@@ -1,0 +1,391 @@
+title = "Mi Perfil"
+url = "/dashboard/profile"
+layout = "dashboard"
+is_hidden = 0
+
+[account]
+
+[resetPassword]
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+function onInit() {
+    // La autenticación la maneja el componente session
+}
+?>
+==
+{% set user = account.user() %}
+{% if not user %}
+    {% do abort(403, 'No autenticado') %}
+{% endif %}
+
+<div class="space-y-6" x-data="profilePage()">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-base-content">Mi Perfil</h1>
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="/dashboard" class="text-primary">Dashboard</a></li>
+                    <li>Perfil</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Sidebar - Avatar & Info -->
+        <div class="lg:col-span-1 space-y-6">
+            <!-- Avatar Card -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body items-center text-center">
+                    <!-- Avatar -->
+                    <div class="avatar online">
+                        <div class="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <img
+                                src="{{ user.getAvatarThumb(256) }}"
+                                alt="{{ user.full_name }}"
+                                x-ref="avatarPreview"
+                            />
+                        </div>
+                    </div>
+
+                    <h2 class="card-title mt-4">{{ user.full_name }}</h2>
+                    <p class="text-base-content/70">{{ user.email }}</p>
+
+                    <!-- Quick Stats -->
+                    <div class="stats stats-vertical shadow mt-4 w-full">
+                        <div class="stat place-items-center">
+                            <div class="stat-title">Miembro desde</div>
+                            <div class="stat-value text-sm">{{ user.created_at|date('M Y') }}</div>
+                        </div>
+                        <div class="stat place-items-center">
+                            <div class="stat-title">Estado</div>
+                            <div class="stat-value text-sm">
+                                {% if user.is_activated %}
+                                    <span class="badge badge-success">Verificado</span>
+                                {% else %}
+                                    <span class="badge badge-warning">Pendiente</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avatar Upload Form -->
+                    <form data-request="account::onUpdateProfile" data-request-flash class="w-full mt-4 space-y-2">
+                        <label class="btn btn-sm btn-outline btn-primary w-full">
+                            <i class="fa fa-upload mr-2"></i>
+                            Cambiar Avatar
+                            <input
+                                type="file"
+                                name="avatar"
+                                accept="image/*"
+                                class="hidden"
+                                @change="$el.closest('form').dispatchEvent(new Event('submit', { bubbles: true }))"
+                            />
+                        </label>
+
+                        {% if user.avatar %}
+                        <button
+                            type="button"
+                            @click="removeAvatar()"
+                            class="btn btn-sm btn-ghost btn-error w-full"
+                        >
+                            <i class="fa fa-trash mr-2"></i>
+                            Eliminar Avatar
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+            <!-- Security Card -->
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <h3 class="card-title text-lg">
+                        <i class="fa fa-shield-alt text-primary"></i>
+                        Seguridad
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center">
+                            <span>Email Verificado</span>
+                            {% if user.is_activated %}
+                                <span class="badge badge-success gap-2">
+                                    <i class="fa fa-check"></i>
+                                    Sí
+                                </span>
+                            {% else %}
+                                <span class="badge badge-warning gap-2">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                    No
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Autenticación 2FA</span>
+                            {% if this.account.twoFactorEnabled() %}
+                                <span class="badge badge-success gap-2">
+                                    <i class="fa fa-check"></i>
+                                    Activo
+                                </span>
+                            {% else %}
+                                <span class="badge badge-ghost gap-2">
+                                    <i class="fa fa-times"></i>
+                                    Inactivo
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content - Tabs -->
+        <div class="lg:col-span-2">
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <!-- Tabs -->
+                    <div role="tablist" class="tabs tabs-boxed bg-base-200 mb-6">
+                        <a
+                            role="tab"
+                            class="tab"
+                            :class="{ 'tab-active': activeTab === 'profile' }"
+                            @click="activeTab = 'profile'"
+                        >
+                            <i class="fa fa-user mr-2"></i>
+                            Información Personal
+                        </a>
+                        <a
+                            role="tab"
+                            class="tab"
+                            :class="{ 'tab-active': activeTab === 'security' }"
+                            @click="activeTab = 'security'"
+                        >
+                            <i class="fa fa-lock mr-2"></i>
+                            Seguridad
+                        </a>
+                    </div>
+
+                    <!-- Profile Tab -->
+                    <div x-show="activeTab === 'profile'" x-transition>
+                        <form
+                            data-request="account::onUpdateProfile"
+                            data-request-flash
+                            data-request-validate
+                        >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- First Name -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Nombre <span class="text-error">*</span></span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="first_name"
+                                        value="{{ user.first_name }}"
+                                        class="input input-bordered"
+                                        required
+                                    />
+                                </div>
+
+                                <!-- Last Name -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Apellido</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="last_name"
+                                        value="{{ user.last_name|default('') }}"
+                                        class="input input-bordered"
+                                    />
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-control md:col-span-2">
+                                    <label class="label">
+                                        <span class="label-text">Email <span class="text-error">*</span></span>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value="{{ user.email }}"
+                                        class="input input-bordered"
+                                        required
+                                    />
+                                    {% if not user.is_activated %}
+                                    <label class="label">
+                                        <span class="label-text-alt text-warning">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                            Email no verificado
+                                        </span>
+                                    </label>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Phone -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Teléfono</span>
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value="{{ user.phone|default('') }}"
+                                        class="input input-bordered"
+                                    />
+                                </div>
+
+                                <!-- Company -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Empresa</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="company"
+                                        value="{{ user.company|default('') }}"
+                                        class="input input-bordered"
+                                    />
+                                </div>
+
+                                <!-- City -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Ciudad</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        value="{{ user.city|default('') }}"
+                                        class="input input-bordered"
+                                    />
+                                </div>
+
+                                <!-- ZIP -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Código Postal</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="zip"
+                                        value="{{ user.zip|default('') }}"
+                                        class="input input-bordered"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="card-actions justify-end mt-6">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save mr-2"></i>
+                                    Guardar Cambios
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Security Tab -->
+                    <div x-show="activeTab === 'security'" x-transition>
+                        <form
+                            data-request="resetPassword::onChangePassword"
+                            data-request-flash
+                            data-request-validate
+                            data-request-success="onPasswordChanged"
+                        >
+                            <div class="space-y-4">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info-circle"></i>
+                                    <span>Tu contraseña debe tener al menos 8 caracteres.</span>
+                                </div>
+
+                                <!-- Current Password -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Contraseña Actual <span class="text-error">*</span></span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="current_password"
+                                        class="input input-bordered"
+                                        required
+                                        autocomplete="current-password"
+                                    />
+                                </div>
+
+                                <!-- New Password -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Nueva Contraseña <span class="text-error">*</span></span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        class="input input-bordered"
+                                        required
+                                        autocomplete="new-password"
+                                    />
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Confirmar Nueva Contraseña <span class="text-error">*</span></span>
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password_confirmation"
+                                        class="input input-bordered"
+                                        required
+                                        autocomplete="new-password"
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="card-actions justify-end mt-6">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-key mr-2"></i>
+                                    Cambiar Contraseña
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('alpine:init', () => {
+    Alpine.data('profilePage', () => ({
+        activeTab: 'profile',
+
+        init() {
+            console.log('Profile page initialized');
+        },
+
+        removeAvatar() {
+            if (confirm('¿Estás seguro de eliminar tu avatar?')) {
+                oc.request(this.$el, 'account::onUpdateProfile', {
+                    data: { remove_avatar: 1 },
+                    flash: true,
+                    success: () => {
+                        setTimeout(() => window.location.reload(), 500);
+                    }
+                });
+            }
+        },
+
+        onPasswordChanged() {
+            // Reset form fields
+            this.$el.querySelectorAll('input[type="password"]').forEach(input => {
+                input.value = '';
+            });
+        }
+    }));
+});
+</script>

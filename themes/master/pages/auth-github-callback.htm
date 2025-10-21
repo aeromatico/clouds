@@ -1,0 +1,20 @@
+title = "Github Auth Callback"
+url = "/auth/github/callback"
+layout = "default"
+is_hidden = 1
+
+[socialAuth]
+==
+<?php
+function onInit()
+{
+    return $this->socialAuth->onGithubCallback();
+}
+?>
+==
+<div class="min-h-screen flex items-center justify-center">
+    <div class="text-center">
+        <div class="loading loading-spinner loading-lg text-primary"></div>
+        <p class="mt-4">Autenticando con Github...</p>
+    </div>
+</div>

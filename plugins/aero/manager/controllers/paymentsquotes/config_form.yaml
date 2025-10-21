@@ -1,0 +1,11 @@
+name: PaymentsQuotes
+modelClass: Aero\Manager\Models\PaymentsQuotes
+form: $/aero/manager/models/paymentsquotes/fields.yaml
+defaultRedirect: aero/manager/paymentsquotes
+create:
+    redirect: 'aero/manager/paymentsquotes/update/:id'
+    redirectClose: aero/manager/paymentsquotes
+update:
+    redirect: aero/manager/paymentsquotes
+    redirectClose: aero/manager/paymentsquotes
+preview: {  }

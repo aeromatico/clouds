@@ -1,0 +1,249 @@
+title = "Acerca de"
+url = "/about"
+layout = "default"
+is_hidden = 0
+
+[viewBag]
+localeCode = "es"
+==
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-secondary/5 via-background to-primary/5 py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            Acerca de 
+            <span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Master Theme
+            </span>
+        </h1>
+        
+        <p class="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            Un tema moderno y completo para OctoberCMS que combina las mejores tecnologías 
+            de desarrollo frontend con un diseño elegante y funcional.
+        </p>
+
+        <div class="flex flex-wrap justify-center items-center gap-4 text-sm text-muted-foreground">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-user text-primary"></i>
+                <span>Desarrollado por <strong>aero</strong></span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-calendar text-primary"></i>
+                <span>{{ "now" | date("Y") }}</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-code text-primary"></i>
+                <span>OctoberCMS 4.0</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technology Stack -->
+<section class="py-24 bg-muted/30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Stack Tecnológico
+            </h2>
+            <p class="text-xl text-muted-foreground">
+                Construido con las mejores herramientas y tecnologías modernas
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- OctoberCMS -->
+            <div class="card p-6 text-center">
+                <div class="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fab fa-laravel text-orange-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-card-foreground mb-2">OctoberCMS 4</h3>
+                <p class="text-sm text-muted-foreground">
+                    CMS moderno basado en Laravel 12 con PHP 8.4
+                </p>
+            </div>
+
+            <!-- Vite -->
+            <div class="card p-6 text-center">
+                <div class="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bolt text-purple-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-card-foreground mb-2">Vite 5</h3>
+                <p class="text-sm text-muted-foreground">
+                    Build tool ultra-rápido con HMR para desarrollo eficiente
+                </p>
+            </div>
+
+            <!-- Tailwind CSS -->
+            <div class="card p-6 text-center">
+                <div class="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-wind text-cyan-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-card-foreground mb-2">Tailwind CSS</h3>
+                <p class="text-sm text-muted-foreground">
+                    Framework CSS utility-first para diseños rápidos
+                </p>
+            </div>
+
+            <!-- Alpine.js -->
+            <div class="card p-6 text-center">
+                <div class="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-mountain text-green-500 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-card-foreground mb-2">Alpine.js</h3>
+                <p class="text-sm text-muted-foreground">
+                    Framework reactivo ligero con sintaxis declarativa
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section class="py-24">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Características Principales
+            </h2>
+            <p class="text-xl text-muted-foreground">
+                Todo lo que necesitas para crear sitios web modernos y profesionales
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- PWA Support -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-mobile-alt text-blue-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">PWA Completo</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Aplicación web progresiva con soporte offline, notificaciones push e instalación nativa.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dark/Light Mode -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-adjust text-purple-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Modo Oscuro/Claro</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Sistema completo de temas con persistencia, auto-detección y transiciones suaves.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Responsive Design -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-tablet-alt text-green-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Diseño Responsivo</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Adaptación perfecta a todos los dispositivos y tamaños de pantalla.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Performance Optimized -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-rocket text-orange-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Alto Rendimiento</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Optimizado para velocidad con code splitting, lazy loading y compresión.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Developer Friendly -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-code text-red-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">Developer Friendly</h3>
+                    <p class="text-muted-foreground text-sm">
+                        HMR, TypeScript support, herramientas modernas y documentación completa.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SEO Ready -->
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-indigo-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-search text-indigo-500 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-2">SEO Optimizado</h3>
+                    <p class="text-muted-foreground text-sm">
+                        Meta tags, structured data, sitemap y optimizaciones para buscadores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-24 bg-gradient-to-r from-primary/10 to-secondary/10">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-12">
+            En Números
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <div class="text-3xl md:text-4xl font-bold text-primary mb-2">20+</div>
+                <div class="text-sm text-muted-foreground">Componentes Alpine.js</div>
+            </div>
+            <div>
+                <div class="text-3xl md:text-4xl font-bold text-primary mb-2">100%</div>
+                <div class="text-sm text-muted-foreground">Responsive Design</div>
+            </div>
+            <div>
+                <div class="text-3xl md:text-4xl font-bold text-primary mb-2">PWA</div>
+                <div class="text-sm text-muted-foreground">Ready & Installable</div>
+            </div>
+            <div>
+                <div class="text-3xl md:text-4xl font-bold text-primary mb-2">A11Y</div>
+                <div class="text-sm text-muted-foreground">Accessibility Support</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            ¿Listo para empezar?
+        </h2>
+        <p class="text-xl text-muted-foreground mb-8">
+            Explora todos los componentes y funcionalidades que Master Theme tiene para ofrecer
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+                href="{{ url('/components') }}" 
+                class="btn btn-primary btn-lg px-8"
+            >
+                <i class="fas fa-palette mr-2"></i>
+                Ver Componentes
+            </a>
+            <a 
+                href="{{ url('/contact') }}" 
+                class="btn btn-outline btn-lg px-8"
+            >
+                <i class="fas fa-envelope mr-2"></i>
+                Contactar
+            </a>
+        </div>
+    </div>
+</section>

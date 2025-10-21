@@ -1,0 +1,53 @@
+fields:
+    title:
+        label: Title
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: title
+            type: slug
+        type: text
+    subtitle:
+        label: Subtitle
+        span: auto
+        type: text
+    author:
+        label: Author
+        span: auto
+        type: text
+    description:
+        label: Description
+        span: full
+        size: ''
+        type: textarea
+    photos:
+        label: Photos
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    tags:
+        label: Tags
+        mode: string
+        separator: comma
+        customTags: true
+        useKey: false
+        span: auto
+        type: taglist
+    content:
+        label: Contents
+        size: giant
+        span: full
+        type: richeditor
+    content_html:
+        label: 'Content html'
+        size: huge
+        language: php
+        span: full
+        type: codeeditor

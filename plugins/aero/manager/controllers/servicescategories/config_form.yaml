@@ -1,0 +1,11 @@
+name: ServicesCategories
+modelClass: Aero\Manager\Models\ServicesCategories
+form: $/aero/manager/models/servicescategories/fields.yaml
+defaultRedirect: aero/manager/servicescategories
+create:
+    redirect: 'aero/manager/servicescategories/update/:id'
+    redirectClose: aero/manager/servicescategories
+update:
+    redirect: aero/manager/servicescategories
+    redirectClose: aero/manager/servicescategories
+preview: {  }

@@ -1,0 +1,11 @@
+name: DashboardCards
+modelClass: Aero\Manager\Models\DashboardCards
+form: $/aero/manager/models/dashboardcards/fields.yaml
+defaultRedirect: aero/manager/dashboardcards
+create:
+    redirect: 'aero/manager/dashboardcards/update/:id'
+    redirectClose: aero/manager/dashboardcards
+update:
+    redirect: aero/manager/dashboardcards
+    redirectClose: aero/manager/dashboardcards
+preview: {  }

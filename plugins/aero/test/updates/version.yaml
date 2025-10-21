@@ -1,0 +1,29 @@
+v1.0.1:
+    - 'Initialize plugin'
+v1.0.2:
+    - 'Created table aero_test_students'
+    - builder_table_create_aero_test_students.php
+v1.0.3:
+    - 'Updated table aero_test_students'
+    - builder_table_update_aero_test_students.php
+v1.0.4:
+    - 'Updated table aero_test_students'
+    - builder_table_update_aero_test_students_2.php
+v1.0.5:
+    - 'Created table aero_test_cursos'
+    - builder_table_create_aero_test_cursos.php
+v1.0.6:
+    - 'Updated table aero_test_cursos'
+    - builder_table_update_aero_test_cursos.php
+v1.0.7:
+    - 'Updated table aero_test_cursos'
+    - builder_table_update_aero_test_cursos_2.php
+v1.0.8:
+    - 'Updated table aero_test_cursos'
+    - builder_table_update_aero_test_curses.php
+v1.0.9:
+    - 'Updated table aero_test_curses'
+    - builder_table_update_aero_test_curses_2.php
+v1.0.10:
+    - 'Updated table aero_test_students'
+    - builder_table_update_aero_test_students_3.php

@@ -1,0 +1,11 @@
+name: StoreItems
+modelClass: Aero\Manager\Models\StoreItems
+form: $/aero/manager/models/storeitems/fields.yaml
+defaultRedirect: aero/manager/storeitems
+create:
+    redirect: 'aero/manager/storeitems/update/:id'
+    redirectClose: aero/manager/storeitems
+update:
+    redirect: aero/manager/storeitems
+    redirectClose: aero/manager/storeitems
+preview: {  }

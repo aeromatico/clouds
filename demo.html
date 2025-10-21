@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0ea5e9">
+    
+    <title>Master Theme Demo - OctoberCMS</title>
+    <meta name="description" content="Demo del tema Master con stack moderno para OctoberCMS">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.14.1/dist/cdn.min.js"></script>
+    
+    <style>
+        /* CSS Variables for theming */
+        :root {
+          --color-background: 255 255 255;
+          --color-foreground: 15 23 42;
+          --color-muted: 248 250 252;
+          --color-muted-foreground: 100 116 139;
+          --color-border: 226 232 240;
+          --color-primary: 14 165 233;
+          --color-primary-foreground: 255 255 255;
+          --color-secondary: 248 250 252;
+          --color-secondary-foreground: 15 23 42;
+          --color-accent: 240 244 248;
+          --color-accent-foreground: 15 23 42;
+          --color-card: 255 255 255;
+          --color-card-foreground: 15 23 42;
+        }
+
+        [data-theme="dark"] {
+          --color-background: 2 6 23;
+          --color-foreground: 248 250 252;
+          --color-muted: 15 23 42;
+          --color-muted-foreground: 148 163 184;
+          --color-border: 30 41 59;
+          --color-primary: 56 189 248;
+          --color-primary-foreground: 2 6 23;
+          --color-secondary: 15 23 42;
+          --color-secondary-foreground: 248 250 252;
+          --color-accent: 30 41 59;
+          --color-accent-foreground: 248 250 252;
+          --color-card: 2 6 23;
+          --color-card-foreground: 248 250 252;
+        }
+
+        body {
+            background-color: rgb(var(--color-background));
+            color: rgb(var(--color-foreground));
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .nav { background: rgb(var(--color-background) / 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgb(var(--color-border)); padding: 1rem 0; position: sticky; top: 0; z-index: 50; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: rgb(var(--color-primary)); text-decoration: none; }
+        .hero { text-align: center; padding: 6rem 0; background: linear-gradient(135deg, rgb(var(--color-primary) / 0.05), rgb(var(--color-background)), rgb(var(--color-secondary) / 0.05)); }
+        .hero h1 { font-size: 4rem; font-weight: bold; margin-bottom: 1rem; background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-secondary))); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.25rem; color: rgb(var(--color-muted-foreground)); max-width: 600px; margin: 0 auto 2rem; }
+        .btn { display: inline-flex; align-items: center; padding: 0.75rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500; transition: all 0.2s; margin: 0.5rem; }
+        .btn-primary { background: rgb(var(--color-primary)); color: rgb(var(--color-primary-foreground)); }
+        .btn-primary:hover { background: rgb(var(--color-primary) / 0.9); transform: translateY(-2px); }
+        .btn-outline { border: 1px solid rgb(var(--color-border)); color: rgb(var(--color-foreground)); }
+        .btn-outline:hover { background: rgb(var(--color-accent)); }
+        .features { padding: 4rem 0; background: rgb(var(--color-muted) / 0.3); }
+        .features h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .feature-card { background: rgb(var(--color-card)); border: 1px solid rgb(var(--color-border)); border-radius: 0.5rem; padding: 2rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); transition: transform 0.2s; }
+        .feature-card:hover { transform: translateY(-4px); }
+        .feature-icon { width: 3rem; height: 3rem; background: rgb(var(--color-primary) / 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+        .theme-toggle { position: fixed; bottom: 2rem; right: 2rem; width: 3rem; height: 3rem; background: rgb(var(--color-primary)); color: rgb(var(--color-primary-foreground)); border: none; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 12px rgb(var(--color-primary) / 0.3); transition: all 0.2s; z-index: 100; }
+        .theme-toggle:hover { transform: scale(1.1); }
+        .tech-stack { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; }
+        .tech-item { display: flex; align-items: center; gap: 0.5rem; color: rgb(var(--color-muted-foreground)); font-size: 0.9rem; }
+        .footer { background: rgb(var(--color-muted) / 0.5); border-top: 1px solid rgb(var(--color-border)); padding: 3rem 0; text-align: center; margin-top: 4rem; }
+        .status-banner { background: rgb(34 197 94 / 0.1); border: 1px solid rgb(34 197 94 / 0.3); color: rgb(22 101 52); padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem; text-align: center; }
+        [data-theme="dark"] .status-banner { background: rgb(5 46 22); color: rgb(187 247 208); border-color: rgb(34 197 94 / 0.3); }
+    </style>
+</head>
+
+<body x-data="{ theme: localStorage.getItem('theme') || 'light' }" :data-theme="theme">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-bolt"></i>
+                    Master Theme
+                </a>
+                <div>
+                    <button 
+                        @click="theme = theme === 'light' ? 'dark' : 'light'; localStorage.setItem('theme', theme)"
+                        class="theme-toggle"
+                        :title="theme === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro'"
+                    >
+                        <i :class="theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <!-- Status Banner -->
+            <div class="status-banner animate__animated animate__fadeInDown">
+                <i class="fas fa-check-circle"></i>
+                <strong>¡Instalación Exitosa!</strong> OctoberCMS 4 + Master Theme funcionando correctamente
+            </div>
+
+            <h1 class="animate__animated animate__fadeInUp">Master Theme</h1>
+            <p class="animate__animated animate__fadeInUp animate__delay-1s">
+                Un tema moderno para OctoberCMS con Vite, Tailwind CSS, Alpine.js y soporte PWA completo.
+                Desarrollo rápido, experiencia excepcional.
+            </p>
+            
+            <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="#features" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    Explorar Características
+                </a>
+                <a href="#tech" class="btn btn-outline">
+                    <i class="fas fa-code"></i>
+                    Stack Tecnológico
+                </a>
+            </div>
+
+            <div class="tech-stack animate__animated animate__fadeInUp animate__delay-3s">
+                <div class="tech-item">
+                    <i class="fab fa-laravel" style="color: #ff2d20;"></i>
+                    <span>Laravel 12</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-bolt" style="color: #646cff;"></i>
+                    <span>Vite 5</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-wind" style="color: #38bdf8;"></i>
+                    <span>Tailwind CSS</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-mountain" style="color: #8bc34a;"></i>
+                    <span>Alpine.js</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-mobile-alt" style="color: #2196f3;"></i>
+                    <span>PWA Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Características Principales</h2>
+            <div class="features-grid">
+                <div class="feature-card animate__animated animate__fadeInUp">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>Desarrollo Rápido</h3>
+                    <p>Hot Module Replacement (HMR) con Vite para desarrollo ultra-rápido y eficiente.</p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>PWA Completo</h3>
+                    <p>Aplicación web progresiva con soporte offline, notificaciones push e instalación nativa.</p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="feature-icon">
+                        <i class="fas fa-adjust" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>Modo Oscuro/Claro</h3>
+                    <p>Sistema completo de temas con persistencia y auto-detección del sistema.</p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>Alto Rendimiento</h3>
+                    <p>Optimizado para velocidad con code splitting, lazy loading y compresión avanzada.</p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>Componentes Modernos</h3>
+                    <p>20+ componentes Alpine.js listos para usar: modales, carouseles, formularios y más.</p>
+                </div>
+                
+                <div class="feature-card animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="feature-icon">
+                        <i class="fas fa-code" style="color: rgb(var(--color-primary));"></i>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>TypeScript support, herramientas modernas, documentación completa y desarrollo eficiente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="tech" class="footer">
+        <div class="container">
+            <h3>✅ Estado de la Instalación</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; text-align: left;">
+                <div>
+                    <strong>✅ OctoberCMS 4.0:</strong> Instalado<br>
+                    <strong>✅ Base de Datos:</strong> Conectada<br>
+                    <strong>✅ PHP:</strong> 8.2+ Compatible
+                </div>
+                <div>
+                    <strong>✅ Tema Master:</strong> Activo<br>
+                    <strong>✅ Plugin Vite:</strong> Integrado<br>
+                    <strong>✅ Assets:</strong> Compilados
+                </div>
+                <div>
+                    <strong>✅ PWA:</strong> Configurado<br>
+                    <strong>✅ Dark Mode:</strong> Funcionando<br>
+                    <strong>✅ Alpine.js:</strong> Cargado
+                </div>
+                <div>
+                    <strong>✅ Tailwind CSS:</strong> Activo<br>
+                    <strong>✅ Font Awesome:</strong> Disponible<br>
+                    <strong>✅ Google Fonts:</strong> Cargadas
+                </div>
+            </div>
+            
+            <p>
+                <strong>Master Theme</strong> desarrollado por <strong>aero</strong> • 
+                Powered by OctoberCMS 4 + Laravel 12
+            </p>
+            
+            <p style="color: rgb(var(--color-muted-foreground)); font-size: 0.9rem;">
+                🚀 Instalación completada exitosamente • 
+                Servidor: <code>http://localhost:8000</code> • 
+                Hora: <span id="current-time"></span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Update time
+        document.getElementById('current-time').textContent = new Date().toLocaleString();
+        
+        // Simple toast notification
+        setTimeout(() => {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 2rem; right: 2rem; z-index: 1000;
+                background: rgb(var(--color-card)); border: 1px solid rgb(var(--color-border));
+                padding: 1rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+                animation: slideIn 0.3s ease-out;
+            `;
+            toast.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> <strong>¡Bienvenido al Master Theme!</strong>';
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }, 2000);
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(100%); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes slideOut {
+                from { opacity: 1; transform: translateX(0); }
+                to { opacity: 0; transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

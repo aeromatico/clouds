@@ -1,0 +1,64 @@
+title = "HMR Test"
+url = "/hmr-test"
+layout = "default"
+is_hidden = 0
+
+==
+<?php
+function onStart()
+{
+    // Simple page for HMR testing
+}
+?>
+==
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-center mb-8">
+        🔥 Hot Module Replacement Test
+    </h1>
+    
+    <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4">Estado del HMR</h2>
+        
+        <div id="hmr-status" class="mb-6">
+            <p class="text-lg">Cargando estado...</p>
+        </div>
+        
+        <div class="mb-6">
+            <h3 class="text-xl font-medium mb-2">Pruebas:</h3>
+            <ul class="list-disc list-inside space-y-2">
+                <li>Modifica este archivo y guarda para probar HMR</li>
+                <li>Cambia estilos CSS y observa los cambios</li>
+                <li>Edita JavaScript y revisa la consola</li>
+            </ul>
+        </div>
+        
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+            <p>Última actualización: <span id="timestamp"><?= date('H:i:s') ?></span></p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Check if HMR is working
+if (import.meta.hot) {
+    document.getElementById('hmr-status').innerHTML = `
+        <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 p-4 rounded-lg">
+            <h4 class="font-semibold">✅ HMR Activo</h4>
+            <p>Hot Module Replacement está funcionando correctamente!</p>
+            <p>Servidor: ${import.meta.env.DEV ? 'Desarrollo' : 'Producción'}</p>
+        </div>
+    `;
+} else {
+    document.getElementById('hmr-status').innerHTML = `
+        <div class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 p-4 rounded-lg">
+            <h4 class="font-semibold">❌ HMR No Disponible</h4>
+            <p>Hot Module Replacement no está activo.</p>
+        </div>
+    `;
+}
+
+// Update timestamp every second to show live updates
+setInterval(() => {
+    document.getElementById('timestamp').textContent = new Date().toLocaleTimeString();
+}, 1000);
+</script>

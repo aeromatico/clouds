@@ -1,0 +1,83 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    lastname:
+        label: 'Last Name'
+        span: auto
+        type: text
+    birthday:
+        label: Birthday
+        mode: datetime
+        span: auto
+        type: datepicker
+    ci:
+        label: CI
+        span: auto
+        type: number
+    mail:
+        label: Mail
+        span: auto
+        type: text
+    phone:
+        label: Phone
+        span: auto
+        type: number
+    address:
+        label: Address
+        span: auto
+        type: text
+    active:
+        label: Active
+        span: auto
+        type: switch
+    course:
+        label: Course
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    photo:
+        label: Photo
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    gallery:
+        label: Gallery
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    cv:
+        label: CV
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    social:
+        label: Social
+        prompt: 'Add new item'
+        displayMode: accordion
+        span: auto
+        type: repeater
+        form:
+            fields:
+                name:
+                    label: Name
+                    span: auto
+                    type: text
+                url:
+                    label: URL
+                    span: auto
+                    type: text

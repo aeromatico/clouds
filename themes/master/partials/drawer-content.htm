@@ -1,0 +1,160 @@
+<!-- Drawer Header -->
+<div class="p-4 border-b border-base-300">
+    <div class="flex items-center justify-between">
+        <h2 class="text-lg font-semibold">
+            <i class="fas fa-th-large mr-2 text-primary"></i>
+            Componentes
+        </h2>
+        <label for="main-drawer" class="btn btn-ghost btn-sm lg:hidden">
+            <i class="fas fa-times"></i>
+        </label>
+    </div>
+</div>
+
+<!-- Drawer Menu -->
+<div class="p-4">
+    <!-- Components Section -->
+    <div class="mb-6">
+        <h3 class="text-sm font-medium text-base-content/70 uppercase tracking-wide mb-3">
+            UI Components
+        </h3>
+        <ul class="menu menu-sm w-full">
+            <li>
+                <a href="{{ url('/components/buttons') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-mouse-pointer w-4"></i>
+                    <span>Buttons</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/forms') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-edit w-4"></i>
+                    <span>Forms</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/cards') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-id-card w-4"></i>
+                    <span>Cards</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/modals') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-window-restore w-4"></i>
+                    <span>Modals</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/tables') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-table w-4"></i>
+                    <span>Tables</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/navigation') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-compass w-4"></i>
+                    <span>Navigation</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Layout Section -->
+    <div class="mb-6">
+        <h3 class="text-sm font-medium text-base-content/70 uppercase tracking-wide mb-3">
+            Layout
+        </h3>
+        <ul class="menu menu-sm w-full">
+            <li>
+                <a href="{{ url('/components/grids') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-th w-4"></i>
+                    <span>Grids</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/containers') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-square w-4"></i>
+                    <span>Containers</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/dividers') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-minus w-4"></i>
+                    <span>Dividers</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Data Display Section -->
+    <div class="mb-6">
+        <h3 class="text-sm font-medium text-base-content/70 uppercase tracking-wide mb-3">
+            Data Display
+        </h3>
+        <ul class="menu menu-sm w-full">
+            <li>
+                <a href="{{ url('/components/badges') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-tag w-4"></i>
+                    <span>Badges</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/avatars') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-user-circle w-4"></i>
+                    <span>Avatars</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/progress') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-chart-line w-4"></i>
+                    <span>Progress</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/stats') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-chart-bar w-4"></i>
+                    <span>Stats</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Feedback Section -->
+    <div class="mb-6">
+        <h3 class="text-sm font-medium text-base-content/70 uppercase tracking-wide mb-3">
+            Feedback
+        </h3>
+        <ul class="menu menu-sm w-full">
+            <li>
+                <a href="{{ url('/components/alerts') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-exclamation-triangle w-4"></i>
+                    <span>Alerts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/toasts') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-bell w-4"></i>
+                    <span>Toasts</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/components/loading') }}" class="flex items-center" onclick="document.getElementById('main-drawer').checked = false">
+                    <i class="fas fa-spinner w-4"></i>
+                    <span>Loading</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Drawer Footer -->
+<div class="mt-auto p-4 border-t border-base-300">
+    <div class="text-center">
+        <p class="text-xs text-base-content/60">
+            Master Theme v1.0
+        </p>
+        <p class="text-xs text-base-content/60">
+            Powered by 
+            <span class="font-medium text-primary">aero</span>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+fields:
+    partial1:
+        label: ''
+        span: auto
+        path: $/aero/manager/models/paymentsquotes/partials/_preview_button.htm
+        type: partial
+    partial2:
+        label: ''
+        span: auto
+        path: $/aero/manager/models/paymentsquotes/partials/_url_button.htm
+        type: partial        
+    url:
+        label: Url
+        span: auto
+        type: text
+    amount:
+        label: Amount
+        span: auto
+        default: '0'
+        type: number
+    identifier:
+        label: Identifier
+        span: auto
+        readOnly: 1
+        type: text
+    endtime:
+        label: Endtime
+        span: auto
+        type: number
+        comment: 'Value in hours'
+    status:
+        label: Status
+        options:
+            Pendiente: Pendiente
+            Activa: Activa
+        span: auto
+        type: balloon-selector
+tabs:
+    fields:
+        chat_on:
+            label: 'Chat on'
+            span: left
+            type: switch
+            tab: Chat
+        chat:
+            label: Chat
+            prompt: 'Add new message'
+            style: default
+            span: full
+            trigger:
+                action: show
+                field: chat_on
+                condition: checked
+            type: repeater
+            tab: Chat
+            form:
+                fields:
+                    message:
+                        label: Message
+                        size: small
+                        span: full
+                        trigger:
+                            action: hide
+                            field: predefined_on
+                            condition: checked
+                        type: richeditor
+                    message_predefined:
+                        label: 'Predefined message'
+                        options:
+                            'Estas son nuestras cuentas bancarias': 'Cuentas bancarias'
+                            'Esta es una respuesta predefinida': 'Respuesta 1'
+                        showSearch: true
+                        span: left
+                        trigger:
+                            action: show
+                            field: predefined_on
+                            condition: checked
+                        type: dropdown
+                    predefined_on:
+                        label: Predefined
+                        span: left
+                        type: switch
+                    customer_on:
+                        label: 'Is customer'
+                        span: left
+                        readOnly: 1
+                        type: switch
+        fee:
+            label: 'Own fee'
+            span: auto
+            type: number
+            tab: Fees
+        fee_ext_detail:
+            label: 'Fee ext detail'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Fees
+            form:
+                fields:
+                    type:
+                        label: Type
+                        options:
+                            'Pasarela de pago': 'Pasarela de pago'
+                            'Cambio de moneda': 'Cambio de moneda'
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    amount:
+                        label: Amount
+                        span: auto
+                        type: number
+                    description:
+                        label: Description
+                        size: ''
+                        span: full
+                        type: textarea
+        gateways:
+            label: Gateways
+            prompt: 'Add new item'
+            style: default
+            span: auto
+            type: repeater
+            tab: Gateways
+            form:
+                fields:
+                    gateway:
+                        label: Gateway
+                        span: auto
+                        type: text

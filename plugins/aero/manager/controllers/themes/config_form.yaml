@@ -1,0 +1,11 @@
+name: Themes
+modelClass: Aero\Manager\Models\Themes
+form: $/aero/manager/models/themes/fields.yaml
+defaultRedirect: aero/manager/themes
+create:
+    redirect: 'aero/manager/themes/update/:id'
+    redirectClose: aero/manager/themes
+update:
+    redirect: aero/manager/themes
+    redirectClose: aero/manager/themes
+preview: {  }

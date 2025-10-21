@@ -1,0 +1,28 @@
+fields:
+    user_id:
+        label: 'User id'
+        span: auto
+        type: number
+    card_holder:
+        label: 'Card holder'
+        span: auto
+        type: text
+    card_number:
+        label: 'Card number'
+        span: auto
+        type: number
+    card_expiration:
+        label: 'Card expiration'
+        mode: date
+        span: auto
+        type: datepicker
+    card_cvv:
+        label: 'Card cvv'
+        span: auto
+        type: text
+    active:
+        label: Active
+        span: auto
+        'on': 'On'
+        'off': 'Off'
+        type: switch

@@ -1,0 +1,60 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    user_id:
+        label: User
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    url:
+        label: URL
+        type: partial
+        path: $/aero/manager/models/paymentsquotes/partials/_url_button.htm
+        sortable: false
+        searchable: false
+    amount:
+        label: Amount
+        type: number
+        searchable: true
+        sortable: true
+    fee:
+        label: 'Own fee'
+        type: number
+        searchable: true
+        sortable: true
+    fee_gateway:
+        label: 'Gateway fee'
+        type: number
+        searchable: true
+        sortable: true
+    status:
+        label: status
+        type: text
+        searchable: true
+        sortable: true
+    chat_alert:
+        label: 'New chat'
+        type: switch
+        searchable: true
+        sortable: true
+    created_at:
+        label: Created
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: Updated
+        type: datetime
+        searchable: true
+        sortable: true
+    preview_button:
+        label: Preview
+        type: partial
+        path: $/aero/manager/models/paymentsquotes/partials/_preview_button.htm
+        sortable: false
+        searchable: false

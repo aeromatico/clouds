@@ -1,0 +1,11 @@
+name: Payments
+modelClass: Aero\Manager\Models\Payments
+form: $/aero/manager/models/payments/fields.yaml
+defaultRedirect: aero/manager/payments
+create:
+    redirect: 'aero/manager/payments/update/:id'
+    redirectClose: aero/manager/payments
+update:
+    redirect: aero/manager/payments
+    redirectClose: aero/manager/payments
+preview: {  }

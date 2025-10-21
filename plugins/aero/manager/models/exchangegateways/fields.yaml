@@ -1,0 +1,33 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    fee_fixed:
+        label: 'Fee fixed'
+        span: left
+        default: '0'
+        type: number
+    fee_percentage:
+        label: 'Fee percentage'
+        span: left
+        default: '0'
+        type: number
+    fee_own:
+        label: 'Own fee'
+        span: left
+        default: '0'
+        type: number
+    from_on:
+        label: 'From on'
+        span: left
+        type: switch
+    to_on:
+        label: 'To on'
+        span: left
+        type: switch
+    public_on:
+        label: Public
+        span: left
+        default: 1
+        type: switch

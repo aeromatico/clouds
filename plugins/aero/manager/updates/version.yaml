@@ -1,0 +1,1718 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table aero_manager_services'
+    - builder_table_create_aero_manager_services.php
+1.0.3:
+    - 'Created table aero_manager_plans'
+    - builder_table_create_aero_manager_plans.php
+1.0.4:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans.php
+1.0.5:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_2.php
+1.0.6:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_3.php
+1.0.7:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_4.php
+1.0.8:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_5.php
+1.0.9:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_6.php
+1.0.10:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_7.php
+1.0.11:
+    - 'Created table aero_manager_portal'
+    - builder_table_create_aero_manager_portal.php
+1.0.12:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal.php
+1.0.13:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_8.php
+1.0.14:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_9.php
+1.0.15:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services.php
+1.0.16:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_2.php
+1.0.17:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_10.php
+1.0.18:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_11.php
+1.0.19:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_2.php
+1.0.20:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_3.php
+1.0.21:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_4.php
+1.0.22:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_5.php
+1.0.23:
+    - 'Created table aero_manager_faqs'
+    - builder_table_create_aero_manager_faqs.php
+1.0.24:
+    - 'Updated table aero_manager_faqs'
+    - builder_table_update_aero_manager_faqs.php
+1.0.25:
+    - 'Created table aero_manager_features'
+    - builder_table_create_aero_manager_features.php
+1.0.26:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features.php
+1.0.27:
+    - 'Updated table aero_manager_faqs'
+    - builder_table_update_aero_manager_faqs_2.php
+1.0.28:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_3.php
+1.0.29:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_4.php
+1.0.30:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_2.php
+1.0.31:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_12.php
+1.0.32:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_13.php
+1.0.33:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_3.php
+1.0.34:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_4.php
+1.0.35:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_5.php
+1.0.36:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_14.php
+1.0.37:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_15.php
+1.0.38:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_6.php
+1.0.39:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_7.php
+1.0.40:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_8.php
+1.0.41:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_9.php
+1.0.42:
+    - 'Updated table aero_manager_faqs'
+    - builder_table_update_aero_manager_faqs_3.php
+1.0.43:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_10.php
+1.0.44:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_11.php
+1.0.45:
+    - 'Created table aero_manager_service_features'
+    - builder_table_create_aero_manager_service_features.php
+1.0.46:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_12.php
+1.0.47:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_13.php
+1.0.48:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_14.php
+1.0.49:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_15.php
+1.0.50:
+    - 'Updated table aero_manager_service_features'
+    - builder_table_update_aero_manager_service_features.php
+1.0.51:
+    - 'Updated table aero_manager_service_features'
+    - builder_table_update_aero_manager_services_features.php
+1.0.52:
+    - 'Created table aero_manager_services_plans'
+    - builder_table_create_aero_manager_services_plans.php
+1.0.53:
+    - 'Created table aero_manager_services_faqs'
+    - builder_table_create_aero_manager_services_faqs.php
+1.0.54:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_5.php
+1.0.55:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_6.php
+1.0.56:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_16.php
+1.0.57:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_17.php
+1.0.58:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_7.php
+1.0.59:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_8.php
+1.0.60:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_18.php
+1.0.61:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_19.php
+1.0.62:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_20.php
+1.0.63:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_21.php
+1.0.64:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_9.php
+1.0.65:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_10.php
+1.0.66:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_11.php
+1.0.67:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_12.php
+1.0.68:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_13.php
+1.0.69:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_14.php
+1.0.70:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_22.php
+1.0.71:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_23.php
+1.0.72:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_6.php
+1.0.73:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_7.php
+1.0.74:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_8.php
+1.0.75:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_9.php
+1.0.76:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_10.php
+1.0.77:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_16.php
+1.0.78:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_17.php
+1.0.79:
+    - 'Created table aero_manager_orders'
+    - builder_table_create_aero_manager_orders.php
+1.0.80:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders.php
+1.0.81:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_2.php
+1.0.82:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_3.php
+1.0.83:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_4.php
+1.0.84:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_5.php
+1.0.85:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_6.php
+1.0.86:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_15.php
+1.0.87:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_16.php
+1.0.88:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_24.php
+1.0.89:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_25.php
+1.0.90:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_17.php
+1.0.91:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_18.php
+1.0.92:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_26.php
+1.0.93:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_27.php
+1.0.94:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_19.php
+1.0.95:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_20.php
+1.0.96:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_21.php
+1.0.97:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_22.php
+1.0.98:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_28.php
+1.0.99:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_29.php
+1.0.100:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_23.php
+1.0.101:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_24.php
+1.0.102:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_30.php
+1.0.103:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_31.php
+1.0.104:
+    - 'Created table aero_manager_payments'
+    - builder_table_create_aero_manager_payments.php
+1.0.105:
+    - 'Created table aero_manager_addons'
+    - builder_table_create_aero_manager_addons.php
+1.0.106:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_32.php
+1.0.107:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_33.php
+1.0.108:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_34.php
+1.0.109:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_35.php
+1.0.110:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_36.php
+1.0.111:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_37.php
+1.0.112:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_38.php
+1.0.113:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_39.php
+1.0.114:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_25.php
+1.0.115:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_26.php
+1.0.116:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_18.php
+1.0.117:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_19.php
+1.0.118:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_40.php
+1.0.119:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_41.php
+1.0.120:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_42.php
+1.0.121:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_43.php
+1.0.122:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_27.php
+1.0.123:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_28.php
+1.0.124:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_29.php
+1.0.125:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_30.php
+1.0.126:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_31.php
+1.0.127:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_32.php
+1.0.128:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_44.php
+1.0.129:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_45.php
+1.0.130:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_46.php
+1.0.131:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_47.php
+1.0.132:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_48.php
+1.0.133:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_49.php
+1.0.134:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_50.php
+1.0.135:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_51.php
+1.0.136:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_33.php
+1.0.137:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_52.php
+1.0.138:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_53.php
+1.0.139:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_34.php
+1.0.140:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_35.php
+1.0.141:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_36.php
+1.0.142:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_37.php
+1.0.143:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_38.php
+1.0.144:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_39.php
+1.0.145:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_11.php
+1.0.146:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_12.php
+1.0.147:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_13.php
+1.0.148:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_14.php
+1.0.149:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_15.php
+1.0.150:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_16.php
+1.0.151:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_54.php
+1.0.152:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_55.php
+1.0.153:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_56.php
+1.0.154:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_57.php
+1.0.155:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_58.php
+1.0.156:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_59.php
+1.0.157:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_60.php
+1.0.158:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_61.php
+1.0.159:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_62.php
+1.0.160:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_63.php
+1.0.161:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_64.php
+1.0.162:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_65.php
+1.0.163:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_40.php
+1.0.164:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_41.php
+1.0.165:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_42.php
+1.0.166:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_43.php
+1.0.167:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_44.php
+1.0.168:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_45.php
+1.0.169:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_46.php
+1.0.170:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_47.php
+1.0.171:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_48.php
+1.0.172:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_49.php
+1.0.173:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_66.php
+1.0.174:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_67.php
+1.0.175:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_50.php
+1.0.176:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_51.php
+1.0.177:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_52.php
+1.0.178:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_53.php
+1.0.179:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_54.php
+1.0.180:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_55.php
+1.0.181:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_56.php
+1.0.182:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_57.php
+1.0.183:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_58.php
+1.0.184:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_68.php
+1.0.185:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_69.php
+1.0.186:
+    - 'Created table aero_manager_contents'
+    - builder_table_create_aero_manager_contents.php
+1.0.187:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents.php
+1.0.188:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents_2.php
+1.0.189:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_70.php
+1.0.190:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_71.php
+1.0.191:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_72.php
+1.0.192:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_73.php
+1.0.193:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_74.php
+1.0.194:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_75.php
+1.0.195:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_76.php
+1.0.196:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_77.php
+1.0.197:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_78.php
+1.0.198:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_79.php
+1.0.199:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_80.php
+1.0.200:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_81.php
+1.0.201:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_82.php
+1.0.202:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_83.php
+1.0.203:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_84.php
+1.0.204:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_85.php
+1.0.205:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_86.php
+1.0.206:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_59.php
+1.0.207:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_60.php
+1.0.208:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_87.php
+1.0.209:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_88.php
+1.0.210:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents_3.php
+1.0.211:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents_4.php
+1.0.212:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents_5.php
+1.0.213:
+    - 'Updated table aero_manager_contents'
+    - builder_table_update_aero_manager_contents_6.php
+1.0.214:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_61.php
+1.0.215:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_62.php
+1.0.216:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_63.php
+1.0.217:
+    - 'Created table aero_manager_settings'
+    - builder_table_create_aero_manager_settings.php
+1.0.218:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings.php
+1.0.219:
+    - 'Created table aero_manager_themes'
+    - builder_table_create_aero_manager_themes.php
+1.0.220:
+    - 'Updated table aero_manager_themes'
+    - builder_table_update_aero_manager_themes.php
+1.0.221:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_64.php
+1.0.222:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_89.php
+1.0.223:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_90.php
+1.0.224:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_91.php
+1.0.225:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_92.php
+1.0.226:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_93.php
+1.0.227:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_94.php
+1.0.228:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_95.php
+1.0.229:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_96.php
+1.0.230:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_97.php
+1.0.231:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_98.php
+1.0.232:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_99.php
+1.0.233:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_2.php
+1.0.234:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_17.php
+1.0.235:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_18.php
+1.0.236:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_19.php
+1.0.237:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_20.php
+1.0.238:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_21.php
+1.0.239:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_22.php
+1.0.240:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_23.php
+1.0.241:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_3.php
+1.0.242:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_100.php
+1.0.243:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_101.php
+1.0.244:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_4.php
+1.0.245:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_5.php
+1.0.246:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_6.php
+1.0.247:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_7.php
+1.0.248:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_8.php
+1.0.249:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_9.php
+1.0.250:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_10.php
+1.0.251:
+    - 'Updated table aero_manager_themes'
+    - builder_table_update_aero_manager_themes_2.php
+1.0.252:
+    - 'Updated table aero_manager_themes'
+    - builder_table_update_aero_manager_themes_3.php
+1.0.253:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_65.php
+1.0.254:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_102.php
+1.0.255:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_103.php
+1.0.256:
+    - 'Updated table aero_manager_themes'
+    - builder_table_update_aero_manager_themes_4.php
+1.0.257:
+    - 'Updated table aero_manager_themes'
+    - builder_table_update_aero_manager_themes_5.php
+1.0.258:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_66.php
+1.0.259:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_24.php
+1.0.260:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_25.php
+1.0.261:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_26.php
+1.0.262:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_27.php
+1.0.263:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_67.php
+1.0.264:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_68.php
+1.0.265:
+    - 'Created table aero_manager_freelancers'
+    - builder_table_create_aero_manager_freelancers.php
+1.0.266:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_11.php
+1.0.267:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_12.php
+1.0.268:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_13.php
+1.0.269:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_69.php
+1.0.270:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_28.php
+1.0.271:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_70.php
+1.0.272:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_104.php
+1.0.273:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_105.php
+1.0.274:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_106.php
+1.0.275:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_107.php
+1.0.276:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_108.php
+1.0.277:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_109.php
+1.0.278:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_110.php
+1.0.279:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_111.php
+1.0.280:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_71.php
+1.0.281:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_112.php
+1.0.282:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_113.php
+1.0.283:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_72.php
+1.0.284:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_114.php
+1.0.285:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_20.php
+1.0.286:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_73.php
+1.0.287:
+    - 'Created table aero_manager_express_orders'
+    - builder_table_create_aero_manager_express_orders.php
+1.0.288:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_74.php
+1.0.289:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_75.php
+1.0.290:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_76.php
+1.0.291:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_77.php
+1.0.292:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_14.php
+1.0.293:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_15.php
+1.0.294:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_29.php
+1.0.295:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_30.php
+1.0.296:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_16.php
+1.0.297:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_17.php
+1.0.298:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_78.php
+1.0.299:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_79.php
+1.0.300:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_18.php
+1.0.301:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_80.php
+1.0.302:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_81.php
+1.0.303:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_82.php
+1.0.304:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_83.php
+1.0.305:
+    - 'Created table aero_manager_alerts'
+    - builder_table_create_aero_manager_alerts.php
+1.0.306:
+    - 'Updated table aero_manager_alerts'
+    - builder_table_update_aero_manager_alerts.php
+1.0.307:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_84.php
+1.0.308:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_115.php
+1.0.309:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_21.php
+1.0.310:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_85.php
+1.0.311:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_86.php
+1.0.312:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_87.php
+1.0.313:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_31.php
+1.0.314:
+    - 'Created table aero_manager_portal_features'
+    - builder_table_create_aero_manager_portal_features.php
+1.0.315:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_32.php
+1.0.316:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_33.php
+1.0.317:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_34.php
+1.0.318:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_35.php
+1.0.319:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_36.php
+1.0.320:
+    - 'Created table aero_manager_stats'
+    - builder_table_create_aero_manager_stats.php
+1.0.321:
+    - 'Updated table aero_manager_stats'
+    - builder_table_update_aero_manager_visitors.php
+1.0.322:
+    - 'Created table aero_manager_wallet'
+    - builder_table_create_aero_manager_wallet.php
+1.0.323:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_88.php
+1.0.324:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_89.php
+1.0.325:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_90.php
+1.0.326:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_91.php
+1.0.327:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_92.php
+1.0.328:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_93.php
+1.0.329:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_116.php
+1.0.330:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_94.php
+1.0.331:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_95.php
+1.0.332:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_96.php
+1.0.333:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_97.php
+1.0.334:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_98.php
+1.0.335:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_99.php
+1.0.336:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_100.php
+1.0.337:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_117.php
+1.0.338:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_118.php
+1.0.339:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_19.php
+1.0.340:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_20.php
+1.0.341:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_37.php
+1.0.342:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_22.php
+1.0.343:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_21.php
+1.0.344:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_22.php
+1.0.345:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_23.php
+1.0.346:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_24.php
+1.0.347:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_38.php
+1.0.348:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_23.php
+1.0.349:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_39.php
+1.0.350:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_101.php
+1.0.351:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_25.php
+1.0.352:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_102.php
+1.0.353:
+    - 'Created table aero_manager_dashboard_cards'
+    - builder_table_create_aero_manager_dashboard_cards.php
+1.0.354:
+    - 'Updated table aero_manager_dashboard_cards'
+    - builder_table_update_aero_manager_dashboard_cards.php
+1.0.355:
+    - 'Created table aero_manager_dashboard_cards_activations'
+    - builder_table_create_aero_manager_dashboard_cards_activations.php
+1.0.356:
+    - 'Updated table aero_manager_dashboard_cards_activations'
+    - builder_table_update_aero_manager_dashboard_cards_log.php
+1.0.357:
+    - 'Updated table aero_manager_dashboard_cards'
+    - builder_table_update_aero_manager_dashboard_cards_2.php
+1.0.358:
+    - 'Updated table aero_manager_dashboard_cards'
+    - builder_table_update_aero_manager_dashboard_cards_3.php
+1.0.359:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_cards_log_2.php
+1.0.360:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_cards_log_3.php
+1.0.361:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_cards_log_4.php
+1.0.362:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_cards_log_5.php
+1.0.363:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_cards_log_6.php
+1.0.364:
+    - 'Updated table aero_manager_dashboard_cards_log'
+    - builder_table_update_aero_manager_dashboard_log.php
+1.0.365:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_119.php
+1.0.366:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_120.php
+1.0.367:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_121.php
+1.0.368:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_122.php
+1.0.369:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_123.php
+1.0.370:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_124.php
+1.0.371:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_125.php
+1.0.372:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_126.php
+1.0.373:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet.php
+1.0.374:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_2.php
+1.0.375:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_3.php
+1.0.376:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_4.php
+1.0.377:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_5.php
+1.0.378:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_6.php
+1.0.379:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_7.php
+1.0.380:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_8.php
+1.0.381:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_8.php
+1.0.382:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_8.php
+1.0.383:
+    - 'Created table aero_manager_wallet_balance'
+    - builder_table_create_aero_manager_wallet_balance.php
+1.0.384:
+    - 'Updated table aero_manager_wallet_balance'
+    - builder_table_update_aero_manager_wallet_balance.php
+1.0.385:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_9.php
+1.0.386:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_10.php
+1.0.387:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_11.php
+1.0.388:
+    - 'Created table aero_manager_dashboard_servers'
+    - builder_table_create_aero_manager_dashboard_servers.php
+1.0.389:
+    - 'Updated table aero_manager_dashboard_servers'
+    - builder_table_update_aero_manager_dashboard_servers.php
+1.0.390:
+    - 'Updated table aero_manager_dashboard_servers'
+    - builder_table_update_aero_manager_dashboard_servers_2.php
+1.0.391:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_12.php
+1.0.392:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_127.php
+1.0.393:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_13.php
+1.0.394:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_14.php
+1.0.395:
+    - 'Updated table aero_manager_wallet'
+    - builder_table_update_aero_manager_wallet_15.php
+1.0.396:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_128.php
+1.0.397:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_129.php
+1.0.398:
+    - 'Updated table aero_manager_features'
+    - builder_table_update_aero_manager_features_24.php
+1.0.399:
+    - 'Created table aero_manager_exchanges_quotes'
+    - builder_table_create_aero_manager_exchanges_quotes.php
+1.0.400:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes.php
+1.0.401:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_2.php
+1.0.402:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_3.php
+1.0.403:
+    - 'Created table aero_manager_exchanges_gateways'
+    - builder_table_create_aero_manager_exchanges_gateways.php
+1.0.404:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_4.php
+1.0.405:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_5.php
+1.0.406:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_6.php
+1.0.407:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchanges_quotes_7.php
+1.0.408:
+    - 'Updated table aero_manager_exchanges_quotes'
+    - builder_table_update_aero_manager_exchange_quotes.php
+1.0.409:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_2.php
+1.0.410:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_3.php
+1.0.411:
+    - 'Updated table aero_manager_exchanges_gateways'
+    - builder_table_update_aero_manager_exchanges_gateways.php
+1.0.412:
+    - 'Updated table aero_manager_exchanges_gateways'
+    - builder_table_update_aero_manager_exchanges_gateways_2.php
+1.0.413:
+    - 'Updated table aero_manager_exchanges_gateways'
+    - builder_table_update_aero_manager_exchange_gateways.php
+1.0.414:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_2.php
+1.0.415:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_3.php
+1.0.416:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_4.php
+1.0.417:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_5.php
+1.0.418:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_6.php
+1.0.419:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_7.php
+1.0.420:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_8.php
+1.0.421:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_9.php
+1.0.422:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_10.php
+1.0.423:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_11.php
+1.0.424:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_12.php
+1.0.425:
+    - 'Created table aero_manager_cargo_quotes'
+    - builder_table_create_aero_manager_cargo_quotes.php
+1.0.426:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes.php
+1.0.427:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_2.php
+1.0.428:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_3.php
+1.0.429:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_4.php
+1.0.430:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_5.php
+1.0.431:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_6.php
+1.0.432:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_13.php
+1.0.433:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_7.php
+1.0.434:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_8.php
+1.0.435:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_9.php
+1.0.436:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_14.php
+1.0.437:
+    - 'Created table aero_manager_store_pruductos'
+    - builder_table_create_aero_manager_store_pruductos.php
+1.0.438:
+    - 'Updated table aero_manager_store_pruductos'
+    - builder_table_update_aero_manager_store_pruductos.php
+1.0.439:
+    - 'Updated table aero_manager_store_pruductos'
+    - builder_table_update_aero_manager_store_items.php
+1.0.440:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_2.php
+1.0.441:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_3.php
+1.0.442:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_4.php
+1.0.443:
+    - 'Created table aero_manager_store_collections'
+    - builder_table_create_aero_manager_store_collections.php
+1.0.444:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_103.php
+1.0.445:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_40.php
+1.0.446:
+    - 'Created table aero_manager_docs'
+    - builder_table_create_aero_manager_docs.php
+1.0.447:
+    - 'Created table aero_manager_services_docs'
+    - builder_table_create_aero_manager_services_docs.php
+1.0.448:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_104.php
+1.0.449:
+    - 'Created table aero_manager_docs_categories'
+    - builder_table_create_aero_manager_docs_categories.php
+1.0.450:
+    - 'Created table aero_manager_docs_docs_categories'
+    - builder_table_create_aero_manager_docs_docs_categories.php
+1.0.451:
+    - 'Updated table aero_manager_docs_categories'
+    - builder_table_update_aero_manager_docs_categories.php
+1.0.452:
+    - 'Updated table aero_manager_docs_categories'
+    - builder_table_update_aero_manager_docs_categories_2.php
+1.0.453:
+    - 'Created table aero_manager_chats'
+    - builder_table_create_aero_manager_chats.php
+1.0.454:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats.php
+1.0.455:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_2.php
+1.0.456:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_3.php
+1.0.457:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_4.php
+1.0.458:
+    - 'Updated table aero_manager_docs_categories'
+    - builder_table_update_aero_manager_docs_categories_3.php
+1.0.459:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_5.php
+1.0.460:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_6.php
+1.0.461:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_105.php
+1.0.462:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_106.php
+1.0.463:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_107.php
+1.0.464:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_108.php
+1.0.465:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_109.php
+1.0.466:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_110.php
+1.0.467:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_111.php
+1.0.468:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_112.php
+1.0.469:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_113.php
+1.0.470:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_114.php
+1.0.471:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_115.php
+1.0.472:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_130.php
+1.0.473:
+    - 'Created table aero_manager_services_categories'
+    - builder_table_create_aero_manager_services_categories.php
+1.0.474:
+    - 'Updated table aero_manager_services_categories'
+    - builder_table_update_aero_manager_services_categories.php
+1.0.475:
+    - 'Created table aero_manager_services_services_categories'
+    - builder_table_create_aero_manager_services_services_categories.php
+1.0.476:
+    - 'Updated table aero_manager_services_services_categories'
+    - builder_table_update_aero_manager_services_services_categories.php
+1.0.477:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_116.php
+1.0.478:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_117.php
+1.0.479:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_118.php
+1.0.480:
+    - 'Created table aero_manager_payments_quotes'
+    - builder_table_create_aero_manager_payments_quotes.php
+1.0.481:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_10.php
+1.0.482:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes.php
+1.0.483:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_2.php
+1.0.484:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_4.php
+1.0.485:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_7.php
+1.0.486:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_131.php
+1.0.487:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_132.php
+1.0.488:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_41.php
+1.0.489:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_119.php
+1.0.490:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_120.php
+1.0.491:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_42.php
+1.0.492:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_15.php
+1.0.493:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_16.php
+1.0.494:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_11.php
+1.0.495:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_17.php
+1.0.496:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_3.php
+1.0.497:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_121.php
+1.0.498:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_5.php
+1.0.499:
+    - 'Created table aero_manager_store_items_collections'
+    - builder_table_create_aero_manager_store_items_collections.php
+1.0.500:
+    - 'Updated table aero_manager_store_items_collections'
+    - builder_table_update_aero_manager_store_items_collections.php
+1.0.501:
+    - 'Updated table aero_manager_store_items_collections'
+    - builder_table_update_aero_manager_store_items_collections_2.php
+1.0.502:
+    - 'Updated table aero_manager_store_collections'
+    - builder_table_update_aero_manager_store_collections.php
+1.0.503:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_6.php
+1.0.504:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_7.php
+1.0.505:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_8.php
+1.0.506:
+    - 'Updated table aero_manager_store_items'
+    - builder_table_update_aero_manager_store_items_9.php
+1.0.507:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_18.php
+1.0.508:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_12.php
+1.0.509:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_4.php
+1.0.510:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_19.php
+1.0.511:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_5.php
+1.0.512:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_20.php
+1.0.513:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_21.php
+1.0.514:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_22.php
+1.0.515:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_23.php
+1.0.516:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_24.php
+1.0.517:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_43.php
+1.0.518:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_44.php
+1.0.519:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_45.php
+1.0.520:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_25.php
+1.0.521:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_26.php
+1.0.522:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_27.php
+1.0.523:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_13.php
+1.0.524:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_6.php
+1.0.525:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_7.php
+1.0.526:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_8.php
+1.0.527:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_26.php
+1.0.528:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_27.php
+1.0.529:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_28.php
+1.0.530:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_122.php
+1.0.531:
+    - 'Updated table aero_manager_docs'
+    - builder_table_update_aero_manager_docs.php
+1.0.532:
+    - 'Updated table aero_manager_docs'
+    - builder_table_update_aero_manager_docs_2.php
+1.0.533:
+    - 'Updated table aero_manager_docs'
+    - builder_table_update_aero_manager_docs_3.php
+1.0.534:
+    - 'Updated table aero_manager_docs_categories'
+    - builder_table_update_aero_manager_docs_categories_4.php
+1.0.535:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_8.php
+1.0.536:
+    - 'Updated table aero_manager_chats'
+    - builder_table_update_aero_manager_chats_9.php
+1.0.537:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_7.php
+1.0.538:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_8.php
+1.0.539:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_9.php
+1.0.540:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_10.php
+1.0.541:
+    - 'Updated table aero_manager_orders'
+    - builder_table_update_aero_manager_orders_11.php
+1.0.542:
+    - 'Updated table aero_manager_portal'
+    - builder_table_update_aero_manager_portal_46.php
+1.0.543:
+    - 'Updated table aero_manager_settings'
+    - builder_table_update_aero_manager_settings_29.php
+1.0.544:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_133.php
+1.0.545:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_123.php
+1.0.546:
+    - 'Created table aero_manager_dashboard_services'
+    - builder_table_create_aero_manager_dashboard_services.php
+1.0.547:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_124.php
+1.0.548:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_125.php
+1.0.549:
+    - 'Updated table aero_manager_dashboard_services'
+    - builder_table_update_aero_manager_dashboard_services.php
+1.0.550:
+    - 'Updated table aero_manager_dashboard_services'
+    - builder_table_update_aero_manager_dashboard_services_2.php
+1.0.551:
+    - 'Updated table aero_manager_dashboard_services'
+    - builder_table_update_aero_manager_dashboard_services_3.php
+1.0.552:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_134.php
+1.0.553:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_126.php
+1.0.554:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_127.php
+1.0.555:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_128.php
+1.0.556:
+    - 'Updated table aero_manager_faqs'
+    - builder_table_update_aero_manager_faqs_4.php
+1.0.557:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_129.php
+1.0.558:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_130.php
+1.0.559:
+    - 'Updated table aero_manager_services'
+    - builder_table_update_aero_manager_services_131.php
+1.0.560:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_5.php
+1.0.561:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_28.php
+1.0.562:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_9.php
+1.0.563:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_14.php
+1.0.564:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_15.php
+1.0.565:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_16.php
+1.0.566:
+    - 'Updated table aero_manager_cargo_quotes'
+    - builder_table_update_aero_manager_cargo_quotes_17.php
+1.0.567:
+    - 'Updated table aero_manager_exchange_quotes'
+    - builder_table_update_aero_manager_exchange_quotes_29.php
+1.0.568:
+    - 'Updated table aero_manager_payments_quotes'
+    - builder_table_update_aero_manager_payments_quotes_10.php
+1.0.569:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_6.php
+1.0.570:
+    - 'Updated table aero_manager_exchange_gateways'
+    - builder_table_update_aero_manager_exchange_gateways_7.php
+1.0.571:
+    - 'Updated table aero_manager_services_categories'
+    - builder_table_update_aero_manager_services_categories_2.php
+1.0.572:
+    - 'Updated table aero_manager_services_categories'
+    - builder_table_update_aero_manager_services_categories_3.php
+1.0.573:
+    - 'Updated table aero_manager_plans'
+    - builder_table_update_aero_manager_plans_135.php

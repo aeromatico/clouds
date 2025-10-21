@@ -1,0 +1,11 @@
+name: Features
+modelClass: Aero\Manager\Models\Features
+form: $/aero/manager/models/features/fields.yaml
+defaultRedirect: aero/manager/features
+create:
+    redirect: 'aero/manager/features/update/:id'
+    redirectClose: aero/manager/features
+update:
+    redirect: aero/manager/features
+    redirectClose: aero/manager/features
+preview: {  }

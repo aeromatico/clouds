@@ -1,0 +1,252 @@
+url = "/shop/:slug?"
+layout = "dashboard"
+title = "Shop"
+is_hidden = 0
+
+[cart]
+==
+<?php
+use Aero\Clouds\Models\Service;
+use Aero\Clouds\Models\Plan;
+
+function onStart()
+{
+    $slug = $this->param('slug');
+
+    if ($slug) {
+        // Mostrar un servicio específico con sus planes
+        $service = Service::where('slug', $slug)
+            ->where('is_active', true)
+            ->with(['plans' => function($query) {
+                $query->where('is_active', true)->orderBy('sort_order');
+            }])
+            ->first();
+
+        if (!$service) {
+            return Redirect::to('/shop');
+        }
+
+        $this['service'] = $service;
+        $this['plans'] = $service->plans;
+    } else {
+        // Mostrar todos los servicios
+        $this['services'] = Service::where('is_active', true)
+            ->orderBy('sort_order')
+            ->withCount(['plans' => function($query) {
+                $query->where('is_active', true);
+            }])
+            ->get();
+    }
+}
+?>
+==
+{% if service %}
+    <!-- Página de detalle del servicio -->
+    <div class="container mx-auto px-4 py-12">
+        <!-- Breadcrumb -->
+        <div class="mb-8">
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/shop">Servicios</a></li>
+                    <li>{{ service.name }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Encabezado del servicio -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                {{ service.name }}
+            </h1>
+            {% if service.description %}
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    {{ service.description }}
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Planes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {% for plan in plans %}
+                {% set available_pricing = plan.available_pricing %}
+                <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl transition-all duration-300 relative overflow-hidden {{ plan.is_featured ? 'ring-2 ring-primary scale-105' : '' }}"
+                     x-data="planCard(JSON.parse($el.querySelector('.plan-config').textContent))">
+
+                    <script type="application/json" class="plan-config">
+                        {
+                            "defaultCycle": "{{ available_pricing[0].cycle ?? 'monthly' }}",
+                            "pricingOptions": {{ available_pricing|json_encode|raw }},
+                            "planId": {{ plan.id }},
+                            "planName": {{ plan.name|json_encode|raw }},
+                            "serviceName": {{ service.name|json_encode|raw }},
+                            "features": {{ plan.features_list|json_encode|raw }}
+                        }
+                    </script>
+
+                    <!-- Badge de más popular -->
+                    {% if plan.is_featured %}
+                        <div class="absolute -top-3 -right-3 z-10">
+                            <div class="badge badge-primary badge-lg px-6 py-4 shadow-lg rotate-12">
+                                <i class="fas fa-star mr-1"></i>
+                                Popular
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body p-6">
+                        <!-- Encabezado del plan -->
+                        <div class="text-center mb-6">
+                            <h2 class="card-title text-2xl font-bold mb-2 justify-center">
+                                {{ plan.name }}
+                            </h2>
+                            {% if plan.description %}
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ plan.description }}</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Selector de ciclo de facturación (Tabs) -->
+                        {% if available_pricing is not empty %}
+                            <div class="mb-6">
+                                <div class="flex flex-wrap gap-2 justify-center mb-4">
+                                    {% for pricing_option in available_pricing %}
+                                        <button
+                                            @click="selectedCycle = '{{ pricing_option.cycle }}'"
+                                            :class="selectedCycle === '{{ pricing_option.cycle }}' ? 'btn-primary' : 'btn-outline text-base-content'"
+                                            class="btn btn-sm">
+                                            {{ pricing_option.label }}
+                                        </button>
+                                    {% endfor %}
+                                </div>
+
+                                <!-- Precio dinámico -->
+                                <div class="text-center py-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg">
+                                    <div class="text-5xl font-bold text-primary mb-2">
+                                        $<span x-text="getCurrentPrice()"></span>
+                                    </div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400 uppercase tracking-wide">
+                                        <span x-text="getCycleLabel()"></span>
+                                    </div>
+                                    <template x-if="getSetupFee() > 0">
+                                        <div class="text-xs text-gray-500 mt-2">
+                                            + $<span x-text="getSetupFee()"></span> setup fee
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <!-- Recursos del plan -->
+                            {% set limits = plan.formatted_limits %}
+                            {% if limits is not empty %}
+                                <div class="mb-6">
+                                    <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">
+                                        Recursos Incluidos
+                                    </h3>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        {% for limit in limits %}
+                                            <div class="flex items-center gap-2 text-sm">
+                                                <i class="fas {{ limit.icon }} text-primary w-4"></i>
+                                                <div class="flex-1">
+                                                    <div class="font-medium">{{ limit.value }}</div>
+                                                    <div class="text-xs text-gray-500">{{ limit.label }}</div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Características adicionales -->
+                            {% if plan.features_list is not empty %}
+                                <div class="mb-6">
+                                    <h3 class="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide">
+                                        Características
+                                    </h3>
+                                    <ul class="space-y-2">
+                                        {% for feature in plan.features_list %}
+                                            {% if feature %}
+                                                <li class="flex items-start gap-2 text-sm">
+                                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
+                                                    <span>{{ feature }}</span>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+
+                            <!-- Botón de agregar al carrito -->
+                            <button
+                                @click="addToCart()"
+                                class="btn btn-outline btn-full btn-lg gap-2 shadow-lg hover:shadow-xl transition-all">
+                                <i class="fas fa-shopping-cart"></i>
+                                Agregar al Carrito
+                            </button>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Este plan no tiene precios configurados</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botón volver -->
+        <div class="text-center">
+            <a href="/shop" class="btn btn-outline">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Ver Todos los Servicios
+            </a>
+        </div>
+    </div>
+
+{% else %}
+    <!-- Página de lista de servicios -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                Nuestros Servicios
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Elige la familia de servicios que mejor se adapte a tus necesidades
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for service in services %}
+                <a href="/shop/{{ service.slug }}" class="group">
+                    <div class="card bg-base-100 shadow-xl border border-base-300 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                        <div class="card-body">
+                            {% if service.icon %}
+                                <div class="text-5xl mb-4">
+                                    <i class="{{ service.icon }} text-primary"></i>
+                                </div>
+                            {% endif %}
+
+                            <h2 class="card-title text-2xl group-hover:text-primary transition-colors">
+                                {{ service.name }}
+                            </h2>
+
+                            {% if service.description %}
+                                <p class="text-gray-600 dark:text-gray-400">
+                                    {{ service.description }}
+                                </p>
+                            {% endif %}
+
+                            <div class="card-actions justify-between items-center mt-4">
+                                <div class="badge badge-outline">
+                                    {{ service.plans_count }} planes disponibles
+                                </div>
+                                <div class="text-primary font-semibold">
+                                    Ver Planes <i class="fas fa-arrow-right ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

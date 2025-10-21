@@ -1,0 +1,221 @@
+<section class="p-4">
+    <div class="w-full" x-data="tabsServices()">
+        
+        <!-- Loading -->
+        <div x-show="loading" class="text-center py-12">
+            <span class="loading loading-spinner loading-lg"></span>
+            <p>Cargando servicios...</p>
+        </div>
+        
+        <!-- Tabs -->
+        <div x-show="!loading && services.length > 0" class="relative mb-6">
+            <!-- Gradients -->
+            <div x-show="showLeftGradient" 
+                 class="absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none gradient-fade-left"></div>
+            <div x-show="showRightGradient" 
+                 class="absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none gradient-fade-right"></div>
+            
+            <div class="tabs tabs-boxed overflow-x-auto flex-nowrap"
+                 x-ref="tabContainer"
+                 @scroll="updateGradients()"
+                 @touchstart="startTouch($event)"
+                 @touchmove="moveTouch($event)"
+                 @touchend="endTouch()"
+                 @mousedown="startDrag($event)"
+                 @mousemove="moveDrag($event)"
+                 @mouseup="endDrag()"
+                 @mouseleave="endDrag()"
+                 style="scrollbar-width: none; -ms-overflow-style: none;"
+                 :style="{ cursor: isDragging ? 'grabbing' : 'grab' }">
+                
+                <template x-for="(service, index) in services" :key="service.slug">
+                    <a class="tab whitespace-nowrap flex-shrink-0"
+                       :class="activeTab === index ? 'tab-active' : ''"
+                       @click="setActiveTab(index)"
+                       x-text="service.name">
+                    </a>
+                </template>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div x-show="!loading && services.length > 0" class="card bg-base-100 shadow-xl">
+            <div class="card-body text-center">
+                <template x-if="services[activeTab]">
+                    <div>
+                        <h2 class="card-title justify-center text-3xl md:text-5xl mb-2" x-text="services[activeTab]?.name"></h2>
+                        <p class="text-xs md:text-sm mb-6" x-text="services[activeTab]?.menu_description"></p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <template x-for="software in services[activeTab]?.software || []" :key="software.name">
+                                <div class="badge badge-xs badge-outline" x-text="software.name"></div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+        
+        <!-- Error -->
+        <div x-show="error" class="alert alert-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Error al cargar los servicios</span>
+            <button @click="loadServices()" class="btn btn-sm">Reintentar</button>
+        </div>
+        
+    </div>
+</section>
+
+<script>
+    function tabsServices() {
+        return {
+            services: [],
+            activeTab: 0,
+            loading: true,
+            error: false,
+            showLeftGradient: false,
+            showRightGradient: false,
+            isDragging: false,
+            startX: 0,
+            scrollLeft: 0,
+            
+            init() {
+                this.loadServices();
+                this.$nextTick(() => this.updateGradients());
+            },
+            
+            async loadServices() {
+                this.loading = true;
+                this.error = false;
+                
+                try {
+                    const response = await fetch('https://boliviahost.com/api?model=services&action=list&fields=name,slug,menu_description,software&scope=domain');
+                    const data = await response.json();
+                    
+                    if (data.status === 'success' && data.data) {
+                        this.services = data.data;
+                    } else {
+                        throw new Error('Invalid response');
+                    }
+                } catch (error) {
+                    this.error = true;
+                    this.services = [
+                        { 
+                            name: "Shared Hosting", 
+                            slug: "shared-hosting", 
+                            menu_description: "El hosting de siempre, ahora mejor que nunca.",
+                            software: [
+                                { name: "PHP" },
+                                { name: "MySQL" },
+                                { name: "PostgreSQL" },
+                                { name: "Python" },
+                                { name: "Node.js" },
+                                { name: "Ruby" }
+                            ]
+                        },
+                        { 
+                            name: "VPS Hosting", 
+                            slug: "vps-hosting", 
+                            menu_description: "Servidor virtual privado con máximo rendimiento.",
+                            software: [
+                                { name: "Docker" },
+                                { name: "Kubernetes" },
+                                { name: "Linux" },
+                                { name: "Apache" },
+                                { name: "Nginx" }
+                            ]
+                        },
+                        { 
+                            name: "Dedicated Server", 
+                            slug: "dedicated-server", 
+                            menu_description: "Servidor dedicado para máxima potencia.",
+                            software: [
+                                { name: "VMware" },
+                                { name: "Windows Server" },
+                                { name: "CentOS" },
+                                { name: "Ubuntu" }
+                            ]
+                        }
+                    ];
+                }
+                
+                this.loading = false;
+                this.$nextTick(() => this.updateGradients());
+            },
+            
+            setActiveTab(index) {
+                this.activeTab = index;
+            },
+            
+            updateGradients() {
+                const container = this.$refs.tabContainer;
+                if (!container) return;
+                
+                this.showLeftGradient = container.scrollLeft > 0;
+                this.showRightGradient = container.scrollLeft < (container.scrollWidth - container.clientWidth);
+            },
+            
+            startTouch(e) {
+                this.isDragging = true;
+                this.startX = e.touches[0].pageX - this.$refs.tabContainer.offsetLeft;
+                this.scrollLeft = this.$refs.tabContainer.scrollLeft;
+            },
+            
+            moveTouch(e) {
+                if (!this.isDragging) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - this.$refs.tabContainer.offsetLeft;
+                const walk = (x - this.startX) * 2;
+                this.$refs.tabContainer.scrollLeft = this.scrollLeft - walk;
+            },
+            
+            endTouch() {
+                this.isDragging = false;
+            },
+            
+            startDrag(e) {
+                this.isDragging = true;
+                this.startX = e.pageX - this.$refs.tabContainer.offsetLeft;
+                this.scrollLeft = this.$refs.tabContainer.scrollLeft;
+            },
+            
+            moveDrag(e) {
+                if (!this.isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - this.$refs.tabContainer.offsetLeft;
+                const walk = (x - this.startX) * 2;
+                this.$refs.tabContainer.scrollLeft = this.scrollLeft - walk;
+            },
+            
+            endDrag() {
+                this.isDragging = false;
+            }
+        }
+    }
+</script>
+
+<style>
+    .gradient-fade-left {
+        background: linear-gradient(to right, hsl(var(--b1)), transparent);
+    }
+    
+    .gradient-fade-right {
+        background: linear-gradient(to left, hsl(var(--b1)), transparent);
+    }
+    
+    /* Fallback para navegadores que no soporten CSS variables */
+    [data-theme="light"] .gradient-fade-left {
+        background: linear-gradient(to right, #ffffff, transparent);
+    }
+    
+    [data-theme="light"] .gradient-fade-right {
+        background: linear-gradient(to left, #ffffff, transparent);
+    }
+    
+    [data-theme="dark"] .gradient-fade-left {
+        background: linear-gradient(to right, #020617, transparent);
+    }
+    
+    [data-theme="dark"] .gradient-fade-right {
+        background: linear-gradient(to left, #020617, transparent);
+    }
+</style>

@@ -1,0 +1,129 @@
+fields:
+    # Basic Information
+    name:
+        label: Service Name
+        type: text
+        required: true
+        span: left
+        placeholder: Enter service name
+
+    slug:
+        label: Service Slug
+        type: text
+        span: right
+        placeholder: service-slug
+        comment: URL-friendly version of name
+
+    category:
+        label: Category
+        type: dropdown
+        span: left
+        options:
+            hosting: Web Hosting
+            vps: VPS Hosting
+            dedicated: Dedicated Servers
+            domain: Domain Services
+            ssl: SSL Certificates
+            email: Email Services
+            backup: Backup Services
+            other: Other
+
+    type:
+        label: Service Type
+        type: dropdown
+        span: right
+        default: hosting
+        options:
+            hosting: Hosting
+            domain: Domain
+            ssl: SSL Certificate
+            addon: Add-on Service
+
+    # Content
+    short_description:
+        label: Short Description
+        type: textarea
+        size: small
+        span: full
+        maxlength: 200
+        comment: Brief description for listings
+
+    description:
+        label: Full Description
+        type: textarea
+        size: large
+        span: full
+        comment: Detailed service description
+
+    # Status
+    is_active:
+        label: Active
+        type: switch
+        span: left
+        default: true
+        comment: Service is available
+
+    is_public:
+        label: Public
+        type: switch
+        span: right
+        default: true
+        comment: Show to public
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: left
+        default: 0
+        comment: Order in listings
+
+    # Related Plans Section
+    plans:
+        label: Service Plans
+        type: repeater
+        span: full
+        prompt: Add Plan
+        form:
+            fields:
+                name:
+                    label: Plan Name
+                    type: text
+                    required: true
+                    span: left
+                price:
+                    label: Price
+                    type: number
+                    step: 0.01
+                    required: true
+                    span: right
+                setup_fee:
+                    label: Setup Fee
+                    type: number
+                    step: 0.01
+                    default: 0
+                    span: left
+                billing_cycle:
+                    label: Billing Cycle
+                    type: dropdown
+                    span: right
+                    default: monthly
+                    options:
+                        monthly: Monthly
+                        quarterly: Quarterly
+                        yearly: Yearly
+                        custom: Custom
+                description:
+                    label: Plan Description
+                    type: textarea
+                    size: small
+                    span: full
+                is_popular:
+                    label: Popular Plan
+                    type: switch
+                    span: left
+                    default: false
+                is_active:
+                    label: Active
+                    type: switch
+                    span: right
+                    default: true

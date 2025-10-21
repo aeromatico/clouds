@@ -1,0 +1,14 @@
+name: Plan
+modelClass: Aero\Connector\Models\Plan
+defaultRedirect: aero/connector/plans
+create:
+    title: Create Plan
+    redirect: aero/connector/plans/update/:id
+    redirectClose: aero/connector/plans
+update:
+    title: Edit Plan
+    redirect: aero/connector/plans
+    redirectClose: aero/connector/plans
+preview:
+    title: Preview Plan
+form: $/aero/connector/models/plan/fields.yaml

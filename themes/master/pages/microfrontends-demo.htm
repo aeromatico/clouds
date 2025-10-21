@@ -1,0 +1,203 @@
+url = "/microfrontends-demo"
+layout = "default"
+title = "Demo de Microfrontends"
+is_hidden = 0
+
+[viewBag]
+localeCode = "es"
+==
+<!-- Demo Page for Microfrontends -->
+<section class="py-12 bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-foreground mb-4">
+                Demo de Microfrontends con API Cache
+            </h1>
+            <p class="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Ejemplo de reutilización de endpoints entre componentes independientes
+            </p>
+        </div>
+
+        <!-- API Cache Status -->
+        <div class="bg-card border border-border rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-card-foreground mb-4 flex items-center">
+                <i class="fas fa-database mr-2 text-primary"></i>
+                Estado del Cache de APIs
+            </h2>
+            <div x-data="{
+                stats: {},
+                refreshStats() {
+                    if (window.apiManager) {
+                        this.stats = window.apiManager.getCacheStats();
+                    }
+                }
+            }" x-init="refreshStats(); setInterval(refreshStats, 2000)">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary" x-text="stats.total || 0"></div>
+                        <div class="text-sm text-muted-foreground">Entradas en Cache</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-orange-500" x-text="stats.pending || 0"></div>
+                        <div class="text-sm text-muted-foreground">Requests Pendientes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-500" x-text="stats.subscribers || 0"></div>
+                        <div class="text-sm text-muted-foreground">Suscriptores</div>
+                    </div>
+                    <div class="text-center">
+                        <button 
+                            @click="window.apiManager?.clearCache(); $nextTick(() => refreshStats())"
+                            class="btn btn-outline btn-sm"
+                        >
+                            <i class="fas fa-trash mr-1"></i>
+                            Limpiar Cache
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Cache Entries Details -->
+                <div x-show="stats.entries && stats.entries.length > 0" class="space-y-2">
+                    <h3 class="font-medium text-foreground">Entradas del Cache:</h3>
+                    <template x-for="entry in stats.entries || []" :key="entry.endpoint">
+                        <div class="flex items-center justify-between p-2 bg-muted/30 rounded text-sm">
+                            <span class="font-mono text-foreground" x-text="entry.endpoint"></span>
+                            <div class="flex items-center space-x-2 text-muted-foreground">
+                                <span x-text="`Edad: ${Math.floor(entry.age / 1000)}s`"></span>
+                                <span x-text="`Expira: ${Math.floor(entry.expires / 1000)}s`"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Explanation -->
+        <div class="bg-primary/5 border border-primary/20 rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4 flex items-center">
+                <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                ¿Cómo funciona?
+            </h2>
+            <div class="prose prose-sm text-muted-foreground max-w-none">
+                <p class="mb-3">
+                    Los dos componentes a continuación utilizan el mismo endpoint <code>/api/user/profile</code>, 
+                    pero el sistema de cache inteligente garantiza que:
+                </p>
+                <ul class="list-disc list-inside space-y-1 mb-3">
+                    <li>Solo se hace <strong>una</strong> petición HTTP real</li>
+                    <li>Los datos se comparten automáticamente entre componentes</li>
+                    <li>Cuando un componente actualiza los datos, el otro se actualiza también</li>
+                    <li>El cache se invalida inteligentemente en operaciones de escritura</li>
+                </ul>
+                <p class="text-sm text-primary">
+                    <strong>Prueba:</strong> Edita el perfil en el segundo componente y observa cómo el primero se actualiza automáticamente.
+                </p>
+            </div>
+        </div>
+
+        <!-- Microfrontends Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- User Dashboard Microfrontend -->
+            <div>
+                <h2 class="text-2xl font-semibold text-foreground mb-4 flex items-center">
+                    <i class="fas fa-tachometer-alt mr-2 text-blue-500"></i>
+                    User Dashboard
+                    <span class="ml-2 text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                        Microfrontend 1
+                    </span>
+                </h2>
+                {% partial 'microfrontends/user-dashboard' %}
+            </div>
+
+            <!-- User Profile Microfrontend -->
+            <div>
+                <h2 class="text-2xl font-semibold text-foreground mb-4 flex items-center">
+                    <i class="fas fa-user-edit mr-2 text-green-500"></i>
+                    User Profile
+                    <span class="ml-2 text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                        Microfrontend 2
+                    </span>
+                </h2>
+                {% partial 'microfrontends/user-profile' %}
+            </div>
+        </div>
+
+        <!-- API Simulation Notice -->
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <div class="flex items-start space-x-3">
+                <i class="fas fa-info-circle text-yellow-600 mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-yellow-800">Nota sobre las APIs</h3>
+                    <p class="text-yellow-700 text-sm mt-1">
+                        Esta demo utiliza APIs ficticias. En un entorno real, deberías implementar 
+                        los endpoints correspondientes en tu backend de OctoberCMS:
+                    </p>
+                    <ul class="list-disc list-inside text-yellow-700 text-sm mt-2 space-y-1">
+                        <li><code>GET /api/user/profile</code> - Obtener perfil del usuario</li>
+                        <li><code>PUT /api/user/profile</code> - Actualizar perfil del usuario</li>
+                        <li><code>GET /api/user/stats</code> - Obtener estadísticas del usuario</li>
+                        <li><code>GET /api/user/notifications</code> - Obtener notificaciones</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Implementation -->
+        <div class="bg-card border border-border rounded-lg p-6">
+            <h2 class="text-xl font-semibold text-card-foreground mb-4 flex items-center">
+                <i class="fas fa-code mr-2 text-purple-500"></i>
+                Implementación Técnica
+            </h2>
+            <div class="space-y-4">
+                
+                <!-- Architecture Overview -->
+                <div>
+                    <h3 class="font-medium text-foreground mb-2">Arquitectura del Sistema:</h3>
+                    <div class="bg-muted/30 rounded p-4 font-mono text-sm">
+                        <div class="text-primary">API Manager (core/api-manager.js)</div>
+                        <div class="pl-4 text-muted-foreground">├── Cache inteligente con TTL</div>
+                        <div class="pl-4 text-muted-foreground">├── Deduplicación de requests</div>
+                        <div class="pl-4 text-muted-foreground">├── Sistema de suscripciones</div>
+                        <div class="pl-4 text-muted-foreground">└── Invalidación automática</div>
+                        <br>
+                        <div class="text-green-500">Alpine Mixin (core/alpine-api-mixin.js)</div>
+                        <div class="pl-4 text-muted-foreground">├── Wrapper para componentes</div>
+                        <div class="pl-4 text-muted-foreground">├── Manejo automático de loading/error</div>
+                        <div class="pl-4 text-muted-foreground">└── Cleanup automático de suscripciones</div>
+                        <br>
+                        <div class="text-blue-500">Microfrontends</div>
+                        <div class="pl-4 text-muted-foreground">├── user-dashboard.js (consumidor)</div>
+                        <div class="pl-4 text-muted-foreground">├── user-profile.js (consumidor/productor)</div>
+                        <div class="pl-4 text-muted-foreground">└── Parciales Twig independientes</div>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div>
+                    <h3 class="font-medium text-foreground mb-2">Beneficios Principales:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-check text-green-500 mt-1 text-sm"></i>
+                            <span class="text-sm text-muted-foreground">Reducción del 80%+ en requests HTTP</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-check text-green-500 mt-1 text-sm"></i>
+                            <span class="text-sm text-muted-foreground">Sincronización automática entre componentes</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-check text-green-500 mt-1 text-sm"></i>
+                            <span class="text-sm text-muted-foreground">Componentes verdaderamente independientes</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-check text-green-500 mt-1 text-sm"></i>
+                            <span class="text-sm text-muted-foreground">Mejor experiencia de usuario</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

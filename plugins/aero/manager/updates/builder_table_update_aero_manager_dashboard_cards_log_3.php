@@ -1,0 +1,23 @@
+<?php namespace Aero\Manager\Updates;
+
+use Schema;
+use October\Rain\Database\Updates\Migration;
+
+class BuilderTableUpdateAeroManagerDashboardCardsLog3 extends Migration
+{
+    public function up()
+    {
+        Schema::table('aero_manager_dashboard_cards_log', function($table)
+        {
+            $table->string('detail');
+        });
+    }
+    
+    public function down()
+    {
+        Schema::table('aero_manager_dashboard_cards_log', function($table)
+        {
+            $table->dropColumn('detail');
+        });
+    }
+}

@@ -1,0 +1,53 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    credits:
+        label: Credits
+        type: text
+        searchable: true
+        sortable: true
+    debits:
+        label: Debits
+        type: text
+        searchable: true
+        sortable: true
+    load_amount:
+        label: Amount
+        type: text
+        searchable: true
+        sortable: true
+    load_currency:
+        label: Currency
+        type: text
+        searchable: true
+        sortable: true
+    user_id:
+        label: User
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    status:
+        label: Status
+        type: text
+        searchable: true
+        sortable: true
+    domain:
+        label: Domain
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'Created at'
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: 'Updated at'
+        type: datetime
+        searchable: true
+        sortable: true

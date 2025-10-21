@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: Name
+        type: text
+    mobile:
+        label: Mobile
+        type: text
+    active:
+        label: 'Is active?'
+        type: switch
+    created_at:
+        label: Created
+        type: datetime
+    updated_at:
+        label: Updated
+        type: datetime

@@ -1,0 +1,207 @@
+plugin:
+    name: 'aero.manager::lang.plugin.name'
+    description: 'aero.manager::lang.plugin.description'
+    author: Aero
+    icon: oc-icon-cubes
+    homepage: ''
+permissions:
+    Service:
+        tab: Manager
+        label: 'Manage Servicios'
+    Plans:
+        tab: Manager
+        label: 'Manage Planes'
+    Portal:
+        tab: Manager
+        label: 'Manage Portal'
+    Faqs:
+        tab: Manager
+        label: 'Manage Faqs'
+    Features:
+        tab: Manager
+        label: 'Manage features'
+    Orders:
+        tab: Manager
+        label: 'Manage orders'
+    Payments:
+        tab: Manager
+        label: 'Manage Payments'
+    Addons:
+        tab: Manager
+        label: 'Manage Addons'
+    Contents:
+        tab: Manager
+        label: 'Manage Contents'
+    Settings:
+        tab: Manager
+        label: 'General Settings'
+    Themes:
+        tab: Manager
+        label: 'Manage themes'
+    Freelancers:
+        tab: Manager
+        label: 'Manage freelancers'
+    ExpressOrders:
+        tab: Manager
+        label: 'Manage expressOrders'
+    Dashboard:
+        tab: Dashboard
+        label: Dashboard
+    ExchangeQuotes:
+        tab: Exchange
+        label: Quotes
+    ExchangeGateways:
+        tab: Exchange
+        label: Gateways
+    CargoQuotes:
+        tab: Cargo
+        label: Quotes
+    StoreItems:
+        tab: Store
+        label: 'Items for sale'
+    StoreCollections:
+        tab: Store
+        label: 'Items collections'
+    Docs:
+        tab: Docs
+        label: Docs
+    DocsCategories:
+        tab: Docs
+        label: 'Docs categories'
+    ServicesCategories:
+        tab: Manager
+        label: 'Services categories'
+    PaymentsQuotes:
+        tab: Payments
+        label: 'Payment Quotes'
+    WalletBalance:
+        tab: Wallet
+        label: 'Wallet balance'
+    DashboardServices:
+        tab: Dashboard
+        label: 'Dasboard Services'
+    WallterOrders:
+        tab: Wallet
+        label: 'Wallet orders'
+navigation:
+    aero_manager_exchange:
+        label: 'Pay Quotes'
+        url: aero/manager/exchangequotes
+        icon: icon-calculator
+        sideMenu:
+            aero_manager_exchanges_quotes:
+                label: Exchange
+                url: aero/manager/exchangequotes
+                icon: icon-exchange
+            aero_manager_exchanges_payments:
+                label: Payments
+                url: aero/manager/paymentsquotes
+                icon: icon-shopping-cart
+            aero_manager_exchanges_cargo:
+                label: Cargo
+                url: aero/manager/cargoquotes
+                icon: icon-paper-plane
+            aero_manager_exchanges_gateways:
+                label: 'Exchange Gateways'
+                url: aero/manager/exchangegateways
+                icon: icon-list
+    aero_manager_store:
+        label: Store
+        url: aero/manager/storeitems
+        icon: icon-cart
+        sideMenu:
+            aero_manager_store_items:
+                label: Items
+                url: aero/manager/storeitems
+                icon: icon-shopping-cart
+            aero_manager_store_collections:
+                label: Collections
+                url: aero/manager/storecollections
+                icon: icon-list
+    aero_manager_orders:
+        label: Orders
+        url: aero/manager/wallet
+        icon: icon-cart
+        sideMenu:
+            aero_manager_wallet:
+                label: 'Wallet Orders'
+                url: aero/manager/wallet
+                icon: icon-shopping-cart
+            aero_manager_dashboard_services:
+                label: Services
+                url: aero/manager/dashboardservices
+                icon: icon-list
+    aero_manager_services:
+        label: Manager
+        url: aero/manager/plans
+        icon: icon-server
+        sideMenu:
+            aero_manager_plans:
+                label: Plans
+                url: aero/manager/plans
+                icon: icon-table
+            aero_manager_services:
+                label: Services
+                url: aero/manager/services
+                icon: icon-sitemap
+            aero_manager_services_categories:
+                label: 'Services categories'
+                url: aero/manager/servicescategories
+                icon: icon-sitemap
+            aero_manager_faqs:
+                label: Faqs
+                url: aero/manager/faqs
+                icon: icon-question-circle
+            aero_manager_features:
+                label: Features
+                url: aero/manager/features
+                icon: icon-star
+            aero_manager_orders:
+                label: Orders
+                url: aero/manager/orders
+                icon: icon-shopping-cart
+            payments:
+                label: Payments
+                url: aero/manager/payments
+                icon: icon-money
+            addons:
+                label: Addons
+                url: aero/manager/addons
+                icon: icon-cubes
+            aero_manager_themes:
+                label: Themes
+                url: aero/manager/themes
+                icon: icon-paint-brush
+            aero_manager_portal:
+                label: Portal
+                url: aero/manager/portal
+                icon: icon-home
+            aero_manager_settings:
+                label: Settings
+                url: aero/manager/settings
+                icon: icon-sitemap
+            aero_manager_docs:
+                label: Docs
+                url: aero/manager/docs
+                icon: icon-sitemap
+            aero_manager_docs_categories:
+                label: 'Docs categories'
+                url: aero/manager/docscategories
+                icon: icon-sitemap
+    Contents:
+        label: Contents
+        url: aero/manager/contents
+        icon: icon-file-o
+    aero_manager_dashboard:
+        label: dashboard
+        url: aero/manager/wallet
+        icon: icon-server
+        sideMenu:
+            aero_manager_dashboard_wallet:
+                label: Wallet
+                url: aero/manager/wallet
+                icon: icon-sitemap
+            aero_manager_dashboard_cards:
+                label: Cards
+                url: aero/manager/dashboardcards
+                icon: icon-sitemap

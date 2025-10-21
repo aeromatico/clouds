@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+    description:
+        label: description
+        type: text
+    mode:
+        label: mode
+        type: text
+    start_date:
+        label: start_date
+        type: date
+    end_date:
+        label: end_date
+        type: date
+    active:
+        label: active
+        type: switch
+    created_at:
+        label: created_at
+        type: date
+    updated_at:
+        label: updated_at
+        type: date
+    deleted_at:
+        label: deleted_at
+        type: date

@@ -1,0 +1,19 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    email:
+        label: Email
+        span: auto
+        type: text
+    plan_id:
+        label: Plan
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    status:
+        label: Status
+        span: auto
+        type: text

@@ -1,0 +1,27 @@
+fields:
+    name_curse:
+        label: 'Name curse'
+        span: auto
+        type: text
+    description:
+        label: Description
+        size: ''
+        span: auto
+        type: textarea
+    mode:
+        label: Mode
+        span: auto
+        type: text
+    start_date:
+        label: 'Start date'
+        mode: datetime
+        span: auto
+        type: datepicker
+    end_date:
+        label: 'End date'
+        span: auto
+        type: datepicker
+    state:
+        label: State
+        span: auto
+        type: switch

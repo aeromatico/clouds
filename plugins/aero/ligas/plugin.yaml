@@ -1,0 +1,11 @@
+plugin:
+    name: 'aero.ligas::lang.plugin.name'
+    description: 'aero.ligas::lang.plugin.description'
+    author: aero
+    icon: oc-icon-adjust
+    homepage: ''
+navigation:
+    ligas:
+        label: ligas
+        url: /aero/ligas/ligas
+        icon: icon-life-ring

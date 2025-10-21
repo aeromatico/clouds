@@ -1,0 +1,10 @@
+name: ExchangeQuotes
+form: $/aero/manager/models/exchangequotes/fields.yaml
+modelClass: Aero\Manager\Models\ExchangeQuotes
+defaultRedirect: aero/manager/exchangequotes
+create:
+    redirect: 'aero/manager/exchangequotes/update/:id'
+    redirectClose: aero/manager/exchangequotes
+update:
+    redirect: aero/manager/exchangequotes
+    redirectClose: aero/manager/exchangequotes

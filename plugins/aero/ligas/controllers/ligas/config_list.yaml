@@ -1,0 +1,12 @@
+list: $/aero/ligas/models/clubes/columns.yaml
+modelClass: Aero\Ligas\Models\Clubes
+title: Ligas
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'aero/ligas/ligas/update/:id'

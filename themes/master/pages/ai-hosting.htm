@@ -1,0 +1,495 @@
+title = "AI Hosting - Desarrollo Potenciado por Inteligencia Artificial"
+url = "/ai-hosting"
+layout = "default"
+is_hidden = 0
+
+[viewBag]
+localeCode = "es"
+==
+<style>
+    /* Animaciones personalizadas para la landing */
+    @keyframes gradient-xy {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .gradient-animated {
+        background: linear-gradient(270deg, #0ea5e9, #8b5cf6, #ec4899);
+        background-size: 600% 600%;
+        animation: gradient-xy 15s ease infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .float-animation {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .cli-window {
+        background: #1e293b;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .cli-header {
+        background: #0f172a;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .cli-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+</style>
+
+<!-- Hero Section con Gradient Animado -->
+<section class="relative min-h-[90vh] flex items-center overflow-hidden">
+    <!-- Background Gradient -->
+    <div class="absolute inset-0 gradient-animated opacity-10"></div>
+
+    <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Column: Content -->
+            <div class="space-y-8" x-data="{ visible: false }" x-init="setTimeout(() => visible = true, 100)">
+                <!-- Badge -->
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-500 delay-100"
+                    x-transition:enter-start="opacity-0 transform -translate-y-4"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    class="inline-block"
+                >
+                    <div class="badge badge-primary badge-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                        </svg>
+                        Nuevo: AI Hosting
+                    </div>
+                </div>
+
+                <!-- Heading -->
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-500 delay-200"
+                    x-transition:enter-start="opacity-0 transform -translate-y-4"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                >
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                        Desarrolla <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-pink-500">10x más rápido</span> con IA
+                    </h1>
+                </div>
+
+                <!-- Description -->
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-500 delay-300"
+                    x-transition:enter-start="opacity-0 transform -translate-y-4"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                >
+                    <p class="text-xl text-base-content/70 max-w-2xl">
+                        Tu servidor con <strong>Claude Code</strong>, <strong>Gemini CLI</strong> y <strong>Aider AI</strong> pre-configurados. Sin instalación, sin configuración. Solo SSH y empieza a codear con IA.
+                    </p>
+                </div>
+
+                <!-- Features Grid -->
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-500 delay-400"
+                    x-transition:enter-start="opacity-0 transform -translate-y-4"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    class="grid grid-cols-2 gap-4"
+                >
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Setup automático</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>API keys propias</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Multi-IA incluidas</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span>100% seguro</span>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-500 delay-500"
+                    x-transition:enter-start="opacity-0 transform -translate-y-4"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    class="flex flex-wrap gap-4"
+                >
+                    <a href="#planes" class="btn btn-primary btn-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                        </svg>
+                        Ver Planes
+                    </a>
+                    <a href="#como-funciona" class="btn btn-outline btn-lg gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+                        </svg>
+                        Ver Demo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Column: CLI Demo -->
+            <div class="hidden lg:block float-animation" x-data="{ visible: false }" x-init="setTimeout(() => visible = true, 300)">
+                <div
+                    x-show="visible"
+                    x-transition:enter="transition ease-out duration-700"
+                    x-transition:enter-start="opacity-0 transform translate-x-12"
+                    x-transition:enter-end="opacity-100 transform translate-x-0"
+                    class="cli-window shadow-2xl"
+                >
+                    <div class="cli-header">
+                        <div class="cli-dot bg-error"></div>
+                        <div class="cli-dot bg-warning"></div>
+                        <div class="cli-dot bg-success"></div>
+                        <span class="text-xs text-gray-400 ml-2">tu-servidor ~ (SSH)</span>
+                    </div>
+                    <div class="p-6 font-mono text-sm space-y-3">
+                        <div class="flex items-start gap-2">
+                            <span class="text-success">$</span>
+                            <span class="text-gray-300">ai-status</span>
+                        </div>
+                        <div class="text-gray-400 pl-4 space-y-1">
+                            <div>✓ Claude Code: Instalado</div>
+                            <div>✓ Gemini CLI: Instalado</div>
+                            <div>✓ Aider AI: Instalado</div>
+                        </div>
+                        <div class="flex items-start gap-2 mt-4">
+                            <span class="text-success">$</span>
+                            <span class="text-gray-300">claude-code "refactoriza app.js"</span>
+                        </div>
+                        <div class="text-primary pl-4">
+                            🤖 Analizando código...
+                        </div>
+                        <div class="text-gray-400 pl-4 text-xs">
+                            > Encontradas 3 oportunidades de mejora<br>
+                            > Aplicando async/await pattern<br>
+                            > ✓ Refactorización completada
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- IAs Incluidas Section -->
+<section class="py-20 bg-base-200/50" id="ias-incluidas">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-4">
+                3 IAs Potentes, <span class="text-primary">Listas para Usar</span>
+            </h2>
+            <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+                No pierdas tiempo instalando. Todo está preconfigurado y optimizado.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Claude Code -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 border border-primary/20">
+                <div class="card-body">
+                    <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-primary">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-2xl">Claude Code</h3>
+                    <p class="text-base-content/70">
+                        El cerebro de tu desarrollo. 200k tokens de contexto para proyectos complejos.
+                    </p>
+                    <div class="space-y-2 mt-4">
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Debugging profesional</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Refactorización inteligente</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Análisis de arquitectura</span>
+                        </div>
+                    </div>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-primary">Incluido</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gemini CLI -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 border border-secondary/20">
+                <div class="card-body">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-secondary">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-2xl">Gemini CLI</h3>
+                    <div class="badge badge-success badge-sm">GRATIS</div>
+                    <p class="text-base-content/70">
+                        Tu asistente para consultas rápidas. Aprende, experimenta y desarrolla sin costo.
+                    </p>
+                    <div class="space-y-2 mt-4">
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Consultas ilimitadas</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Perfecto para aprender</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Código rápido y simple</span>
+                        </div>
+                    </div>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-secondary">Incluido</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aider AI -->
+            <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 border border-accent/20">
+                <div class="card-body">
+                    <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-accent">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title text-2xl">Aider AI</h3>
+                    <p class="text-base-content/70">
+                        Pair programming con IA. Edita código directamente en tu proyecto.
+                    </p>
+                    <div class="space-y-2 mt-4">
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Edición en tiempo real</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Contexto completo del proyecto</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Compatible con GPT-4</span>
+                        </div>
+                    </div>
+                    <div class="card-actions justify-end mt-4">
+                        <div class="badge badge-accent">Incluido</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cómo Funciona Section -->
+<section class="py-20" id="como-funciona">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-4">
+                Tan Simple Como <span class="text-primary">1, 2, 3</span>
+            </h2>
+            <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+                Sin instalaciones complicadas. Todo está listo desde el primer login.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="card bg-base-100 shadow-lg">
+                <div class="card-body">
+                    <div class="w-12 h-12 bg-primary text-primary-content rounded-full flex items-center justify-center font-bold text-xl mb-4">
+                        1
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Conecta por SSH</h3>
+                    <p class="text-base-content/70">
+                        Inicia sesión en tu servidor como siempre lo haces.
+                    </p>
+                    <div class="mockup-code mt-3 bg-base-300 text-sm">
+                        <pre data-prefix="$"><code>ssh usuario@servidor.com</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-base-100 shadow-lg">
+                <div class="card-body">
+                    <div class="w-12 h-12 bg-secondary text-secondary-content rounded-full flex items-center justify-center font-bold text-xl mb-4">
+                        2
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Verifica el Estado</h3>
+                    <p class="text-base-content/70">
+                        Un comando y sabes qué IAs tienes disponibles.
+                    </p>
+                    <div class="mockup-code mt-3 bg-base-300 text-sm">
+                        <pre data-prefix="$"><code>ai-status</code></pre>
+                        <pre data-prefix=">" class="text-success"><code>✓ Claude, Gemini, Aider</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-base-100 shadow-lg">
+                <div class="card-body">
+                    <div class="w-12 h-12 bg-accent text-accent-content rounded-full flex items-center justify-center font-bold text-xl mb-4">
+                        3
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">¡Empieza a Desarrollar!</h3>
+                    <p class="text-base-content/70">
+                        Usa cualquier IA con un comando.
+                    </p>
+                    <div class="mockup-code mt-3 bg-base-300 text-sm">
+                        <pre data-prefix="$"><code>claude-code "ayuda"</code></pre>
+                        <pre data-prefix="$"><code>gemini "explica API"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Beneficios Section -->
+<section class="py-20 bg-base-200/50">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-4">
+                ¿Por Qué AI Hosting?
+            </h2>
+            <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+                Desarrolla más rápido, ahorra tiempo y reduce errores.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="card-title">Setup Instantáneo</h3>
+                    <p class="text-base-content/70">
+                        Cero configuración. Primer login y ya tienes todo listo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">🔐</div>
+                    <h3 class="card-title">API Keys Propias</h3>
+                    <p class="text-base-content/70">
+                        Tus claves, tu control. Sin compartir credenciales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="card-title">Multi-IA</h3>
+                    <p class="text-base-content/70">
+                        Usa la IA correcta para cada tarea. Todo en un lugar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="card-title">Ahorra Costos</h3>
+                    <p class="text-base-content/70">
+                        Gemini gratis. Claude solo cuando lo necesitas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="card-title">100% Seguro</h3>
+                    <p class="text-base-content/70">
+                        Restricciones por usuario. Aislamiento total.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-100">
+                <div class="card-body">
+                    <div class="text-4xl mb-4">🔄</div>
+                    <h3 class="card-title">Auto-Actualización</h3>
+                    <p class="text-base-content/70">
+                        Nuevos usuarios se configuran automáticamente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Final Section -->
+<section class="py-20">
+    <div class="container mx-auto px-4">
+        <div class="card bg-gradient-to-r from-primary to-secondary text-primary-content shadow-2xl">
+            <div class="card-body items-center text-center py-16">
+                <h2 class="card-title text-4xl lg:text-5xl font-bold mb-4">
+                    Empieza a Desarrollar con IA Hoy
+                </h2>
+                <p class="text-xl opacity-90 mb-8 max-w-2xl">
+                    Todos nuestros planes incluyen AI Hosting. Sin costo adicional.
+                </p>
+                <div class="card-actions flex-col sm:flex-row gap-4">
+                    <a href="/pricing" class="btn btn-lg bg-white text-primary hover:bg-gray-100 border-0">
+                        Ver Planes de Hosting
+                    </a>
+                    <a href="/contact" class="btn btn-lg btn-outline border-white text-white hover:bg-white hover:text-primary">
+                        Contactar Ventas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

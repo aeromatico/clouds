@@ -1,0 +1,10 @@
+name: Portal
+modelClass: Aero\Manager\Models\Portal
+form: $/aero/manager/models/portal/fields.yaml
+defaultRedirect: aero/manager/portal/update/1
+create:
+    redirect: 'aero/manager/portal/update/:id'
+    redirectClose: aero/manager/portal
+update:
+    redirect: aero/manager/portal/update/1
+    redirectClose: 'https://boliviahost.com/backend/aero/manager/plans'

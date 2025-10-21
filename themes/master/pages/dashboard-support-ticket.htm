@@ -1,0 +1,279 @@
+title = "Ver Ticket"
+url = "/dashboard/support/:ticket_number"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+
+[tickets]
+==
+<?php
+use Aero\Clouds\Models\Ticket;
+
+function onStart()
+{
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    $ticketNumber = $this->param('ticket_number');
+
+    $ticket = Ticket::where('ticket_number', $ticketNumber)
+        ->forUser($user->id)
+        ->with(['department', 'replies.user', 'replies.admin'])
+        ->first();
+
+    if (!$ticket) {
+        Flash::error('Ticket no encontrado');
+        return Redirect::to('/dashboard/support');
+    }
+
+    $this['ticket'] = $ticket;
+}
+?>
+==
+<!-- Ticket Detail Page -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="flex items-center gap-2 text-sm breadcrumbs mb-4">
+            <a href="/dashboard">Dashboard</a>
+            <span>/</span>
+            <a href="/dashboard/support">Soporte</a>
+            <span>/</span>
+            <span>{{ ticket.ticket_number }}</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    {{ ticket.subject }}
+                </h1>
+                <div class="flex flex-wrap items-center gap-3">
+                    <span class="badge badge-lg font-mono">{{ ticket.ticket_number }}</span>
+                    <span class="badge badge-lg {{ ticket.status_badge }}">
+                        {% if ticket.status == 'open' %}Abierto
+                        {% elseif ticket.status == 'in_progress' %}En Progreso
+                        {% elseif ticket.status == 'waiting_on_customer' %}Esperando tu respuesta
+                        {% elseif ticket.status == 'waiting_on_staff' %}Esperando staff
+                        {% elseif ticket.status == 'closed' %}Cerrado
+                        {% endif %}
+                    </span>
+                    <span class="badge badge-lg {{ ticket.priority_badge }}">
+                        Prioridad:
+                        {% if ticket.priority == 'low' %}Baja
+                        {% elseif ticket.priority == 'normal' %}Normal
+                        {% elseif ticket.priority == 'high' %}Alta
+                        {% elseif ticket.priority == 'urgent' %}Urgente
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                {% if ticket.isOpen() %}
+                    <button
+                        data-request="tickets::onCloseTicket"
+                        data-request-data="ticket_number: '{{ ticket.ticket_number }}'"
+                        data-request-confirm="¿Estás seguro de cerrar este ticket?"
+                        class="btn btn-warning btn-sm">
+                        <i class="fas fa-times-circle mr-2"></i>
+                        Cerrar Ticket
+                    </button>
+                {% else %}
+                    <button
+                        data-request="tickets::onReopenTicket"
+                        data-request-data="ticket_number: '{{ ticket.ticket_number }}'"
+                        class="btn btn-success btn-sm">
+                        <i class="fas fa-redo mr-2"></i>
+                        Reabrir Ticket
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Content -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Original Message -->
+            <div class="card bg-base-100 shadow-xl border border-base-300">
+                <div class="card-body">
+                    <div class="flex items-start gap-4">
+                        <div class="avatar placeholder">
+                            <div class="bg-primary text-primary-content rounded-full w-12">
+                                <span>{{ user.name|slice(0, 1)|upper }}</span>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <p class="font-semibold">{{ user.name }}</p>
+                                    <p class="text-sm text-gray-500">{{ ticket.created_at|date('d/m/Y H:i') }}</p>
+                                </div>
+                                <span class="badge badge-primary">Mensaje Original</span>
+                            </div>
+                            <div class="prose max-w-none">
+                                {{ ticket.message|nl2br|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Replies -->
+            {% for reply in ticket.replies %}
+                <div class="card bg-base-100 shadow-xl border border-base-300">
+                    <div class="card-body">
+                        <div class="flex items-start gap-4">
+                            <div class="avatar placeholder">
+                                <div class="{% if reply.admin_id %}bg-secondary{% else %}bg-primary{% endif %} text-white rounded-full w-12">
+                                    <span>
+                                        {% if reply.admin_id %}
+                                            {{ reply.admin.full_name|slice(0, 1)|upper }}
+                                        {% else %}
+                                            {{ reply.user.name|slice(0, 1)|upper }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div>
+                                        <p class="font-semibold">
+                                            {% if reply.admin_id %}
+                                                {{ reply.admin.full_name }}
+                                                <span class="badge badge-sm badge-secondary ml-2">Staff</span>
+                                            {% else %}
+                                                {{ reply.user.name }}
+                                            {% endif %}
+                                        </p>
+                                        <p class="text-sm text-gray-500">{{ reply.created_at|date('d/m/Y H:i') }}</p>
+                                    </div>
+                                </div>
+                                <div class="prose max-w-none">
+                                    {{ reply.message|nl2br|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <!-- Reply Form -->
+            {% if ticket.isOpen() %}
+                <div class="card bg-base-100 shadow-xl border border-base-300">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">Agregar Respuesta</h3>
+                        <form data-request="tickets::onAddReply" data-request-flash>
+                            <input type="hidden" name="ticket_number" value="{{ ticket.ticket_number }}" />
+
+                            <div class="form-control">
+                                <textarea
+                                    name="message"
+                                    class="textarea textarea-bordered h-32"
+                                    placeholder="Escribe tu respuesta aquí..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="flex gap-4 mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-reply mr-2"></i>
+                                    Enviar Respuesta
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Este ticket está cerrado. Puedes reabrirlo si necesitas continuar la conversación.</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+            <div class="card bg-base-100 shadow-xl border border-base-300 sticky top-4">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Información</h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Departamento</p>
+                            <p class="font-semibold">{{ ticket.department.name }}</p>
+                        </div>
+
+                        <div class="divider my-2"></div>
+
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Estado</p>
+                            <span class="badge {{ ticket.status_badge }}">
+                                {% if ticket.status == 'open' %}Abierto
+                                {% elseif ticket.status == 'in_progress' %}En Progreso
+                                {% elseif ticket.status == 'waiting_on_customer' %}Esperando tu respuesta
+                                {% elseif ticket.status == 'waiting_on_staff' %}Esperando staff
+                                {% elseif ticket.status == 'closed' %}Cerrado
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="divider my-2"></div>
+
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Prioridad</p>
+                            <span class="badge {{ ticket.priority_badge }}">
+                                {% if ticket.priority == 'low' %}Baja
+                                {% elseif ticket.priority == 'normal' %}Normal
+                                {% elseif ticket.priority == 'high' %}Alta
+                                {% elseif ticket.priority == 'urgent' %}Urgente
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <div class="divider my-2"></div>
+
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Creado</p>
+                            <p class="text-sm">{{ ticket.created_at|date('d/m/Y H:i') }}</p>
+                        </div>
+
+                        {% if ticket.last_reply_at %}
+                            <div class="divider my-2"></div>
+
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Última Respuesta</p>
+                                <p class="text-sm">{{ ticket.last_reply_at|date('d/m/Y H:i') }}</p>
+                                <p class="text-xs text-gray-500 mt-1">
+                                    Por: {% if ticket.last_reply_by == 'staff' %}Staff{% else %}Tú{% endif %}
+                                </p>
+                            </div>
+                        {% endif %}
+
+                        {% if ticket.closed_at %}
+                            <div class="divider my-2"></div>
+
+                            <div>
+                                <p class="text-sm text-gray-500 mb-1">Cerrado</p>
+                                <p class="text-sm">{{ ticket.closed_at|date('d/m/Y H:i') }}</p>
+                            </div>
+                        {% endif %}
+
+                        <div class="divider my-2"></div>
+
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Total Respuestas</p>
+                            <p class="text-2xl font-bold">{{ ticket.replies_count }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

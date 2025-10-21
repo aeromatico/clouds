@@ -1,0 +1,100 @@
+fields:
+    public:
+        label: Public
+        span: auto
+        default: 1
+        type: switch
+    identifier:
+        label: Identifier
+        options:
+            1: '1'
+            2: '2'
+            3: '3'
+            4: '4'
+            5: '5'
+        span: auto
+        type: balloon-selector
+    service:
+        label: Service
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+tabs:
+    fields:
+        name:
+            label: Feature
+            span: auto
+            type: text
+            tab: 'Feature description'
+        subtitle:
+            label: Subtitle
+            span: auto
+            type: text
+            tab: 'Feature description'
+        description:
+            label: Description
+            size: ''
+            span: auto
+            type: textarea
+            tab: 'Feature description'
+        description_mobile:
+            label: 'Description for mobiles'
+            size: ''
+            span: auto
+            type: textarea
+            tab: 'Feature description'
+        icon:
+            label: Icon
+            size: ''
+            span: auto
+            type: textarea
+            tab: 'Feature description'
+        buttondivider:
+            label: Button
+            span: full
+            type: section
+            tab: 'Feature description'
+        button_text:
+            label: 'Button text'
+            span: auto
+            type: text
+            tab: 'Feature description'
+        button_link:
+            label: 'Button target'
+            span: auto
+            type: text
+            tab: 'Feature description'
+        featured:
+            label: Featured
+            span: auto
+            type: switch
+            tab: 'Feature description'
+        special:
+            label: 'Special feature'
+            span: auto
+            type: switch
+            comment: 'Deprecated in v.5. Use ''identifier'' instead'
+            tab: Deprecated
+        css:
+            label: 'Custom CSS'
+            span: auto
+            type: text
+            tab: Style
+        img:
+            label: Image
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            fileTypes: 'png,jpg,svg,webp'
+            type: fileupload
+            tab: Media
+        img_alt:
+            label: 'Alternative image'
+            mode: image
+            span: auto
+            type: mediafinder
+            tab: Media

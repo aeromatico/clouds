@@ -1,0 +1,149 @@
+fields:
+    status:
+        label: Status
+        options:
+            Pendiente: Pendiente
+            Activa: Activa
+            'En proceso': 'En proceso'
+            'En camino': 'En camino'
+            Demorado: Demorado
+            'Ya en el país, rumbo a su domicilio': 'Ya en el país, rumbo a su domicilio'
+            Observado: Observado
+            Cancelado: Cancelado
+            'Cancelado y reembolsado': 'Cancelado y reembolsado'
+            Completado: Completado
+        span: full
+        default: Pendiente
+        type: balloon-selector
+    endtime:
+        label: 'Estimate delivery date'
+        options:
+            'En minutos': 'En minutos'
+            'De 30 a 60 minutos': 'De 30 a 60 minutos'
+            'Alrededor de una hora': 'Alrededor de una hora'
+            'De 1 a 3 horas': 'De 1 a 3 horas'
+            'Durante el día': 'Durante el día'
+            'De 1 a 3 días': 'De 1 a 3 días'
+            'Durante la semana': 'Durante la semana'
+            'Alrededor de una semana': 'Alrededor de una semana'
+            'De 1 a 3 semanas': 'De 1 a 3 semanas'
+            'Alrededor de un mes': 'Alrededor de un mes'
+            'De 1 a 3 meses': 'De 1 a 3 meses'
+            'Más de 3 meses': 'Más de 3 meses'
+        span: full
+        type: balloon-selector
+    urls:
+        label: 'Product list'
+        prompt: 'Add new item'
+        style: default
+        span: full
+        type: repeater
+        form:
+            fields:
+                url:
+                    label: 'URL product'
+                    span: full
+                    type: text
+                amount:
+                    label: Amount
+                    span: auto
+                    default: '0'
+                    type: number
+                fee:
+                    label: 'Own fee'
+                    span: auto
+                    default: '0'
+                    type: number
+                fees:
+                    label: 'External fees'
+                    prompt: 'Add new item'
+                    style: default
+                    span: full
+                    type: repeater
+                    form:
+                        fields:
+                            type:
+                                label: 'Fee type'
+                                options:
+                                    'Transporte hasta nuestro Warehouse en USA': 'Transporte hasta nuestro Warehouse en USA'
+                                    'Transporte hasta Bolivia': 'Transporte hasta Bolivia'
+                                    'Cambio de divisa': 'Cambio de divisa'
+                                    'Comisión de la paralela de pago': 'Comisión de la paralela de pago'
+                                showSearch: true
+                                span: auto
+                                default: ''
+                                type: dropdown
+                            amount:
+                                label: Amount
+                                span: auto
+                                default: '0'
+                                type: number
+                            description:
+                                label: Description
+                                span: full
+                                type: text
+    type_shipment:
+        label: 'Shipment type'
+        options:
+            'Solución completa': 'Solución completa'
+            'Transporte y desaduanización': 'Transporte y desaduanización'
+            'Solo transporte': 'Solo transporte'
+        span: full
+        type: balloon-selector
+    user:
+        label: User
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+tabs:
+    fields:
+        chat_on:
+            label: 'Enable chat for user'
+            span: auto
+            default: 1
+            type: switch
+            tab: Chat
+        chat:
+            label: Chat
+            prompt: 'Add new message'
+            style: default
+            span: full
+            trigger:
+                action: show
+                field: chat_on
+                condition: checked
+            type: repeater
+            tab: Chat
+            form:
+                fields:
+                    message:
+                        label: Message
+                        size: small
+                        span: full
+                        trigger:
+                            action: hide
+                            field: predefined_on
+                            condition: checked
+                        type: richeditor
+                    message_predefined:
+                        label: 'Predefined message'
+                        options:
+                            'Estas son nuestras cuentas bancarias': 'Cuentas bancarias'
+                            'Esta es una respuesta predefinida': 'Respuesta 1'
+                        showSearch: true
+                        span: left
+                        trigger:
+                            action: show
+                            field: predefined_on
+                            condition: checked
+                        type: dropdown
+                    predefined_on:
+                        label: Predefined
+                        span: left
+                        type: switch
+                    customer_on:
+                        label: 'Is customer'
+                        span: left
+                        readOnly: 1
+                        type: switch

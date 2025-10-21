@@ -1,0 +1,28 @@
+columns:
+    id:
+        label: id
+        type: number
+    name_curse:
+        label: name_curse
+        type: text
+    description:
+        label: description
+        type: text
+    mode:
+        label: mode
+        type: text
+    start_date:
+        label: start_date
+        type: date
+    end_date:
+        label: end_date
+        type: date
+    state:
+        label: state
+        type: switch
+    created_at:
+        label: created_at
+        type: date
+    updated_at:
+        label: updated_at
+        type: date

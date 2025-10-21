@@ -1,0 +1,10 @@
+name: Services
+form: $/aero/manager/models/services/fields.yaml
+modelClass: Aero\Manager\Models\Services
+defaultRedirect: aero/manager/services
+create:
+    redirect: 'aero/manager/services/update/:id'
+    redirectClose: aero/manager/services
+update:
+    redirect: aero/manager/services
+    redirectClose: aero/manager/services

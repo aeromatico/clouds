@@ -1,0 +1,51 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+    fee_fixed:
+        label: 'Fixed fee'
+        type: number
+        searchable: true
+        sortable: true
+    fee_percentage:
+        label: 'Percentage fee %'
+        type: number
+        searchable: true
+        sortable: true
+    fee_own:
+        label: 'Own fee %'
+        type: number
+        searchable: true
+        sortable: true
+    from_on:
+        label: From
+        type: switch
+        searchable: true
+        sortable: true
+    to_on:
+        label: To
+        type: switch
+        searchable: true
+        sortable: true
+    public_on:
+        label: Public
+        type: switch
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'Created at'
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: 'Updated at'
+        type: datetime
+        searchable: true
+        sortable: true

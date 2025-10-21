@@ -1,0 +1,10 @@
+name: Contents
+form: $/aero/manager/models/contents/fields.yaml
+modelClass: Aero\Manager\Models\Contents
+defaultRedirect: aero/manager/contents
+create:
+    redirect: 'aero/manager/contents/update/:id'
+    redirectClose: aero/manager/contents
+update:
+    redirect: aero/manager/contents
+    redirectClose: aero/manager/contents

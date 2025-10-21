@@ -1,0 +1,37 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    parent:
+        label: Parent
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+        emptyOption: '-No parent-'
+        trigger:
+            action: hide
+            field: parent_on
+            condition: checked
+    docs:
+        label: Docs
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    parent_on:
+        label: 'Is a parent category'
+        span: auto
+        type: switch
+    domain:
+        label: Domain
+        span: auto
+        type: text

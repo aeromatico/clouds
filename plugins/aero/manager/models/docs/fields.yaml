@@ -1,0 +1,74 @@
+fields:
+    title:
+        label: Title
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: title
+            type: slug
+        type: text
+    description:
+        label: Description
+        span: auto
+        type: textarea
+    author:
+        label: Author
+        span: auto
+        default: Staff
+        type: text
+    content:
+        label: Content
+        size: large
+        span: full
+        type: richeditor
+    keywords:
+        label: Keywords
+        span: auto
+        type: taglist
+    version:
+        label: Version
+        span: auto
+        default: Alpha
+        type: text
+    featured_on:
+        label: 'Featured on'
+        span: auto
+        type: switch
+    public_on:
+        label: 'Public on'
+        span: auto
+        default: 1
+        type: switch
+    categories:
+        label: Categoy
+        nameFrom: name
+        descriptionFrom: description
+        span: left
+        containerAttributes: {  }
+        type: relation
+    service:
+        label: service
+        nameFrom: name
+        descriptionFrom: description
+        span: left
+        containerAttributes: {  }
+        type: relation
+
+tabs:
+    fields:
+        links:
+            label: Links
+            prompt: 'Add new item'
+            style: default
+            span: auto
+            type: repeater
+            tab: Links
+            form:
+                fields:
+                    url:
+                        label: URL
+                        span: auto
+                        type: text

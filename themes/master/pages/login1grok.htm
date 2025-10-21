@@ -1,0 +1,59 @@
+title = "login1grok"
+url = "/login1grok"
+==
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Interfaz Moderna</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+    <div class="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title text-2xl font-bold mb-4 text-center">Iniciar Sesión</h2>
+            
+            <form>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Correo Electrónico</span>
+                    </label>
+                    <input type="email" placeholder="email@ejemplo.com" class="input input-bordered w-full" required />
+                </div>
+                
+                <div class="form-control mt-4">
+                    <label class="label">
+                        <span class="label-text">Contraseña</span>
+                    </label>
+                    <input type="password" placeholder="••••••••" class="input input-bordered w-full" required />
+                </div>
+                
+                <div class="form-control mt-4">
+                    <label class="cursor-pointer label">
+                        <span class="label-text">Recordarme</span>
+                        <input type="checkbox" class="checkbox checkbox-primary" />
+                    </label>
+                </div>
+                
+                <div class="form-control mt-6">
+                    <button class="btn btn-primary w-full">Iniciar Sesión</button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-4">
+                <a href="#" class="text-sm text-primary hover:underline">¿Olvidaste tu contraseña?</a>
+            </div>
+            
+            <div class="divider my-4">O</div>
+            
+            <div class="text-center">
+                <p class="text-sm">¿No tienes una cuenta? <a href="#" class="text-primary hover:underline">Regístrate</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

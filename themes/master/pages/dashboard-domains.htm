@@ -1,0 +1,385 @@
+title = "Mis Dominios"
+url = "/dashboard/domains"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Aero\Clouds\Models\Domain;
+
+function onStart()
+{
+    // Get authenticated user
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    // Get user's domains ordered by most recent
+    $this['domains'] = Domain::where('user_id', $user->id)
+        ->with(['extension', 'provider'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $this['user'] = $user;
+
+    // Calculate stats
+    $allDomains = $this['domains'];
+    $this['stats'] = [
+        'total' => $allDomains->count(),
+        'active' => $allDomains->where('status', 'active')->count(),
+        'expiring' => $allDomains->where('is_expiring_soon', true)->count(),
+        'expired' => $allDomains->where('is_expired', true)->count(),
+    ];
+}
+?>
+==
+<!-- Page Header -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                Mis Dominios
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400">
+                Gestiona tus dominios, nameservers, DNS y configuración
+            </p>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="/shop#domains" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-2"></i>
+                Registrar Dominio
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="stats shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+        <div class="stat">
+            <div class="stat-figure text-primary">
+                <i class="fas fa-globe text-2xl"></i>
+            </div>
+            <div class="stat-title text-gray-600 dark:text-gray-400">Total</div>
+            <div class="stat-value text-primary">{{ stats.total }}</div>
+        </div>
+    </div>
+
+    <div class="stats shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+        <div class="stat">
+            <div class="stat-figure text-success">
+                <i class="fas fa-check-circle text-2xl"></i>
+            </div>
+            <div class="stat-title text-gray-600 dark:text-gray-400">Activos</div>
+            <div class="stat-value text-success">{{ stats.active }}</div>
+        </div>
+    </div>
+
+    <div class="stats shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+        <div class="stat">
+            <div class="stat-figure text-warning">
+                <i class="fas fa-exclamation-triangle text-2xl"></i>
+            </div>
+            <div class="stat-title text-gray-600 dark:text-gray-400">Por Vencer</div>
+            <div class="stat-value text-warning">{{ stats.expiring }}</div>
+        </div>
+    </div>
+
+    <div class="stats shadow bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+        <div class="stat">
+            <div class="stat-figure text-error">
+                <i class="fas fa-times-circle text-2xl"></i>
+            </div>
+            <div class="stat-title text-gray-600 dark:text-gray-400">Vencidos</div>
+            <div class="stat-value text-error">{{ stats.expired }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Domains Table -->
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+    {% if domains|length > 0 %}
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Dominio
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Proveedor
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Registro
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Expiración
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Estado
+                        </th>
+                        <th class="bg-gray-50 dark:bg-gray-900/50 px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for domain in domains %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
+                                    <i class="fas fa-globe text-white text-sm"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                        {{ domain.full_domain }}
+                                    </div>
+                                    {% if domain.is_locked %}
+                                    <div class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <i class="fas fa-lock text-xs"></i>
+                                        Bloqueado
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900 dark:text-white">
+                                {% if domain.provider %}
+                                    {{ domain.provider.name }}
+                                {% else %}
+                                    <span class="text-gray-400">-</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            {{ domain.registration_date|date('d/m/Y') }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if domain.expiration_date %}
+                                <div class="text-sm text-gray-900 dark:text-white">
+                                    {{ domain.expiration_date|date('d/m/Y') }}
+                                </div>
+                                {% set daysLeft = domain.days_until_expiration %}
+                                {% if daysLeft is not null %}
+                                    {% if daysLeft < 0 %}
+                                        <div class="text-xs text-error font-semibold">Vencido</div>
+                                    {% elseif daysLeft <= 30 %}
+                                        <div class="text-xs text-warning font-semibold">{{ daysLeft }} días</div>
+                                    {% else %}
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ daysLeft }} días</div>
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                <span class="text-sm text-gray-400">-</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if domain.status == 'active' %}
+                                <span class="badge badge-success gap-1 text-xs">
+                                    <i class="fas fa-check-circle"></i> Activo
+                                </span>
+                            {% elseif domain.status == 'pending' %}
+                                <span class="badge badge-warning gap-1 text-xs">
+                                    <i class="fas fa-clock"></i> Pendiente
+                                </span>
+                            {% elseif domain.status == 'expired' %}
+                                <span class="badge badge-error gap-1 text-xs">
+                                    <i class="fas fa-exclamation-circle"></i> Expirado
+                                </span>
+                            {% elseif domain.status == 'suspended' %}
+                                <span class="badge badge-error gap-1 text-xs">
+                                    <i class="fas fa-pause-circle"></i> Suspendido
+                                </span>
+                            {% elseif domain.status == 'cancelled' %}
+                                <span class="badge badge-ghost gap-1 text-xs">
+                                    <i class="fas fa-ban"></i> Cancelado
+                                </span>
+                            {% elseif domain.status == 'transferred' %}
+                                <span class="badge badge-info gap-1 text-xs">
+                                    <i class="fas fa-exchange-alt"></i> Transferido
+                                </span>
+                            {% else %}
+                                <span class="badge badge-ghost gap-1 text-xs">
+                                    {{ domain.status }}
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right">
+                            <div class="dropdown dropdown-end">
+                                <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </label>
+                                <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 w-64 z-10">
+                                    <li>
+                                        <a href="/dashboard/domains/{{ domain.id }}" class="text-sm">
+                                            <i class="fas fa-eye text-gray-400"></i>
+                                            Ver detalles
+                                        </a>
+                                    </li>
+                                    {% if domain.status == 'active' %}
+                                    <li class="border-t border-gray-200 dark:border-gray-700 mt-1 pt-1">
+                                        <span class="text-xs text-gray-500 dark:text-gray-400 px-2 py-1">Gestionar</span>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/domains/{{ domain.id }}#nameservers" class="text-sm">
+                                            <i class="fas fa-server text-gray-400"></i>
+                                            Nameservers
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/domains/{{ domain.id }}#dns" class="text-sm">
+                                            <i class="fas fa-list text-gray-400"></i>
+                                            Registros DNS
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/domains/{{ domain.id }}#lock" class="text-sm">
+                                            <i class="fas fa-{% if domain.is_locked %}unlock{% else %}lock{% endif %} text-gray-400"></i>
+                                            {% if domain.is_locked %}Desbloquear{% else %}Bloquear{% endif %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/dashboard/domains/{{ domain.id }}#epp" class="text-sm">
+                                            <i class="fas fa-key text-gray-400"></i>
+                                            Ver código EPP
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% if domain.status == 'expired' or domain.is_expired %}
+                                    <li class="border-t border-gray-200 dark:border-gray-700 mt-1 pt-1">
+                                        <a href="#" class="text-sm text-success">
+                                            <i class="fas fa-sync text-success"></i>
+                                            Renovar dominio
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div class="md:hidden divide-y divide-gray-200 dark:divide-gray-700">
+            {% for domain in domains %}
+            <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-globe text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-gray-900 dark:text-white">
+                                {{ domain.full_domain }}
+                            </div>
+                            {% if domain.provider %}
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                {{ domain.provider.name }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="dropdown dropdown-end">
+                        <label tabindex="0" class="btn btn-ghost btn-sm btn-circle">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </label>
+                        <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 w-52 z-10">
+                            <li>
+                                <a href="/dashboard/domains/{{ domain.id }}" class="text-sm">
+                                    <i class="fas fa-eye text-gray-400"></i>
+                                    Ver detalles
+                                </a>
+                            </li>
+                            {% if domain.status == 'active' %}
+                            <li>
+                                <a href="/dashboard/domains/{{ domain.id }}#nameservers" class="text-sm">
+                                    <i class="fas fa-server text-gray-400"></i>
+                                    Nameservers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/dashboard/domains/{{ domain.id }}#dns" class="text-sm">
+                                    <i class="fas fa-list text-gray-400"></i>
+                                    DNS
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="space-y-2 mb-3">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500 dark:text-gray-400">Registro:</span>
+                        <span class="text-gray-900 dark:text-white font-medium">{{ domain.registration_date|date('d/m/Y') }}</span>
+                    </div>
+                    {% if domain.expiration_date %}
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500 dark:text-gray-400">Expiración:</span>
+                        <span class="text-gray-900 dark:text-white font-medium">{{ domain.expiration_date|date('d/m/Y') }}</span>
+                    </div>
+                    {% endif %}
+                    {% if domain.is_locked %}
+                    <div class="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-lock"></i>
+                        Dominio bloqueado
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div>
+                    {% if domain.status == 'active' %}
+                        <span class="badge badge-success badge-sm gap-1">
+                            <i class="fas fa-check-circle text-xs"></i> Activo
+                        </span>
+                    {% elseif domain.status == 'pending' %}
+                        <span class="badge badge-warning badge-sm gap-1">
+                            <i class="fas fa-clock text-xs"></i> Pendiente
+                        </span>
+                    {% elseif domain.status == 'expired' %}
+                        <span class="badge badge-error badge-sm gap-1">
+                            <i class="fas fa-exclamation-circle text-xs"></i> Expirado
+                        </span>
+                    {% elseif domain.status == 'suspended' %}
+                        <span class="badge badge-error badge-sm gap-1">
+                            <i class="fas fa-pause-circle text-xs"></i> Suspendido
+                        </span>
+                    {% else %}
+                        <span class="badge badge-ghost badge-sm gap-1">
+                            {{ domain.status }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-12 px-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-globe text-3xl text-blue-500"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                No tienes dominios registrados
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                Registra tu primer dominio para comenzar a construir tu presencia en línea
+            </p>
+            <a href="/shop#domains" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus mr-2"></i>
+                Registrar Dominio
+            </a>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,22 @@
+title = "equipos"
+url = "/equipos"
+
+[builderList equipos]
+modelClass = "Aero\Ligas\Models\Clubes"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "id"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+==
+{% set e= equipos.records %}
+
+
+
+{% for e in e %} 
+
+<img src="{{ e.escudo.getPath }}"><hr> el equipo {{e.nombre}} tiene {{ e.trofeos }}<br>
+
+{% endfor %}

@@ -1,0 +1,6 @@
+plugin:
+    name: 'Vite Integration'
+    description: 'Integración de Vite para desarrollo moderno con HMR y build optimizado'
+    author: 'aero'
+    icon: 'oc-icon-bolt'
+    homepage: 'https://clouds.com.bo'

@@ -1,0 +1,62 @@
+fields:
+    credits:
+        label: Credits
+        span: auto
+        type: number
+    debits:
+        label: Debits
+        span: auto
+        type: number
+    load_amount:
+        label: 'Load amount'
+        span: auto
+        type: number
+    load_currency:
+        label: 'Load currency'
+        span: auto
+        type: text
+    whmc_invoice:
+        label: 'Whmc invoice'
+        span: auto
+        type: text
+    status:
+        label: Status
+        span: auto
+        options:
+            Completado: Completado
+            Pendiente: Pendiente
+        type: balloon-selector
+    sku:
+        label: Sku
+        span: auto
+        type: text
+    description:
+        label: Description
+        span: auto
+        type: textarea
+    paid_at:
+        label: 'Paid at'
+        span: auto
+        type: datepicker
+    detail:
+        label: Detail
+        span: auto
+        type: textarea
+    gateway:
+        label: Gateway
+        span: auto
+        type: text
+    fee:
+        label: Fee
+        span: auto
+        type: number
+    domain:
+        label: Domain
+        span: auto
+        type: text
+    user:
+        label: User
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation

@@ -1,0 +1,10 @@
+name: Paises
+form: $/aero/paises/models/paises/fields.yaml
+modelClass: Aero\Paises\Models\Paises
+defaultRedirect: aero/paises/paises
+create:
+    redirect: 'aero/paises/paises/update/:id'
+    redirectClose: aero/paises/paises
+update:
+    redirect: aero/paises/paises
+    redirectClose: aero/paises/paises

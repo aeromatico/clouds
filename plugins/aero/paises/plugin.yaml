@@ -1,0 +1,11 @@
+plugin:
+    name: 'aero.paises::lang.plugin.name'
+    description: 'aero.paises::lang.plugin.description'
+    author: aero
+    icon: oc-icon-adjust
+    homepage: ''
+navigation:
+    Paises:
+        label: Pais
+        url: /aero/paises/paises
+        icon: icon-life-ring

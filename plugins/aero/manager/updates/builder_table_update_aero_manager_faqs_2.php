@@ -1,0 +1,29 @@
+<?php namespace Aero\Manager\Updates;
+
+use Schema;
+use October\Rain\Database\Updates\Migration;
+
+class BuilderTableUpdateAeroManagerFaqs2 extends Migration
+{
+    public function up()
+    {
+        Schema::table('aero_manager_faqs', function($table)
+        {
+            $table->boolean('public');
+            $table->dropColumn('created_at');
+            $table->dropColumn('updated_at');
+            $table->dropColumn('deleted_at');
+        });
+    }
+    
+    public function down()
+    {
+        Schema::table('aero_manager_faqs', function($table)
+        {
+            $table->dropColumn('public');
+            $table->timestamp('created_at')->nullable()->default('NULL');
+            $table->timestamp('updated_at')->nullable()->default('NULL');
+            $table->timestamp('deleted_at')->nullable()->default('NULL');
+        });
+    }
+}

@@ -1,0 +1,40 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    name:
+        label: name
+        type: text
+        searchable: true
+        sortable: true
+    slug:
+        label: slug
+        type: text
+        searchable: true
+        sortable: true
+    whmcs_plan_id:
+        label: 'WHMCS ID'
+        type: number
+        searchable: true
+        sortable: true
+    whmcs_pricing_on:
+        label: 'WHMCS Pricing'
+        type: switch
+        searchable: true
+        sortable: true
+    public:
+        label: Public
+        type: switch
+        searchable: true
+        sortable: true
+    updated_at:
+        label: Updated
+        type: datetime
+        searchable: true
+        sortable: true
+    sort_order:
+        label: 'sort order'
+        type: number
+        sortable: true

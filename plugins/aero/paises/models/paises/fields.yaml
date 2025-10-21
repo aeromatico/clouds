@@ -1,0 +1,52 @@
+fields:
+    nombre:
+        label: nombre
+        span: auto
+        type: text
+    capital:
+        label: capital
+        span: auto
+        type: text
+    idioma:
+        label: idioma
+        span: auto
+        type: text
+    continente:
+        label: continente
+        span: auto
+        type: text
+    poblacion:
+        label: poblacion
+        span: auto
+        type: number
+    extension:
+        label: extension
+        span: auto
+        type: number
+    reconocido:
+        label: reconocido
+        span: auto
+        type: switch
+    creacion:
+        label: creacion
+        span: auto
+        mode: datetime
+        type: datepicker
+    bandera:
+        label: Bandera
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload
+    photos:
+        label: photos
+        mode: image
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        type: fileupload

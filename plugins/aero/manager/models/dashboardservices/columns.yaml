@@ -1,0 +1,22 @@
+columns:
+    id:
+        label: id
+        type: number
+    wallet_id:
+        label: Invoice
+        type: number
+    username:
+        label: username
+        type: text
+    password:
+        label: password
+        type: text
+    type:
+        label: type
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime

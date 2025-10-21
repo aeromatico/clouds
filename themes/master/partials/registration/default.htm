@@ -1,0 +1,130 @@
+<div class="flex items-center justify-center p-4">
+    <div class="card w-full max-w-sm bg-base-100 shadow-xl">
+        <div class="card-body p-6">
+            <form
+                data-request="customRegistration::onRegister"
+                data-request-success="window.location = '{{ 'dashboard'|page }}'"
+                data-request-flash
+                class="w-full"
+            >
+                <!-- Mensajes de error y éxito -->
+                {% if flashBag.exists('error') %}
+                    <div role="alert" class="alert alert-error mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ flashBag.get('error') }}</span>
+                    </div>
+                {% endif %}
+
+                {% if flashBag.exists('success') %}
+                    <div role="alert" class="alert alert-success mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ flashBag.get('success') }}</span>
+                    </div>
+                {% endif %}
+
+                <!-- Campo de Email -->
+                <div class="form-control w-full mb-3">
+                    <label class="label pb-1" for="userEmail">
+                        <span class="label-text text-sm font-medium">Email</span>
+                    </label>
+                    <input
+                        id="userEmail"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        required
+                        placeholder="correo@ejemplo.com"
+                        value="{{ form_value('email') }}"
+                        class="input input-bordered w-full focus:input-primary"
+                    >
+                </div>
+
+                <!-- Campo de Nombre -->
+                <div class="form-control w-full mb-3">
+                    <label class="label pb-1" for="userFirstName">
+                        <span class="label-text text-sm font-medium">Nombre</span>
+                    </label>
+                    <input
+                        id="userFirstName"
+                        name="first_name"
+                        type="text"
+                        autocomplete="given-name"
+                        required
+                        placeholder="Tu nombre"
+                        value="{{ form_value('first_name') }}"
+                        class="input input-bordered w-full focus:input-primary"
+                    >
+                </div>
+
+                <!-- Campo de Apellido -->
+                <div class="form-control w-full mb-3">
+                    <label class="label pb-1" for="userLastName">
+                        <span class="label-text text-sm font-medium">Apellido</span>
+                    </label>
+                    <input
+                        id="userLastName"
+                        name="last_name"
+                        type="text"
+                        autocomplete="family-name"
+                        required
+                        placeholder="Tu apellido"
+                        value="{{ form_value('last_name') }}"
+                        class="input input-bordered w-full focus:input-primary"
+                    >
+                </div>
+
+                <!-- Campo de Contraseña -->
+                <div class="form-control w-full mb-3">
+                    <label class="label pb-1" for="userPassword">
+                        <span class="label-text text-sm font-medium">Contraseña</span>
+                    </label>
+                    <input
+                        id="userPassword"
+                        name="password"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                        placeholder="••••••••"
+                        class="input input-bordered w-full focus:input-primary"
+                    >
+                </div>
+
+                <!-- Campo de Confirmar Contraseña -->
+                <div class="form-control w-full mb-6">
+                    <label class="label pb-1" for="userPasswordConfirm">
+                        <span class="label-text text-sm font-medium">Confirmar Contraseña</span>
+                    </label>
+                    <input
+                        id="userPasswordConfirm"
+                        name="password_confirmation"
+                        type="password"
+                        autocomplete="new-password"
+                        required
+                        placeholder="••••••••"
+                        class="input input-bordered w-full focus:input-primary"
+                    >
+                </div>
+
+                <!-- Botón de crear cuenta -->
+                <button
+                    type="submit"
+                    class="btn btn-primary w-full mb-6"
+                >
+                    Crear cuenta
+                </button>
+
+                <!-- Divider -->
+                <div class="divider text-sm text-base-content/60">¿Ya tienes cuenta?</div>
+
+                <!-- Botón de iniciar sesión -->
+                <a href="{{ 'login'|page }}" class="btn btn-outline w-full">
+                    Iniciar sesión
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

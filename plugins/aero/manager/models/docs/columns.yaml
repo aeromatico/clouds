@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    title:
+        label: Title
+        type: text
+        searchable: true
+        sortable: true
+    author:
+        label: Author
+        type: text
+        searchable: true
+        sortable: true
+    version:
+        label: Version
+        type: text
+        searchable: true
+        sortable: true
+    featured_on:
+        label: Featured
+        type: switch
+        searchable: true
+        sortable: true
+    public_on:
+        label: Public
+        type: switch
+        searchable: true
+        sortable: true

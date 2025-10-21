@@ -1,0 +1,10 @@
+name: Curses
+form: $/aero/test/models/curses/fields.yaml
+modelClass: Aero\Test\Models\Curses
+defaultRedirect: aero/test/curses
+create:
+    redirect: 'aero/test/curses/update/:id'
+    redirectClose: aero/test/curses
+update:
+    redirect: aero/test/curses
+    redirectClose: aero/test/curses

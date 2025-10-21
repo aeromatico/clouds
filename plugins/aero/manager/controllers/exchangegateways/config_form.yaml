@@ -1,0 +1,10 @@
+name: ExchangeGateways
+form: $/aero/manager/models/exchangegateways/fields.yaml
+modelClass: Aero\Manager\Models\ExchangeGateways
+defaultRedirect: aero/manager/exchangegateways
+create:
+    redirect: 'aero/manager/exchangegateways/update/:id'
+    redirectClose: aero/manager/exchangegateways
+update:
+    redirect: aero/manager/exchangegateways
+    redirectClose: aero/manager/exchangegateways

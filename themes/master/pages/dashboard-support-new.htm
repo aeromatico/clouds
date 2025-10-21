@@ -1,0 +1,135 @@
+title = "Nuevo Ticket"
+url = "/dashboard/support/new"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+
+[tickets]
+==
+<?php
+use Aero\Clouds\Models\SupportDepartment;
+
+function onStart()
+{
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    $this['departments'] = SupportDepartment::active()->ordered()->get();
+}
+?>
+==
+<!-- New Ticket Page -->
+<div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="flex items-center gap-2 text-sm breadcrumbs mb-4">
+            <a href="/dashboard">Dashboard</a>
+            <span>/</span>
+            <a href="/dashboard/support">Soporte</a>
+            <span>/</span>
+            <span>Nuevo Ticket</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            Crear Nuevo Ticket
+        </h1>
+    </div>
+
+    <!-- Form -->
+    <div class="card bg-base-100 shadow-xl border border-base-300">
+        <div class="card-body">
+            <form data-request="tickets::onCreateTicket" data-request-flash>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Department -->
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Departamento <span class="text-error">*</span></span>
+                        </label>
+                        <select name="department_id" class="select select-bordered w-full" required>
+                            <option value="">Selecciona un departamento</option>
+                            {% for dept in departments %}
+                                <option value="{{ dept.id }}">{{ dept.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label class="label">
+                            <span class="label-text-alt">Elige el departamento que mejor se adapte a tu consulta</span>
+                        </label>
+                    </div>
+
+                    <!-- Priority -->
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Prioridad <span class="text-error">*</span></span>
+                        </label>
+                        <select name="priority" class="select select-bordered w-full" required>
+                            <option value="normal">Normal</option>
+                            <option value="low">Baja</option>
+                            <option value="high">Alta</option>
+                            <option value="urgent">Urgente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Subject -->
+                <div class="form-control mt-6">
+                    <label class="label">
+                        <span class="label-text">Asunto <span class="text-error">*</span></span>
+                    </label>
+                    <input
+                        type="text"
+                        name="subject"
+                        class="input input-bordered w-full"
+                        placeholder="Describe brevemente tu problema"
+                        required
+                        maxlength="255"
+                    />
+                </div>
+
+                <!-- Message -->
+                <div class="form-control mt-6">
+                    <label class="label">
+                        <span class="label-text">Mensaje <span class="text-error">*</span></span>
+                    </label>
+                    <textarea
+                        name="message"
+                        class="textarea textarea-bordered h-48"
+                        placeholder="Describe tu problema en detalle. Incluye cualquier información relevante como mensajes de error, pasos para reproducir el problema, etc."
+                        required
+                    ></textarea>
+                    <label class="label">
+                        <span class="label-text-alt">Proporciona la mayor cantidad de detalles posible para ayudarnos a resolver tu problema rápidamente</span>
+                    </label>
+                </div>
+
+                <!-- Important Notice -->
+                <div class="alert alert-info mt-6">
+                    <i class="fas fa-info-circle"></i>
+                    <div class="text-sm">
+                        <p class="font-semibold">Información importante:</p>
+                        <ul class="list-disc list-inside mt-2">
+                            <li>Recibirás una notificación cuando el equipo de soporte responda</li>
+                            <li>Puedes consultar el estado de tu ticket en cualquier momento</li>
+                            <li>Intenta proporcionar capturas de pantalla si es aplicable</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-4 mt-8">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Crear Ticket
+                    </button>
+                    <a href="/dashboard/support" class="btn btn-ghost">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

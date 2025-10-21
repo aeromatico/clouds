@@ -1,0 +1,39 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        type: text
+    category:
+        label: Category
+        span: auto
+        type: text
+    description:
+        label: Description
+        span: auto
+        type: textarea
+    img:
+        label: Img
+        span: auto
+        type: textarea
+    demo_link:
+        label: 'Demo link'
+        span: auto
+        type: textarea
+    collection:
+        label: Collection
+        span: auto
+        type: text
+    html:
+        label: HTML
+        size: large
+        language: html
+        span: full
+        type: codeeditor
+    scrapaed:
+        label: Scrapaed
+        span: auto
+        type: switch

@@ -1,0 +1,14 @@
+name: Plans
+form: $/aero/manager/models/plans/fields.yaml
+modelClass: Aero\Manager\Models\Plans
+defaultRedirect: aero/manager/plans
+create:
+    redirect: 'aero/manager/plans/update/:id'
+    redirectClose: aero/manager/plans
+update:
+    redirect: aero/manager/plans
+    redirectClose: aero/manager/plans
+structure:
+    showTree: true
+    showReorder: true
+    maxDepth: 2

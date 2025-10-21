@@ -1,0 +1,322 @@
+tabs:
+    fields:
+        name:
+            label: 'Site Name'
+            span: auto
+            type: text
+            tab: Identity
+        logo_text:
+            label: 'Logo in text mode'
+            span: left
+            type: text
+            tab: Identity
+        logo_slogan:
+            label: 'Logo slogan'
+            span: auto
+            type: text
+            tab: Identity
+        description:
+            label: 'Short description'
+            size: ''
+            span: full
+            type: textarea
+            tab: Identity
+        logo:
+            label: Logo
+            mode: image
+            fileTypes: 'svg,png,jpg,webp'
+            mimeTypes: 'svg,png,jpg,webp'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Identity
+        logo_dark:
+            label: 'Dark logo'
+            mode: image
+            fileTypes: 'svg,png,jpg,webp'
+            mimeTypes: 'svg,png,jpg,webp'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Identity
+        favicon:
+            label: Favicon
+            mode: image
+            fileTypes: 'svg,png,jpg,webp,ico'
+            mimeTypes: 'svg,png,jpg,webp,ico'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Identity
+        og_image:
+            label: 'Home OG Image'
+            mode: image
+            span: auto
+            type: mediafinder
+            tab: Identity
+        metas:
+            label: Metas
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: 'Meta tags'
+            form:
+                fields:
+                    name:
+                        label: 'Meta name'
+                        span: auto
+                        type: text
+                    type:
+                        label: Type
+                        options:
+                            name: Name
+                            property: Property
+                        span: auto
+                        type: balloon-selector
+                    content:
+                        label: Content
+                        span: full
+                        type: text
+        facebook_pixel:
+            label: 'Facebook pixel'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Analysis
+        google_analytics:
+            label: 'Google analytics'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Analysis
+        dynamic_menus_on:
+            label: 'Disable dynamic menu'
+            span: auto
+            default: 1
+            type: switch
+            tab: Menús
+        menus:
+            label: Menus
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Menús
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    link:
+                        label: Link
+                        span: auto
+                        type: text
+                    icon:
+                        label: Icon
+                        span: auto
+                        type: text
+                    class:
+                        label: Class
+                        span: auto
+                        type: text
+                    position:
+                        label: Position
+                        options:
+                            top: top
+                            main: main
+                            sidebar: sidebar
+                            footer: footer
+                            social: social
+                            corporate: corporate
+                        span: auto
+                        type: balloon-selector
+                    type:
+                        label: Type
+                        span: auto
+                        options:
+                            group: group
+                        type: balloon-selector
+                    submenu:
+                        label: Submenu
+                        prompt: 'Add new item'
+                        style: default
+                        span: full
+                        type: repeater
+                        form:
+                            fields:
+                                name:
+                                    label: Name
+                                    span: auto
+                                    type: text
+                                slug:
+                                    label: Slug
+                                    span: auto
+                                    preset:
+                                        field: name
+                                        type: slug
+                                    type: text
+                                link:
+                                    label: Link
+                                    span: auto
+                                    type: text
+                    public:
+                        label: Public
+                        span: auto
+                        default: 1
+                        type: switch
+        currency:
+            label: 'Default currency'
+            options:
+                USD: USD
+                BOB: BOB
+                ARS: ARS
+            span: auto
+            type: balloon-selector
+            tab: Configuration
+        link_shop:
+            label: 'Shop link'
+            span: auto
+            type: text
+            tab: Links
+        widget_chat:
+            label: 'Chat widget'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Links
+        link_ticket:
+            label: 'Create ticket link'
+            span: auto
+            type: text
+            tab: Links
+        link_messenger:
+            label: 'Messenger Link'
+            span: auto
+            type: text
+            tab: Links
+        link_whatsapp:
+            label: 'WhatsApp Link'
+            span: auto
+            type: text
+            tab: Links
+        whatsapp_number:
+            label: WhatsApp
+            span: auto
+            type: text
+            tab: Links
+        cookies_consent:
+            label: 'Cookies consent code'
+            size: ''
+            span: auto
+            type: textarea
+            tab: Others
+        domain_search_url:
+            label: 'Domain search URL'
+            span: auto
+            type: text
+            tab: Others
+        facebook_likes_counter:
+            label: 'Facebook likes counter'
+            span: auto
+            type: text
+            tab: Others
+        sections_padding:
+            label: 'Sections padding'
+            span: auto
+            default: '20'
+            type: number
+            tab: Others
+        sitemap_services_base:
+            label: 'Services base URL'
+            span: auto
+            type: text
+            tab: Sitemap
+        sitemap:
+            label: Sitemap
+            prompt: 'Añadir nuevo item'
+            style: default
+            span: full
+            type: repeater
+            tab: Sitemap
+            form:
+                fields:
+                    url:
+                        label: Link
+                        span: full
+                        type: text
+                    changefreq:
+                        label: Dropdown
+                        options:
+                            '0.5': '0.5'
+                            '1.0': '1.0'
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+                    priority:
+                        label: Dropdown
+                        options:
+                            always: always
+                            daily: daily
+                        showSearch: true
+                        span: auto
+                        type: dropdown
+        whmcs_url:
+            label: 'WHMCS URL'
+            span: auto
+            type: text
+            tab: WHMCS
+        whmcs_currency:
+            label: 'Default currency'
+            options:
+                1: '1'
+                2: '2'
+                3: '3'
+                4: '4'
+                5: '5'
+            span: auto
+            type: balloon-selector
+            tab: WHMCS
+        whmcs_apikey:
+            label: 'Api Key'
+            span: auto
+            type: text
+            tab: WHMCS
+        whmcs_secret:
+            label: 'Api Secret'
+            span: auto
+            type: text
+            tab: WHMCS
+        whmcs_connection:
+            label: 'WHMCS connector name'
+            span: auto
+            type: text
+            tab: WHMCS
+        dealer_source:
+            label: Source
+            span: auto
+            default: boliviahost.com
+            disabled: 0
+            readOnly: 1
+            type: text
+            tab: Dealers
+        gallery:
+            label: Gallery
+            span: auto
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            type: fileupload
+            tab: gallery

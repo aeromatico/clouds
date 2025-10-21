@@ -1,0 +1,18 @@
+columns:
+    user_id:
+        label: user_id
+        type: number
+        searchable: true
+    order_id:
+        label: order_id
+        type: number
+        searchable: true
+    payment_titular_name:
+        label: payment_titular_name
+        type: text
+    payment_titular_email:
+        label: payment_titular_email
+        type: text
+    created_at:
+        label: created_at
+        type: datetime

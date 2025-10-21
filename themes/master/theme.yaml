@@ -1,0 +1,23 @@
+name: "Master"
+description: "Tema moderno con stack completo - Vite, Tailwind CSS, Alpine.js, PWA"
+author: "aero"
+homepage: "https://clouds.com.bo"
+code: "master"
+form:
+  fields:
+    site_name:
+      label: "Nombre del Sitio"
+      type: text
+      default: "Master Theme"
+    site_description:
+      label: "Descripción del Sitio"
+      type: textarea
+      default: "Un sitio moderno con OctoberCMS"
+    enable_dark_mode:
+      label: "Habilitar Modo Oscuro"
+      type: switch
+      default: true
+    enable_pwa:
+      label: "Habilitar PWA"
+      type: switch  
+      default: true

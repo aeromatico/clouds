@@ -1,0 +1,37 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    birthday:
+        label: Birthday
+        mode: date
+        span: auto
+        type: datepicker
+    address:
+        label: Address
+        span: auto
+        type: text
+    mobile:
+        label: Mobile
+        span: auto
+        type: number
+    email:
+        label: Email
+        span: auto
+        type: text
+    bio:
+        label: Bio
+        size: ''
+        span: auto
+        type: richeditor
+    active:
+        label: Active
+        span: auto
+        type: switch
+    courses:
+        label: Relation
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation

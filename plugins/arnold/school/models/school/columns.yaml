@@ -1,0 +1,31 @@
+columns:
+    id:
+        label: id
+        type: number
+    name:
+        label: name
+        type: text
+    adress:
+        label: adress
+        type: text
+    turn:
+        label: turn
+        type: text
+    phone:
+        label: phone
+        type: number
+    mail:
+        label: mail
+        type: text
+    active:
+        label: active
+        type: switch
+    created_at:
+        label: created_at
+        type: date
+    updated_at:
+        label: updated_at
+        type: date
+    deleted_at:
+        label: deleted_at
+        type: date

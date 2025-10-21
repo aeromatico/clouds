@@ -1,0 +1,9 @@
+<?php
+$url = $record->url ?? '';
+$displayUrl = preg_replace('#^https?://#', '', $url);
+$shortUrl = strlen($displayUrl) > 20 ? substr($displayUrl, 0, 20) . '...' : $displayUrl;
+?>
+
+<a href="javascript:void(0)" onclick="window.open('<?= e($url) ?>', '_blank')">
+    <?= e($shortUrl) ?>
+</a>

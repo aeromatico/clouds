@@ -1,0 +1,38 @@
+fields:
+    question:
+        label: Question
+        span: auto
+        type: text
+    answer:
+        label: Answer
+        span: auto
+        size: ''
+        type: richeditor
+    buttons:
+        label: Buttons
+        prompt: 'Add new item'
+        style: default
+        span: auto
+        type: repeater
+        form:
+            fields:
+                text:
+                    label: Text
+                    span: auto
+                    type: text
+                link:
+                    label: Link
+                    span: auto
+                    type: text
+    public:
+        label: Public
+        span: auto
+        default: 1
+        type: switch
+    service:
+        label: service
+        nameFrom: name
+        descriptionFrom: description
+        span: left
+        containerAttributes: {  }
+        type: relation

@@ -1,0 +1,11 @@
+name: DashboardServices
+modelClass: Aero\Manager\Models\DashboardServices
+form: $/aero/manager/models/dashboardservices/fields.yaml
+defaultRedirect: aero/manager/dashboardservices
+create:
+    redirect: 'aero/manager/dashboardservices/update/:id'
+    redirectClose: aero/manager/dashboardservices
+update:
+    redirect: aero/manager/dashboardservices
+    redirectClose: aero/manager/dashboardservices
+preview: {  }

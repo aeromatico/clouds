@@ -1,0 +1,12 @@
+list: $/aero/manager/models/contents/columns.yaml
+modelClass: Aero\Manager\Models\Contents
+title: Contents
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'aero/manager/contents/update/:id'

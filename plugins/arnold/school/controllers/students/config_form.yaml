@@ -1,0 +1,12 @@
+name: Students
+form: $/arnold/school/models/students/fields.yaml
+modelClass: Arnold\School\Models\Students
+defaultRedirect: arnold/school/students
+
+create:
+    redirect: 'arnold/school/students/update/:id'
+    redirectClose: arnold/school/students
+
+update:
+    redirect: arnold/school/students
+    redirectClose: arnold/school/students

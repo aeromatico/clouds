@@ -1,0 +1,11 @@
+name: DocsCategories
+modelClass: Aero\Manager\Models\DocsCategories
+form: $/aero/manager/models/docscategories/fields.yaml
+defaultRedirect: aero/manager/docscategories
+create:
+    redirect: 'aero/manager/docscategories/update/:id'
+    redirectClose: aero/manager/docscategories
+update:
+    redirect: aero/manager/docscategories
+    redirectClose: aero/manager/docscategories
+preview: {  }

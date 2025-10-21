@@ -1,0 +1,14 @@
+title = "Invoice PDF"
+url = "/invoice/:invoice"
+
+[invoicePDF]
+invoice = "{{ :invoice }}"
+mode = "inline"
+==
+<?php
+function onStart()
+{
+    // The component handles the PDF generation and returns the response
+    // No content will be rendered from this page
+}
+?>

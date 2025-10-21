@@ -1,0 +1,11 @@
+name: Wallet
+modelClass: Aero\Manager\Models\Wallet
+form: $/aero/manager/models/wallet/fields.yaml
+defaultRedirect: aero/manager/wallet
+create:
+    redirect: 'aero/manager/wallet/update/:id'
+    redirectClose: aero/manager/wallet
+update:
+    redirect: aero/manager/wallet
+    redirectClose: aero/manager/wallet
+preview: {  }

@@ -1,0 +1,11 @@
+name: Docs
+modelClass: Aero\Manager\Models\Docs
+form: $/aero/manager/models/docs/fields.yaml
+defaultRedirect: aero/manager/docs
+create:
+    redirect: 'aero/manager/docs/update/:id'
+    redirectClose: aero/manager/docs
+update:
+    redirect: aero/manager/docs
+    redirectClose: aero/manager/docs
+preview: {  }

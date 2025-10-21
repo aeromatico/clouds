@@ -1,0 +1,16 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+    domain:
+        label: Domain
+        type: text
+        searchable: true
+        sortable: true
+    name:
+        label: 'Site name'
+        type: text
+        searchable: true
+        sortable: true

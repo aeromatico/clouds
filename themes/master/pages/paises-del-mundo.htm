@@ -1,0 +1,20 @@
+title = "Paises de Mundo"
+url = "/paises-de-mundo"
+
+[builderList countries]
+modelClass = "Aero\Paises\Models\Paises"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "id"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+==
+{% set p = countries.records %}
+
+{%for i in p %}
+
+La capital de {{i.nombre }} es {{i.capital }}.<br>
+<img src="{{i.bandera.getPath }}" style="width:100px; height: 60px">
+{% endfor %}

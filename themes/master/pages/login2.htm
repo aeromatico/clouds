@@ -1,0 +1,71 @@
+title = "login2"
+url = "/login2"
+==
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - DaisyUI</title>
+  <!-- Tailwind + DaisyUI desde CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.js"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
+
+  <div class="card w-full max-w-sm shadow-2xl bg-base-100">
+    <div class="card-body">
+      <!-- Encabezado -->
+      <h2 class="text-3xl font-bold text-center bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        Bienvenido 👋
+      </h2>
+      <p class="text-sm text-center text-base-content/70 mb-6">
+        Inicia sesión para continuar
+      </p>
+      
+      <!-- Formulario -->
+      <form>
+        <!-- Email -->
+        <div class="form-control mb-4">
+          <label class="label">
+            <span class="label-text font-medium text-primary">Correo electrónico</span>
+          </label>
+          <input type="email" placeholder="ejemplo@mail.com" class="input input-bordered focus:input-primary w-full" required />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-control mb-2">
+          <label class="label">
+            <span class="label-text font-medium text-secondary">Contraseña</span>
+          </label>
+          <input type="password" placeholder="••••••••" class="input input-bordered focus:input-secondary w-full" required />
+          <label class="label">
+            <a href="#" class="label-text-alt link link-hover text-secondary">¿Olvidaste tu contraseña?</a>
+          </label>
+        </div>
+
+        <!-- Botón login -->
+        <div class="form-control mt-4">
+          <button class="btn btn-primary w-full">Ingresar</button>
+        </div>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">o</div>
+
+      <!-- Login social -->
+      <div class="grid grid-cols-2 gap-3">
+        <button class="btn btn-outline btn-error">Google</button>
+        <button class="btn btn-outline btn-neutral">GitHub</button>
+      </div>
+
+      <!-- Registro -->
+      <p class="text-sm text-center mt-6 text-base-content/70">
+        ¿No tienes cuenta?
+        <a href="#" class="link link-secondary font-medium">Regístrate</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+title = "Detalle de Dominio"
+url = "/dashboard/domains/:id"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Aero\Clouds\Models\Domain;
+
+function onStart()
+{
+    // Get authenticated user
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    // Get domain ID from URL
+    $domainId = $this->param('id');
+
+    // Get domain and verify ownership
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->with(['extension', 'provider', 'order'])
+        ->first();
+
+    if (!$domain) {
+        Flash::error('Dominio no encontrado');
+        return Redirect::to('/dashboard/domains');
+    }
+
+    $this['domain'] = $domain;
+    $this['user'] = $user;
+
+    // Initialize nameservers array if empty
+    if (empty($domain->nameservers)) {
+        $this['nameservers'] = ['', ''];
+    } else {
+        $this['nameservers'] = $domain->nameservers;
+    }
+
+    // Initialize DNS records
+    $this['dns_records'] = $domain->dns_records ?? [];
+}
+
+function onSyncNameservers()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        $result = $domain->syncNameservers();
+
+        if ($result['success']) {
+            Flash::success($result['message']);
+            return ['nameservers' => $domain->nameservers];
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al sincronizar nameservers: ' . $e->getMessage());
+    }
+}
+
+function onUpdateNameservers()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+    $nameservers = post('nameservers', []);
+
+    // Filter empty nameservers
+    $nameservers = array_filter($nameservers, function($ns) {
+        return !empty(trim($ns));
+    });
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        $result = $domain->updateNameservers($nameservers);
+
+        if ($result['success']) {
+            Flash::success($result['message']);
+            return Redirect::refresh();
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al actualizar nameservers: ' . $e->getMessage());
+    }
+}
+
+function onSyncDnsRecords()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        $result = $domain->syncDnsRecords();
+
+        if ($result['success']) {
+            Flash::success($result['message']);
+            return ['records' => $domain->dns_records];
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al sincronizar DNS: ' . $e->getMessage());
+    }
+}
+
+function onUpdateDnsRecords()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+    $records = post('records', []);
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        $result = $domain->updateDnsRecords($records);
+
+        if ($result['success']) {
+            Flash::success($result['message']);
+            return Redirect::refresh();
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al actualizar DNS: ' . $e->getMessage());
+    }
+}
+
+function onToggleLock()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        if ($domain->is_locked) {
+            $result = $domain->unlock();
+        } else {
+            $result = $domain->lock();
+        }
+
+        if ($result['success']) {
+            Flash::success($result['message']);
+            return Redirect::refresh();
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al cambiar estado de bloqueo: ' . $e->getMessage());
+    }
+}
+
+function onGetAuthCode()
+{
+    $user = Auth::getUser();
+    $domainId = post('domain_id');
+
+    $domain = Domain::where('id', $domainId)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$domain) {
+        throw new \ApplicationException('Dominio no encontrado');
+    }
+
+    try {
+        $result = $domain->getAuthCode();
+
+        if ($result['success']) {
+            return [
+                'auth_code' => $result['auth_code'],
+                'message' => $result['message']
+            ];
+        } else {
+            throw new \ApplicationException($result['message']);
+        }
+    } catch (\Exception $e) {
+        throw new \ApplicationException('Error al obtener código EPP: ' . $e->getMessage());
+    }
+}
+?>
+==
+<!-- Back Button -->
+<div class="mb-4">
+    <a href="/dashboard/domains" class="btn btn-ghost btn-sm">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Volver a Dominios
+    </a>
+</div>
+
+<!-- Page Header -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                {{ domain.full_domain }}
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400">
+                Gestiona la configuración de tu dominio
+            </p>
+        </div>
+        <div>
+            {% if domain.status == 'active' %}
+                <span class="badge badge-success gap-2">
+                    <i class="fas fa-check-circle"></i> Activo
+                </span>
+            {% elseif domain.status == 'pending' %}
+                <span class="badge badge-warning gap-2">
+                    <i class="fas fa-clock"></i> Pendiente
+                </span>
+            {% elseif domain.status == 'expired' %}
+                <span class="badge badge-error gap-2">
+                    <i class="fas fa-exclamation-circle"></i> Expirado
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Domain Info Card -->
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        Información del Dominio
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Proveedor</div>
+            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                {{ domain.provider.name }}
+            </div>
+        </div>
+        <div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Fecha de Registro</div>
+            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                {{ domain.registration_date|date('d/m/Y') }}
+            </div>
+        </div>
+        <div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Fecha de Expiración</div>
+            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                {{ domain.expiration_date|date('d/m/Y') }}
+                {% if domain.days_until_expiration is not null %}
+                    <span class="text-xs {% if domain.days_until_expiration < 30 %}text-warning{% else %}text-gray-500{% endif %}">
+                        ({{ domain.days_until_expiration }} días)
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">Auto Renovación</div>
+            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                {% if domain.auto_renew %}
+                    <span class="text-success"><i class="fas fa-check-circle"></i> Activada</span>
+                {% else %}
+                    <span class="text-gray-500"><i class="fas fa-times-circle"></i> Desactivada</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Management Tabs -->
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div role="tablist" class="tabs tabs-lifted tabs-lg">
+        <!-- Nameservers Tab -->
+        <input type="radio" name="domain_tabs" role="tab" class="tab" aria-label="Nameservers" checked />
+        <div role="tabpanel" class="tab-content bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-server text-primary mr-2"></i>
+                    Nameservers
+                </h3>
+                <button
+                    data-request="onSyncNameservers"
+                    data-request-data="{ domain_id: {{ domain.id }} }"
+                    data-request-success="
+                        if (data.nameservers) {
+                            location.reload();
+                        }
+                    "
+                    class="btn btn-sm btn-ghost">
+                    <i class="fas fa-sync mr-2"></i>
+                    Sincronizar
+                </button>
+            </div>
+
+            <form data-request="onUpdateNameservers" data-request-flash>
+                <input type="hidden" name="domain_id" value="{{ domain.id }}">
+
+                <div class="space-y-3 mb-4">
+                    {% for i in 0..5 %}
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Nameserver {{ i + 1 }}</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="nameservers[]"
+                            value="{{ nameservers[i] ?? '' }}"
+                            placeholder="ns{{ i + 1 }}.ejemplo.com"
+                            class="input input-bordered w-full"
+                        />
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i>
+                    Guardar Nameservers
+                </button>
+            </form>
+        </div>
+
+        <!-- DNS Records Tab -->
+        <input type="radio" name="domain_tabs" role="tab" class="tab" aria-label="DNS Records" />
+        <div role="tabpanel" class="tab-content bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-list text-primary mr-2"></i>
+                    Registros DNS
+                </h3>
+                <button
+                    data-request="onSyncDnsRecords"
+                    data-request-data="{ domain_id: {{ domain.id }} }"
+                    data-request-success="
+                        if (data.records) {
+                            location.reload();
+                        }
+                    "
+                    class="btn btn-sm btn-ghost">
+                    <i class="fas fa-sync mr-2"></i>
+                    Sincronizar
+                </button>
+            </div>
+
+            {% if dns_records|length > 0 %}
+            <div class="overflow-x-auto mb-4">
+                <table class="table w-full">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Subdominio</th>
+                            <th>Valor</th>
+                            <th>Prioridad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in dns_records %}
+                        <tr>
+                            <td><span class="badge badge-sm">{{ record.type }}</span></td>
+                            <td>{{ record.subdomain|default('@') }}</td>
+                            <td class="font-mono text-sm">{{ record.value }}</td>
+                            <td>{{ record.priority|default('-') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-info-circle"></i>
+                <span>No hay registros DNS configurados. Haz clic en Sincronizar para obtener los registros actuales.</span>
+            </div>
+            {% endif %}
+
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>La gestión completa de DNS estará disponible próximamente. Por ahora puedes ver los registros actuales.</span>
+            </div>
+        </div>
+
+        <!-- Lock/Unlock Tab -->
+        <input type="radio" name="domain_tabs" role="tab" class="tab" aria-label="Seguridad" />
+        <div role="tabpanel" class="tab-content bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <i class="fas fa-shield-alt text-primary mr-2"></i>
+                Seguridad del Dominio
+            </h3>
+
+            <div class="card bg-base-200 mb-4">
+                <div class="card-body">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-1">
+                                {% if domain.is_locked %}
+                                    <i class="fas fa-lock text-success mr-2"></i>
+                                    Dominio Bloqueado
+                                {% else %}
+                                    <i class="fas fa-unlock text-warning mr-2"></i>
+                                    Dominio Desbloqueado
+                                {% endif %}
+                            </h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                {% if domain.is_locked %}
+                                    El dominio está protegido contra transferencias no autorizadas
+                                {% else %}
+                                    El dominio puede ser transferido sin restricciones
+                                {% endif %}
+                            </p>
+                        </div>
+                        <button
+                            data-request="onToggleLock"
+                            data-request-data="{ domain_id: {{ domain.id }} }"
+                            data-request-confirm="¿Estás seguro de que deseas {% if domain.is_locked %}desbloquear{% else %}bloquear{% endif %} este dominio?"
+                            class="btn {% if domain.is_locked %}btn-warning{% else %}btn-success{% endif %}">
+                            <i class="fas fa-{% if domain.is_locked %}unlock{% else %}lock{% endif %} mr-2"></i>
+                            {% if domain.is_locked %}Desbloquear{% else %}Bloquear{% endif %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <div class="font-semibold">Acerca del bloqueo de dominio</div>
+                    <div class="text-sm">
+                        El bloqueo de dominio protege tu dominio contra transferencias no autorizadas a otros proveedores.
+                        Es recomendable mantener el dominio bloqueado a menos que planees transferirlo.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EPP Code Tab -->
+        <input type="radio" name="domain_tabs" role="tab" class="tab" aria-label="Código EPP" />
+        <div role="tabpanel" class="tab-content bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <i class="fas fa-key text-primary mr-2"></i>
+                Código EPP (Auth Code)
+            </h3>
+
+            <div class="alert alert-warning mb-4">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <div class="font-semibold">Importante</div>
+                    <div class="text-sm">
+                        El código EPP es necesario para transferir tu dominio a otro proveedor.
+                        Mantenlo seguro y no lo compartas con nadie.
+                    </div>
+                </div>
+            </div>
+
+            {% if domain.epp_code %}
+            <div class="card bg-base-200 mb-4">
+                <div class="card-body">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <label class="label">
+                                <span class="label-text font-semibold">Código EPP</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <input
+                                    type="text"
+                                    value="{{ domain.epp_code }}"
+                                    readonly
+                                    class="input input-bordered flex-1 font-mono"
+                                    id="epp-code-input"
+                                />
+                                <button
+                                    onclick="navigator.clipboard.writeText('{{ domain.epp_code }}'); alert('Código EPP copiado al portapapeles')"
+                                    class="btn btn-square btn-outline">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <button
+                data-request="onGetAuthCode"
+                data-request-data="{ domain_id: {{ domain.id }} }"
+                data-request-success="
+                    if (data.auth_code) {
+                        location.reload();
+                    }
+                "
+                class="btn btn-primary">
+                <i class="fas fa-sync mr-2"></i>
+                {% if domain.epp_code %}Actualizar{% else %}Obtener{% endif %} Código EPP
+            </button>
+        </div>
+    </div>
+</div>

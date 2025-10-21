@@ -1,0 +1,141 @@
+fields:
+    # Basic Information
+    service_id:
+        label: Service
+        type: relation
+        nameFrom: name
+        select: name
+        required: true
+        span: left
+        comment: Select the service this plan belongs to
+
+    name:
+        label: Plan Name
+        type: text
+        required: true
+        span: right
+        placeholder: Enter plan name
+
+    # Pricing
+    price:
+        label: Price
+        type: number
+        step: 0.01
+        required: true
+        span: left
+        min: 0
+
+    setup_fee:
+        label: Setup Fee
+        type: number
+        step: 0.01
+        default: 0
+        span: right
+        min: 0
+
+    billing_cycle:
+        label: Billing Cycle
+        type: dropdown
+        span: left
+        default: monthly
+        required: true
+        options:
+            monthly: Monthly
+            quarterly: Quarterly
+            yearly: Yearly
+            custom: Custom
+
+    # Status
+    is_active:
+        label: Active
+        type: switch
+        span: right
+        default: true
+        comment: Plan is available for purchase
+
+    is_popular:
+        label: Popular Plan
+        type: switch
+        span: left
+        default: false
+        comment: Highlight as popular choice
+
+    sort_order:
+        label: Sort Order
+        type: number
+        span: right
+        default: 0
+        comment: Order within service plans
+
+    # Content
+    description:
+        label: Plan Description
+        type: textarea
+        size: large
+        span: full
+        comment: Detailed plan description
+
+    features:
+        label: Plan Features
+        type: repeater
+        span: full
+        prompt: Add Feature
+        form:
+            fields:
+                feature_name:
+                    label: Feature Name
+                    type: text
+                    required: true
+                    span: left
+                feature_value:
+                    label: Feature Value
+                    type: text
+                    span: right
+                    placeholder: "e.g., Unlimited, 10GB, Yes"
+                feature_type:
+                    label: Feature Type
+                    type: dropdown
+                    span: left
+                    options:
+                        storage: Storage
+                        bandwidth: Bandwidth
+                        email: Email Accounts
+                        database: Databases
+                        subdomain: Subdomains
+                        feature: Feature
+                        limit: Limit
+                        other: Other
+                is_highlighted:
+                    label: Highlight
+                    type: switch
+                    span: right
+                    default: false
+                    comment: Show prominently
+
+    # Advanced Options
+    resource_limits:
+        label: Resource Limits
+        type: codeeditor
+        language: json
+        size: medium
+        comment: JSON configuration for resource limits
+        placeholder: |
+            {
+                "cpu_cores": 2,
+                "ram_gb": 4,
+                "disk_gb": 50,
+                "bandwidth_gb": 1000
+            }
+
+    pricing_options:
+        label: Advanced Pricing Options
+        type: codeeditor
+        language: json
+        size: medium
+        comment: JSON configuration for complex pricing
+        placeholder: |
+            {
+                "discount_annual": 20,
+                "promo_code": "SAVE20",
+                "trial_days": 30
+            }

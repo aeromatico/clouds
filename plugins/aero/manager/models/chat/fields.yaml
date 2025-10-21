@@ -1,0 +1,36 @@
+fields:
+    chatbot_on:
+        label: 'Chatbot on'
+        span: auto
+        type: checkbox
+    room:
+        label: Room
+        size: ''
+        span: auto
+        type: textarea
+    identifier:
+        label: Identifier
+        span: auto
+        type: text
+    type:
+        label: Type
+        span: auto
+        type: text
+    chat:
+        label: Chat
+        prompt: 'Add new item'
+        style: default
+        span: full
+        type: repeater
+        form:
+            fields:
+                prompt:
+                    label: Prompt
+                    size: ''
+                    span: auto
+                    type: textarea
+                answer:
+                    label: Answer
+                    size: ''
+                    span: auto
+                    type: textarea

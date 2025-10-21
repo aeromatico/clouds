@@ -1,0 +1,8 @@
+v1.0.1:
+    - 'Initialize plugin'
+v1.0.2:
+    - 'Created table aero_ligas_clubes'
+    - builder_table_create_aero_ligas_clubes.php
+v1.0.3:
+    - 'Updated table aero_ligas_clubes'
+    - builder_table_update_aero_ligas_clubes.php

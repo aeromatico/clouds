@@ -1,0 +1,240 @@
+<footer class="bg-muted/50 border-t border-border mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Brand Column -->
+            <div class="lg:col-span-1">
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fas fa-bolt text-primary text-xl"></i>
+                    <span class="text-xl font-bold text-foreground">{{ this.theme.site_name | default('Master') }}</span>
+                </div>
+                <p class="text-muted-foreground text-sm leading-relaxed mb-4">
+                    {{ this.theme.site_description | default('Un tema moderno para OctoberCMS con Vite, Tailwind CSS, Alpine.js y soporte PWA completo.') }}
+                </p>
+                
+                <!-- Social Links -->
+                <div class="flex items-center space-x-4">
+                    <a 
+                        href="#" 
+                        class="text-muted-foreground hover:text-primary transition-colors"
+                        title="Twitter"
+                    >
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a 
+                        href="#" 
+                        class="text-muted-foreground hover:text-primary transition-colors"
+                        title="GitHub"
+                    >
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a 
+                        href="#" 
+                        class="text-muted-foreground hover:text-primary transition-colors"
+                        title="LinkedIn"
+                    >
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a 
+                        href="#" 
+                        class="text-muted-foreground hover:text-primary transition-colors"
+                        title="Discord"
+                    >
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="font-semibold text-foreground mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a 
+                            href="{{ url('/') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/about') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Acerca de
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/contact') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Contacto
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/blog') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Blog
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Components -->
+            <div>
+                <h3 class="font-semibold text-foreground mb-4">Componentes</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a 
+                            href="{{ url('/components/buttons') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Buttons
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/components/forms') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Forms
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/components/cards') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Cards
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="{{ url('/components/modals') }}" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm"
+                        >
+                            Modals
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tech Stack -->
+            <div>
+                <h3 class="font-semibold text-foreground mb-4">Tecnologías</h3>
+                <ul class="space-y-3">
+                    <li>
+                        <a 
+                            href="https://octobercms.com" 
+                            target="_blank" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center space-x-2"
+                        >
+                            <span>OctoberCMS</span>
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="https://vitejs.dev" 
+                            target="_blank" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center space-x-2"
+                        >
+                            <span>Vite</span>
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="https://tailwindcss.com" 
+                            target="_blank" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center space-x-2"
+                        >
+                            <span>Tailwind CSS</span>
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="https://alpinejs.dev" 
+                            target="_blank" 
+                            class="text-muted-foreground hover:text-primary transition-colors text-sm flex items-center space-x-2"
+                        >
+                            <span>Alpine.js</span>
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-border pt-8 mt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <!-- Copyright -->
+                <div class="text-sm text-muted-foreground">
+                    © {{ "now" | date("Y") }} {{ this.theme.site_name | default('Master Theme') }}. 
+                    <span>Desarrollado por</span>
+                    <a href="#" class="text-primary hover:underline">aero</a>
+                    <span>con</span>
+                    <i class="fas fa-heart text-red-500 mx-1"></i>
+                </div>
+
+                <!-- Tech Stack Badge -->
+                <div class="flex items-center space-x-4 text-xs text-muted-foreground">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-bolt text-yellow-500"></i>
+                        <span>Powered by Vite</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-mobile-alt text-blue-500"></i>
+                        <span>PWA Ready</span>
+                    </div>
+                    <div class="flex items-center space-x-2" x-data="{ isDark: $store.theme.current === 'dark' }">
+                        <i class="fas fa-moon text-purple-500" x-show="isDark"></i>
+                        <i class="fas fa-sun text-yellow-500" x-show="!isDark"></i>
+                        <span x-text="isDark ? 'Dark Mode' : 'Light Mode'"></span>
+                    </div>
+                </div>
+
+                <!-- Back to Top -->
+                <button 
+                    @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                    class="btn btn-outline btn-sm"
+                    title="Volver arriba"
+                >
+                    <i class="fas fa-arrow-up"></i>
+                    <span class="ml-2 hidden sm:inline">Arriba</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Info (Development Only) -->
+    {% if app.debug %}
+    <div class="border-t border-border bg-muted/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-stopwatch"></i>
+                    <span>Page Load: <span class="font-mono">{{ execution_time() }}ms</span></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-database"></i>
+                    <span>Queries: <span class="font-mono">{{ query_count() }}</span></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-memory"></i>
+                    <span>Memory: <span class="font-mono">{{ memory_usage() }}</span></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-code-branch"></i>
+                    <span>Environment: <span class="font-mono">{{ app.env }}</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</footer>

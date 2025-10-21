@@ -1,0 +1,11 @@
+name: Orders
+modelClass: Aero\Manager\Models\Orders
+form: $/aero/manager/models/orders/fields.yaml
+defaultRedirect: aero/manager/orders
+create:
+    redirect: 'aero/manager/orders/update/:id'
+    redirectClose: aero/manager/orders
+update:
+    redirect: aero/manager/orders
+    redirectClose: aero/manager/orders
+preview: {  }

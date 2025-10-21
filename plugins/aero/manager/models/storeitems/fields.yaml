@@ -1,0 +1,92 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    domain:
+        label: Domain
+        span: auto
+        default: jumechi.store
+        type: text
+    description_short:
+        label: 'Short Description'
+        size: ''
+        span: auto
+        type: textarea
+    description:
+        label: Description
+        size: ''
+        span: auto
+        type: richeditor
+    public_on:
+        label: 'Public on'
+        span: auto
+        default: 1
+        type: switch
+    collections:
+        label: Colecciones
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+tabs:
+    fields:
+        variants:
+            label: Variants
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Variants
+            form:
+                fields:
+                    value:
+                        label: 'Variant name'
+                        span: auto
+                        type: text
+                    stock:
+                        label: Stock
+                        span: auto
+                        type: number
+                    price:
+                        label: Price
+                        span: auto
+                        type: number
+                    reward:
+                        label: Reward
+                        span: auto
+                        type: text
+                    price_currency:
+                        label: Currency
+                        options:
+                            C: Credits
+                            BOB: Bolivianos
+                            USD: Dólares
+                            USDT: Tether
+                        showSearch: true
+                        span: auto
+                        default: ''
+                        type: dropdown
+                    price_prefix:
+                        label: Prefix
+                        span: auto
+                        default: Créditos
+                        type: text
+        images:
+            label: Images
+            mode: image
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            comment: 'First image well be the featured image'
+            tab: Media

@@ -1,0 +1,169 @@
+<!-- Microfrontend: User Profile -->
+<div 
+    x-data="userProfile" 
+    x-init="init()" 
+    data-component="user-profile"
+    class="bg-card rounded-lg shadow-lg p-6 space-y-6"
+>
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-card-foreground">Mi Perfil</h2>
+        
+        <!-- Loading indicator -->
+        <div x-show="loading" class="flex items-center space-x-2 text-muted-foreground">
+            <div class="spinner"></div>
+            <span class="text-sm">Cargando...</span>
+        </div>
+    </div>
+
+    <!-- Error state -->
+    <div x-show="error" x-transition class="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+        <div class="flex items-center space-x-2 text-destructive">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class="font-medium">Error:</span>
+            <span x-text="error"></span>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div x-show="!loading && !error && user" x-transition class="space-y-6">
+        
+        <!-- View Mode -->
+        <div x-show="!isEditing" class="space-y-4">
+            <!-- Profile Header -->
+            <div class="flex items-center space-x-6">
+                <!-- Avatar -->
+                <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold">
+                    <span x-text="user?.name?.split(' ').map(n => n[0]).join('').toUpperCase()"></span>
+                </div>
+                
+                <!-- Basic Info -->
+                <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-foreground" x-text="user?.name"></h3>
+                    <p class="text-muted-foreground" x-text="user?.email"></p>
+                    <p class="text-sm text-muted-foreground mt-1" x-text="user?.bio || 'Sin biografía'"></p>
+                </div>
+                
+                <!-- Edit Button -->
+                <button 
+                    @click="startEdit()"
+                    class="btn btn-outline"
+                >
+                    <i class="fas fa-edit mr-2"></i>
+                    Editar
+                </button>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
+                <div>
+                    <label class="text-sm font-medium text-muted-foreground">Miembro desde</label>
+                    <p class="text-foreground" x-text="user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'"></p>
+                </div>
+                <div>
+                    <label class="text-sm font-medium text-muted-foreground">Última actividad</label>
+                    <p class="text-foreground" x-text="user?.last_login ? new Date(user.last_login).toLocaleDateString() : 'N/A'"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Mode -->
+        <div x-show="isEditing" x-transition class="space-y-4">
+            <form @submit.prevent="saveProfile()">
+                <!-- Name Field -->
+                <div>
+                    <label for="edit-name" class="block text-sm font-medium text-foreground mb-2">
+                        Nombre completo
+                    </label>
+                    <input 
+                        id="edit-name"
+                        x-model="editForm.name"
+                        type="text" 
+                        required
+                        class="input w-full"
+                        placeholder="Tu nombre completo"
+                    >
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label for="edit-email" class="block text-sm font-medium text-foreground mb-2">
+                        Correo electrónico
+                    </label>
+                    <input 
+                        id="edit-email"
+                        x-model="editForm.email"
+                        type="email" 
+                        required
+                        class="input w-full"
+                        placeholder="tu@email.com"
+                    >
+                </div>
+
+                <!-- Bio Field -->
+                <div>
+                    <label for="edit-bio" class="block text-sm font-medium text-foreground mb-2">
+                        Biografía
+                    </label>
+                    <textarea 
+                        id="edit-bio"
+                        x-model="editForm.bio"
+                        rows="3"
+                        class="input w-full resize-none"
+                        placeholder="Cuéntanos algo sobre ti..."
+                    ></textarea>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex items-center justify-end space-x-3 pt-4 border-t border-border">
+                    <!-- Cancel Button -->
+                    <button 
+                        type="button"
+                        @click="cancelEdit()"
+                        class="btn btn-outline"
+                    >
+                        Cancelar
+                    </button>
+                    
+                    <!-- Save Button -->
+                    <button 
+                        type="submit"
+                        :disabled="!isFormValid || !hasChanges || loading"
+                        class="btn btn-primary"
+                        :class="{ 'opacity-50 cursor-not-allowed': !isFormValid || !hasChanges || loading }"
+                    >
+                        <div x-show="loading" class="spinner mr-2"></div>
+                        <i x-show="!loading" class="fas fa-save mr-2"></i>
+                        Guardar cambios
+                    </button>
+                </div>
+
+                <!-- Form Status -->
+                <div class="text-sm text-muted-foreground">
+                    <div x-show="!isFormValid" class="text-destructive">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        Por favor completa todos los campos requeridos
+                    </div>
+                    <div x-show="isFormValid && !hasChanges" class="text-muted-foreground">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        No hay cambios para guardar
+                    </div>
+                    <div x-show="isFormValid && hasChanges" class="text-primary">
+                        <i class="fas fa-check mr-1"></i>
+                        Cambios pendientes
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Empty state -->
+    <div x-show="!loading && !error && !user" x-transition class="text-center py-8">
+        <i class="fas fa-user-circle text-4xl text-muted-foreground mb-4"></i>
+        <p class="text-muted-foreground">No se pudo cargar la información del perfil</p>
+        <button @click="loadProfile()" class="btn btn-outline mt-4">
+            <i class="fas fa-sync-alt mr-2"></i>
+            Reintentar
+        </button>
+    </div>
+</div>

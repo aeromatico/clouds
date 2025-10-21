@@ -1,0 +1,11 @@
+name: Settings
+modelClass: Aero\Manager\Models\Settings
+form: $/aero/manager/models/settings/fields.yaml
+defaultRedirect: aero/manager/settings
+create:
+    redirect: 'aero/manager/settings/update/:id'
+    redirectClose: aero/manager/settings
+update:
+    redirect: aero/manager/settings
+    redirectClose: aero/manager/settings
+preview: {  }

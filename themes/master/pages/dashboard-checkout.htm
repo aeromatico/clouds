@@ -1,0 +1,417 @@
+title = "Checkout"
+url = "/checkout"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+
+[cart]
+==
+<?php
+use Aero\Clouds\Models\Order;
+use Aero\Clouds\Models\Invoice;
+use Aero\Clouds\Models\Cloud;
+use Aero\Clouds\Models\Plan;
+
+function onStart()
+{
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    $this['user'] = $user;
+
+    // Get active payment gateways (sin filtro de dominio, son globales)
+    $gateways = \Aero\Clouds\Models\PaymentGateway::withoutDomainScope()
+        ->where('is_active', true)
+        ->orderBy('sort_order')
+        ->get();
+
+    $this['paymentGateways'] = $gateways;
+}
+
+function onCheckout()
+{
+    $user = Auth::getUser();
+
+    // Get cart data from POST (sent from localStorage)
+    $cartData = post('cart_data');
+    if (!$cartData) {
+        throw new \ApplicationException('No se recibieron datos del carrito');
+    }
+
+    $cart = json_decode($cartData, true);
+
+    if (empty($cart)) {
+        throw new \ApplicationException('El carrito está vacío');
+    }
+
+    $paymentGatewayId = post('payment_gateway_id');
+    if (!$paymentGatewayId) {
+        throw new \ApplicationException('Selecciona un método de pago');
+    }
+
+    // IMPORTANTE: Usar withoutDomainScope() porque PaymentGateways no deberían filtrarse por dominio
+    // Las pasarelas de pago son globales para toda la plataforma
+    $gateway = \Aero\Clouds\Models\PaymentGateway::withoutDomainScope()
+        ->where('id', $paymentGatewayId)
+        ->first();
+
+    if (!$gateway || !$gateway->is_active) {
+        throw new \ApplicationException('Método de pago no válido');
+    }
+
+    try {
+        // Calculate total
+        $subtotal = 0;
+        $items = [];
+
+        foreach ($cart as $item) {
+            $quantity = $item['quantity'] ?? 1;
+            $price = $item['price'] ?? 0;
+            $total = $price * $quantity;
+
+            $items[] = [
+                'plan_id' => $item['plan_id'],
+                'plan_name' => $item['plan_name'],
+                'billing_cycle' => $item['billing_cycle'],
+                'quantity' => $quantity,
+                'price' => $price,
+                'total' => $total
+            ];
+
+            $subtotal += $total;
+        }
+
+        $fee = $gateway->calculateFee($subtotal);
+        $totalAmount = $subtotal + $fee;
+
+        // Create Order
+        $order = Order::create([
+            'user_id' => $user->id,
+            'order_date' => now(),
+            'status' => 'pending', // Siempre pending para offline
+            'items' => json_encode($items),
+            'total_amount' => $totalAmount,
+            'notes' => 'Orden creada desde el carrito de compras. Método de pago: ' . $gateway->name
+        ]);
+
+        // Create Invoice
+        $invoiceItems = [];
+        foreach ($items as $item) {
+            $invoiceItems[] = [
+                'description' => $item['plan_name'] . ' - ' . ucfirst(str_replace('_', ' ', $item['billing_cycle'])),
+                'quantity' => $item['quantity'],
+                'unit_price' => $item['price']
+            ];
+        }
+
+        // Add transaction fee as separate line item if exists
+        if ($fee > 0) {
+            $invoiceItems[] = [
+                'description' => 'Comisión de pago - ' . $gateway->name,
+                'quantity' => 1,
+                'unit_price' => $fee
+            ];
+        }
+
+        $invoice = Invoice::create([
+            'user_id' => $user->id,
+            'payment_gateway_id' => $paymentGatewayId,
+            'invoice_date' => now(),
+            'due_date' => now()->addDays(7),
+            'status' => 'sent', // Sent para que el usuario vea las instrucciones
+            'items' => json_encode($invoiceItems),
+            'tax_rate' => 0,
+            'payment_method' => $gateway->type,
+            'notes' => 'Factura generada automáticamente. Método de pago: ' . $gateway->name
+        ]);
+
+        // Update order with invoice_id
+        $order->invoice_id = $invoice->id;
+        $order->save();
+
+        // Determinar redirección según tipo de pago
+        if ($gateway->isOfflinePayment()) {
+            // Pago offline: redirigir a instrucciones de pago
+            Flash::success('Orden creada exitosamente. Por favor, completa el pago siguiendo las instrucciones.');
+
+            return [
+                'redirect' => '/dashboard/invoices',
+                'clear_cart' => true,
+                'order_id' => $order->id,
+                'invoice_id' => $invoice->id
+            ];
+        } else {
+            // Pago online: redirigir a la pasarela (futuro)
+            Flash::success('Redirigiendo a la pasarela de pago...');
+
+            return [
+                'redirect' => '/payment/process/' . $order->id,
+                'clear_cart' => true,
+                'order_id' => $order->id
+            ];
+        }
+
+    } catch (\Exception $e) {
+        \Log::error('Checkout error: ' . $e->getMessage());
+        throw new \ApplicationException('Error al procesar la orden: ' . $e->getMessage());
+    }
+}
+?>
+==
+<!-- Checkout Page -->
+<div class="container mx-auto px-4 py-12" x-data="{
+    items: {},
+    selectedPayment: null,
+    paymentGateways: {
+        {% for gateway in paymentGateways %}
+        '{{ gateway.id }}': {
+            id: {{ gateway.id }},
+            name: '{{ gateway.name|e('js') }}',
+            isOffline: {{ gateway.isOfflinePayment() ? 'true' : 'false' }}
+        }{{ loop.last ? '' : ',' }}
+        {% endfor %}
+    },
+    init() {
+        this.items = window.cart.getItems();
+        if (Object.keys(this.items).length === 0) {
+            window.location.href = '/cart';
+        }
+        // Set default selected payment
+        const defaultGateway = document.querySelector('input[name=\'payment_gateway_id\']:checked');
+        if (defaultGateway) {
+            this.selectedPayment = defaultGateway.value;
+        }
+    },
+    get itemsArray() {
+        return Object.values(this.items);
+    },
+    get count() {
+        return Object.keys(this.items).length;
+    },
+    get total() {
+        return Object.values(this.items).reduce((sum, item) => {
+            return sum + (item.price * item.quantity);
+        }, 0);
+    },
+    get isOfflinePayment() {
+        if (!this.selectedPayment) return false;
+        const gateway = this.paymentGateways[this.selectedPayment];
+        return gateway ? gateway.isOffline : false;
+    },
+    get buttonText() {
+        return this.isOfflinePayment
+            ? 'He completado el pago, verificar'
+            : 'Completar Orden';
+    },
+    get buttonIcon() {
+        return this.isOfflinePayment
+            ? 'fa-check-double'
+            : 'fa-check-circle';
+    },
+    submitCheckout(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        formData.append('cart_data', JSON.stringify(this.items));
+
+        fetch(window.location.href, {
+            method: 'POST',
+            headers: {
+                'X-OCTOBER-REQUEST-HANDLER': 'onCheckout',
+                'X-OCTOBER-REQUEST-FLASH': '1',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.clear_cart) {
+                window.cart.clear();
+            }
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+        })
+        .catch(error => {
+            console.error('Checkout error:', error);
+            Alpine.store('toast').error('Error al procesar la orden');
+        });
+    }
+}">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+            Finalizar Compra
+        </h1>
+        <div class="text-sm breadcrumbs">
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/shop">Servicios</a></li>
+                <li><a href="/cart">Carrito</a></li>
+                <li>Checkout</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Checkout Steps -->
+    <ul class="steps steps-vertical lg:steps-horizontal w-full mb-12">
+        <li class="step step-primary">Carrito</li>
+        <li class="step step-primary">Checkout</li>
+        <li class="step">Confirmación</li>
+    </ul>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Payment Method Selection -->
+        <div class="lg:col-span-2">
+            <form @submit="submitCheckout" data-request-flash>
+                <div class="card bg-base-100 shadow-xl border border-base-300 mb-6">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">
+                            <i class="fas fa-credit-card mr-2"></i>
+                            Método de Pago
+                        </h2>
+
+                        <div class="space-y-4">
+                            {% for gateway in paymentGateways %}
+                                <label class="cursor-pointer block">
+                                    <!-- Hidden Radio Button -->
+                                    <input
+                                        type="radio"
+                                        name="payment_gateway_id"
+                                        value="{{ gateway.id }}"
+                                        class="hidden"
+                                        {{ gateway.is_default ? 'checked' : '' }}
+                                        @change="selectedPayment = '{{ gateway.id }}'"
+                                        required>
+
+                                    <div
+                                        class="card border-2 transition-all duration-200 hover:shadow-lg"
+                                        :class="selectedPayment == '{{ gateway.id }}' ? 'bg-primary/5 dark:bg-primary/10 border-primary shadow-lg' : 'bg-base-100 dark:bg-base-200 border-base-300 dark:border-base-content/20 hover:border-primary/50'">
+                                        <div class="card-body p-4">
+                                            <div class="flex items-start gap-4">
+                                                <!-- Content -->
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="flex items-center justify-between">
+                                                        <div class="flex-1 min-w-0">
+                                                            <h3 class="font-semibold text-lg flex items-center gap-2 flex-wrap">
+                                                                <span class="text-base-content">{{ gateway.name }}</span>
+                                                                <span
+                                                                    x-show="selectedPayment == '{{ gateway.id }}'"
+                                                                    x-transition
+                                                                    class="badge badge-primary badge-sm">
+                                                                    Seleccionado
+                                                                </span>
+                                                            </h3>
+                                                            {% if gateway.description %}
+                                                                <p class="text-sm text-base-content/70 mt-1">
+                                                                    {{ gateway.description }}
+                                                                </p>
+                                                            {% endif %}
+                                                        </div>
+                                                        {% if gateway.logo %}
+                                                            <img src="{{ gateway.logo.path }}" alt="{{ gateway.name }}" class="h-10 ml-4 flex-shrink-0">
+                                                        {% else %}
+                                                            <i class="fas fa-{{ gateway.type == 'qr_code' ? 'qrcode' : gateway.type == 'bank_transfer' ? 'university' : 'credit-card' }} text-3xl text-primary ml-4 flex-shrink-0"></i>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    {% if gateway.instructions %}
+                                                        <div
+                                                            x-show="selectedPayment == '{{ gateway.id }}'"
+                                                            x-transition
+                                                            class="mt-3 p-3 bg-info/10 dark:bg-info/20 rounded-lg border border-info/30 dark:border-info/40">
+                                                            <div class="flex gap-2">
+                                                                <i class="fas fa-info-circle text-info mt-1 flex-shrink-0"></i>
+                                                                <div class="text-sm text-base-content/80">{{ gateway.instructions }}</div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% if gateway.transaction_fee_type %}
+                                                        <div class="mt-2">
+                                                            <div class="badge badge-outline badge-sm">
+                                                                <i class="fas fa-info-circle mr-1"></i>
+                                                                {% if gateway.transaction_fee_type == 'percentage' %}
+                                                                    +{{ gateway.transaction_fee_percentage }}% comisión
+                                                                {% elseif gateway.transaction_fee_type == 'fixed' %}
+                                                                    +${{ gateway.transaction_fee_amount }} comisión
+                                                                {% elseif gateway.transaction_fee_type == 'both' %}
+                                                                    +${{ gateway.transaction_fee_amount }} + {{ gateway.transaction_fee_percentage }}% comisión
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Order Button -->
+                <button type="submit" class="btn btn-primary btn-lg w-full">
+                    <i class="fas mr-2" :class="buttonIcon"></i>
+                    <span x-text="buttonText"></span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+            <div class="card bg-base-100 shadow-xl border border-base-300 sticky top-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Resumen de Orden</h2>
+
+                    <!-- Cart Items Summary -->
+                    <div class="space-y-3 mb-4">
+                        <template x-for="item in itemsArray" :key="item.plan_id">
+                            <div class="flex justify-between text-sm">
+                                <span>
+                                    <span x-text="item.plan_name"></span>
+                                    <template x-if="item.quantity > 1">
+                                        <span x-text="' x' + item.quantity"></span>
+                                    </template>
+                                </span>
+                                <span class="font-semibold">
+                                    $<span x-text="(item.price * item.quantity).toFixed(2)"></span>
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="divider my-2"></div>
+
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600 dark:text-gray-400">Subtotal</span>
+                            <span class="font-semibold">$<span x-text="total.toFixed(2)"></span></span>
+                        </div>
+
+                        <div class="flex justify-between text-lg font-bold">
+                            <span>Total</span>
+                            <span class="text-primary">$<span x-text="total.toFixed(2)"></span></span>
+                        </div>
+                    </div>
+
+                    <!-- Security Badge -->
+                    <div class="alert alert-success mt-4">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="text-xs">
+                            <div class="font-semibold">Pago Seguro</div>
+                            <div>Tus datos están protegidos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

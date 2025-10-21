@@ -1,0 +1,39 @@
+fields:
+    user_id:
+        label: 'User ID'
+        span: auto
+        type: number
+    dc_user_id:
+        label: 'Datacenter User ID'
+        span: auto
+        type: text
+    server_id:
+        label: 'Server id'
+        span: auto
+        type: text
+    family:
+        label: Family
+        showSearch: true
+        span: auto
+        type: dropdown
+    datacenter:
+        label: Datacenter
+        span: auto
+        type: balloon-selector
+    credits:
+        label: Créditos
+        span: auto
+        type: number
+    status:
+        label: Status
+        options:
+            Pendiente: Pending
+            Desplegando: Deploying
+            Activo: Activo
+            Eliminado: Removed
+        span: auto
+        type: balloon-selector
+    created_at:
+        label: 'Created at'
+        span: auto
+        type: datepicker

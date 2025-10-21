@@ -1,0 +1,11 @@
+name: Faqs
+modelClass: Aero\Manager\Models\Faqs
+form: $/aero/manager/models/faqs/fields.yaml
+defaultRedirect: aero/manager/faqs
+create:
+    redirect: 'aero/manager/faqs/update/:id'
+    redirectClose: aero/manager/faqs
+update:
+    redirect: aero/manager/faqs
+    redirectClose: aero/manager/faqs
+preview: {  }

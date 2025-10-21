@@ -1,0 +1,367 @@
+<nav 
+    x-data="mobileNav"
+    class="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-40"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center space-x-3">
+                <!-- Drawer Toggle - Components Menu -->
+                <label for="main-drawer" class="p-2 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200 cursor-pointer" title="Componentes">
+                    <i class="fas fa-bars text-lg text-gray-300"></i>
+                </label>
+                <a 
+                    href="{{ url('/') }}" 
+                    class="flex items-center space-x-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
+                >
+                    <span class="font-extrabold">{{ this.theme.site_name | default('Master') }}</span>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:block">
+                <div class="flex items-center space-x-8">
+                    <a 
+                        href="{{ url('/') }}" 
+                        class="nav-link {{ request.path == '/' ? 'active' : '' }}"
+                    >
+                        Inicio
+                    </a>
+                    <a 
+                        href="{{ url('/about') }}" 
+                        class="nav-link {{ request.path == '/about' ? 'active' : '' }}"
+                    >
+                        Acerca
+                    </a>
+                    <a 
+                        href="{{ url('/contact') }}" 
+                        class="nav-link {{ request.path == '/contact' ? 'active' : '' }}"
+                    >
+                        Contacto
+                    </a>
+                    
+                    <!-- Components Dropdown -->
+                    <div 
+                        x-data="dropdown"
+                        class="relative"
+                    >
+                        <button 
+                            @click="toggle()"
+                            class="nav-link flex items-center space-x-1"
+                        >
+                            <span>Servicios</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform" :class="{ 'rotate-180': open }"></i>
+                        </button>
+                        
+                        <div 
+                            x-show="open"
+                            @click.away="close()"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform scale-95"
+                            x-transition:enter-end="opacity-100 transform scale-100"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 transform scale-100"
+                            x-transition:leave-end="opacity-0 transform scale-95"
+                            class="absolute right-0 mt-2 w-56 bg-card border rounded-lg shadow-lg py-1 z-50"
+                        >
+                            <a 
+                                href="{{ url('/components/buttons') }}" 
+                                class="block px-4 py-2 text-sm text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                <i class="fas fa-mouse-pointer w-4 mr-2"></i>
+                                Buttons
+                            </a>
+                            <a 
+                                href="{{ url('/components/forms') }}" 
+                                class="block px-4 py-2 text-sm text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                <i class="fas fa-edit w-4 mr-2"></i>
+                                Forms
+                            </a>
+                            <a 
+                                href="{{ url('/components/cards') }}" 
+                                class="block px-4 py-2 text-sm text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                <i class="fas fa-id-card w-4 mr-2"></i>
+                                Cards
+                            </a>
+                            <a 
+                                href="{{ url('/components/modals') }}" 
+                                class="block px-4 py-2 text-sm text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                <i class="fas fa-window-restore w-4 mr-2"></i>
+                                Modals
+                            </a>
+                            <div class="border-t border-border my-1"></div>
+                            <a 
+                                href="{{ url('/components') }}" 
+                                class="block px-4 py-2 text-sm text-primary hover:bg-accent transition-colors"
+                            >
+                                <i class="fas fa-th-large w-4 mr-2"></i>
+                                Ver todos
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side Items -->
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle -->
+                <button 
+                    x-data="{ 
+                        isDark: document.documentElement.classList.contains('dark'),
+                        toggle() {
+                            this.isDark = !this.isDark;
+                            if (this.isDark) {
+                                document.documentElement.classList.add('dark');
+                                document.documentElement.setAttribute('data-theme', 'dark');
+                                localStorage.setItem('theme', 'dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                                document.documentElement.setAttribute('data-theme', 'light');
+                                localStorage.setItem('theme', 'light');
+                            }
+                        }
+                    }"
+                    @click="toggle()"
+                    class="p-2 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    :aria-label="'Switch to ' + (isDark ? 'light' : 'dark') + ' mode'"
+                    :title="'Switch to ' + (isDark ? 'light' : 'dark') + ' mode'"
+                >
+                    <i 
+                        class="fas text-lg transition-all duration-300"
+                        :class="isDark ? 'fa-sun text-yellow-400' : 'fa-moon text-slate-600 dark:text-slate-400'"
+                    ></i>
+                </button>
+
+                <!-- Search Button -->
+                <button
+                    x-data="{ searchOpen: false }"
+                    @click="searchOpen = true"
+                    class="p-2 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    title="Buscar"
+                >
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+
+                <!-- Shopping Cart Badge -->
+                {% partial 'cart::badge' %}
+
+                <!-- Mobile menu button -->
+                <button 
+                    @click="toggle()"
+                    class="md:hidden p-2 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    :aria-expanded="isOpen"
+                    aria-label="Toggle navigation menu"
+                >
+                    <i 
+                        class="fas text-lg transition-transform duration-200" 
+                        :class="isOpen ? 'fa-times' : 'fa-ellipsis-vertical'"
+                    ></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div 
+            x-show="isOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2"
+            class="md:hidden border-t border-border"
+        >
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-background">
+                <a 
+                    href="{{ url('/') }}" 
+                    @click="close()"
+                    class="block px-3 py-2 rounded-md text-base font-medium nav-link {{ request.path == '/' ? 'active bg-accent' : '' }}"
+                >
+                    Inicio
+                </a>
+                <a 
+                    href="{{ url('/about') }}" 
+                    @click="close()"
+                    class="block px-3 py-2 rounded-md text-base font-medium nav-link {{ request.path == '/about' ? 'active bg-accent' : '' }}"
+                >
+                    Acerca
+                </a>
+                <a 
+                    href="{{ url('/contact') }}" 
+                    @click="close()"
+                    class="block px-3 py-2 rounded-md text-base font-medium nav-link {{ request.path == '/contact' ? 'active bg-accent' : '' }}"
+                >
+                    Contacto
+                </a>
+                
+                <!-- Mobile Components Menu -->
+                <div x-data="{ componentsOpen: false }">
+                    <button 
+                        @click="componentsOpen = !componentsOpen"
+                        class="w-full text-left px-3 py-2 rounded-md text-base font-medium nav-link flex items-center justify-between"
+                    >
+                        <span>Componentes</span>
+                        <i 
+                            class="fas fa-chevron-right text-xs transition-transform" 
+                            :class="{ 'rotate-90': componentsOpen }"
+                        ></i>
+                    </button>
+                    
+                    <div 
+                        x-show="componentsOpen"
+                        x-transition
+                        class="pl-6 space-y-1"
+                    >
+                        <a 
+                            href="{{ url('/components/buttons') }}" 
+                            @click="close()"
+                            class="block px-3 py-2 rounded-md text-sm nav-link"
+                        >
+                            <i class="fas fa-mouse-pointer w-4 mr-2"></i>
+                            Buttons
+                        </a>
+                        <a 
+                            href="{{ url('/components/forms') }}" 
+                            @click="close()"
+                            class="block px-3 py-2 rounded-md text-sm nav-link"
+                        >
+                            <i class="fas fa-edit w-4 mr-2"></i>
+                            Forms
+                        </a>
+                        <a 
+                            href="{{ url('/components/cards') }}" 
+                            @click="close()"
+                            class="block px-3 py-2 rounded-md text-sm nav-link"
+                        >
+                            <i class="fas fa-id-card w-4 mr-2"></i>
+                            Cards
+                        </a>
+                        <a 
+                            href="{{ url('/components/modals') }}" 
+                            @click="close()"
+                            class="block px-3 py-2 rounded-md text-sm nav-link"
+                        >
+                            <i class="fas fa-window-restore w-4 mr-2"></i>
+                            Modals
+                        </a>
+                        <a 
+                            href="{{ url('/components') }}" 
+                            @click="close()"
+                            class="block px-3 py-2 rounded-md text-sm text-primary"
+                        >
+                            <i class="fas fa-th-large w-4 mr-2"></i>
+                            Ver todos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Global Search Modal -->
+<div 
+    x-data="{ 
+        searchOpen: false, 
+        query: '', 
+        results: [] 
+    }"
+    @keydown.escape.window="searchOpen = false"
+    @keydown.cmd.k.window.prevent="searchOpen = true"
+    @keydown.ctrl.k.window.prevent="searchOpen = true"
+    x-init="$watch('searchOpen', value => value && $nextTick(() => $refs.searchInput.focus()))"
+>
+    <div 
+        x-show="searchOpen"
+        @click="searchOpen = false"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+    ></div>
+
+    <div 
+        x-show="searchOpen"
+        @click.stop
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform scale-95"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-95"
+        class="fixed inset-x-4 top-16 md:inset-x-auto md:left-1/2 md:transform md:-translate-x-1/2 md:w-full md:max-w-2xl bg-card border rounded-lg shadow-xl z-50"
+    >
+        <div class="p-4">
+            <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                <input 
+                    x-ref="searchInput"
+                    x-model="query"
+                    type="text"
+                    placeholder="Buscar páginas, componentes..."
+                    class="input pl-10 pr-4"
+                >
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-muted-foreground">
+                    <kbd class="px-2 py-1 bg-muted rounded text-xs">ESC</kbd>
+                </div>
+            </div>
+            
+            <div class="mt-4" x-show="query.length > 0">
+                <div class="text-sm text-muted-foreground mb-2">
+                    Resultados para "<span x-text="query"></span>"
+                </div>
+                
+                <div class="space-y-2 max-h-64 overflow-y-auto">
+                    <!-- Mock search results -->
+                    <a 
+                        href="{{ url('/') }}" 
+                        @click="searchOpen = false"
+                        class="block p-3 rounded-lg hover:bg-accent transition-colors"
+                    >
+                        <div class="font-medium text-sm">Página de Inicio</div>
+                        <div class="text-xs text-muted-foreground">Página principal del sitio</div>
+                    </a>
+                    <a 
+                        href="{{ url('/components') }}" 
+                        @click="searchOpen = false"
+                        class="block p-3 rounded-lg hover:bg-accent transition-colors"
+                    >
+                        <div class="font-medium text-sm">Componentes</div>
+                        <div class="text-xs text-muted-foreground">Galería de componentes UI</div>
+                    </a>
+                    <a 
+                        href="{{ url('/about') }}" 
+                        @click="searchOpen = false"
+                        class="block p-3 rounded-lg hover:bg-accent transition-colors"
+                    >
+                        <div class="font-medium text-sm">Acerca de</div>
+                        <div class="text-xs text-muted-foreground">Información sobre el proyecto</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-border px-4 py-3 text-xs text-muted-foreground flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1">
+                    <kbd class="px-2 py-1 bg-muted rounded">↵</kbd>
+                    <span>to select</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <kbd class="px-2 py-1 bg-muted rounded">↑↓</kbd>
+                    <span>to navigate</span>
+                </div>
+            </div>
+            <div>
+                <span>Search by</span>
+                <span class="font-medium">aero</span>
+            </div>
+        </div>
+    </div>
+</div>

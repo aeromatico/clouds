@@ -1,0 +1,360 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    description:
+        label: Description
+        size: ''
+        span: full
+        type: textarea
+    icon:
+        label: Icon
+        span: auto
+        type: text
+    services:
+        label: Services
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    public:
+        label: Public
+        span: auto
+        default: 1
+        type: switch
+    popular:
+        label: Popular
+        span: auto
+        type: switch
+    inherit_plan:
+        label: 'Inherit plan'
+        span: auto
+        type: switch
+    inverse_pricing_on:
+        label: 'Inverse Pricing'
+        span: auto
+        type: switch
+    alias:
+        label: Alias
+        span: auto
+        type: text
+tabs:
+    fields:
+        server_free_domain:
+            label: 'Free domain'
+            span: auto
+            type: switch
+            comment: 'For anual or greater plans'
+            tab: Features
+        server_ssh:
+            label: 'SSH access'
+            span: auto
+            type: switch
+            tab: Features
+        server_allowed_domains:
+            label: 'Allowed domains'
+            span: auto
+            type: text
+            tab: Features
+        server_cpu:
+            label: CPU
+            span: auto
+            type: text
+            tab: Features
+        server_storage:
+            label: Storage
+            span: auto
+            type: text
+            comment: '0 = Unlimited'
+            tab: Features
+        server_memory:
+            label: Memory
+            span: auto
+            type: text
+            tab: Features
+        server_transfer:
+            label: Transfer
+            span: auto
+            type: text
+            comment: '0 = Unlimited'
+            tab: Features
+        server_email_accounts:
+            label: 'Email accounts'
+            span: auto
+            type: text
+            comment: '0 = Unlimited'
+            tab: Features
+        server_databases:
+            label: Detabases
+            span: auto
+            default: '0'
+            type: text
+            comment: '0 = Unlimited'
+            tab: Features
+        server_subdomains:
+            label: Subdomains
+            span: auto
+            default: '0'
+            type: text
+            comment: '0 = Unlimited'
+            tab: Features
+        server_ssl_wildcard:
+            label: 'SSL Wildcard'
+            span: auto
+            type: switch
+            tab: Features
+        server_dedicated_ip:
+            label: 'Dedicated IP'
+            span: auto
+            type: switch
+            tab: Features
+        sites_number:
+            label: 'Sites number'
+            span: auto
+            default: '1'
+            type: number
+            tab: Features
+        parameters:
+            label: Parameters
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Features
+            form:
+                fields:
+                    parameter:
+                        label: Parameter
+                        span: left
+                        type: text
+                    value:
+                        label: Value
+                        span: auto
+                        type: text
+                    disabled:
+                        label: Disabled
+                        span: auto
+                        type: checkbox
+                    featured:
+                        label: Featured
+                        span: auto
+                        type: checkbox
+                    description:
+                        label: Description
+                        size: small
+                        span: auto
+                        type: textarea
+                    color:
+                        label: Color
+                        span: auto
+                        type: colorpicker
+                    link:
+                        label: Link
+                        span: auto
+                        type: text
+        pricing:
+            label: Pricing
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Pricing
+            form:
+                fields:
+                    price:
+                        label: Price
+                        default: '0'
+                        span: left
+                        type: number
+                    price_setup:
+                        label: 'Setup price'
+                        span: auto
+                        default: '0'
+                        type: number
+                    domain:
+                        label: Domain
+                        options:
+                            boliviahost.com: boliviahost.com
+                            llajwa.club: llajwa.club
+                            clouds.com.bo: clouds.com.bo
+                            clouds.com.ar: clouds.com.ar
+                            ialabs.online: ialabs.online
+                            cloud.difunde.org: cloud.difunde.org
+                        span: auto
+                        type: balloon-selector
+                    price_currency:
+                        label: Currency
+                        options:
+                            BOB: Boliviano
+                            USD: Dólar
+                            ARS: 'Peso argentino'
+                            Créditos: Créditos
+                        span: left
+                        type: balloon-selector
+                    price_period:
+                        label: Period
+                        options:
+                            Mensual: Mensual
+                            Trimestral: Trimestral
+                            Semestral: Semestral
+                            Anual: Anual
+                            '2 años': Bienal
+                            '3 años': Trienal
+                        span: left
+                        type: balloon-selector
+                    discount:
+                        label: 'Discount amount'
+                        span: left
+                        type: number
+                    discount_type:
+                        label: 'Discount type'
+                        span: auto
+                        options:
+                            amount: Amount
+                            percentage: Percentage
+                        type: radio
+        barter_on:
+            label: Barter
+            span: auto
+            type: switch
+            tab: Pricing
+        whmcs_pricing_on:
+            label: 'WHMCS pricing'
+            span: auto
+            type: switch
+            tab: Pricing
+        stackcp_plan_link:
+            label: 'StackCP link'
+            span: auto
+            type: text
+            tab: Pricing
+        promo_on:
+            label: Promo
+            span: auto
+            type: switch
+            tab: Promo
+        holiday_on:
+            label: 'Holiday Promo'
+            span: auto
+            type: switch
+            tab: Promo
+        promo_coupon:
+            label: Coupon
+            span: auto
+            type: text
+            tab: Promo
+        promo_description:
+            label: Description
+            size: ''
+            span: auto
+            type: textarea
+            tab: Promo
+        promo_url:
+            label: URL
+            span: auto
+            type: text
+            tab: Promo
+        promo_date_end:
+            label: 'Promo end'
+            mode: datetime
+            format: d/m/Y
+            span: auto
+            type: datepicker
+            tab: Promo
+        promo_discount:
+            label: 'Promo discount'
+            span: auto
+            default: '0'
+            type: number
+            tab: Promo
+        promo_discount_percentage:
+            label: 'Percentage discount'
+            span: auto
+            type: switch
+            tab: Promo
+        override:
+            label: 'Override plans'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Override
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    slug:
+                        label: Slug
+                        span: auto
+                        preset:
+                            field: name
+                            type: slug
+                        type: text
+                    domain:
+                        label: Domain
+                        options:
+                            llajwa.club: llajwa.club
+                            difunde.cloud: difunde.cloud
+                        span: auto
+                        type: balloon-selector
+        cards:
+            label: 'Virtual Cards'
+            prompt: 'Add new item'
+            style: default
+            span: full
+            type: repeater
+            tab: Cards
+            form:
+                fields:
+                    topup:
+                        label: 'Topup amount'
+                        span: auto
+                        type: number
+                    price:
+                        label: Pricing
+                        span: auto
+                        preset: null
+                        type: number
+                    price_currency:
+                        label: Currency
+                        options:
+                            BOB: Boliviano
+                            USD: Dólar
+                            ARS: 'Peso argentino'
+                            Créditos: Créditos
+                        type: text
+        whmcs_plan_id:
+            label: 'WHMCS Plan ID'
+            span: auto
+            type: number
+            tab: WHMCS
+        whmcs_plans:
+            label: 'Alternative WHMCS IDs'
+            prompt: 'Add new item'
+            style: default
+            span: auto
+            type: repeater
+            tab: WHMCS
+            form:
+                fields:
+                    domain:
+                        label: Domain
+                        options:
+                            boliviahost.com: boliviahost.com
+                            llajwa.club: llajwa.club
+                        span: auto
+                        type: balloon-selector
+                    whmcs_id:
+                        label: 'WHMCS Plan ID'
+                        span: auto
+                        type: number
