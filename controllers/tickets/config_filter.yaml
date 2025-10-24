@@ -1,0 +1,45 @@
+# ===================================
+#  Filter Scope Definitions
+# ===================================
+
+scopes:
+    status:
+        label: Estado
+        type: group
+        conditions: status = :filtered
+        options:
+            open: Abierto
+            in_progress: En Progreso
+            waiting_on_customer: Esperando Cliente
+            waiting_on_staff: Esperando Staff
+            closed: Cerrado
+
+    priority:
+        label: Prioridad
+        type: group
+        conditions: priority = :filtered
+        options:
+            low: Baja
+            normal: Normal
+            high: Alta
+            urgent: Urgente
+
+    department:
+        label: Departamento
+        type: group
+        conditions: department_id = :filtered
+        modelClass: Aero\Clouds\Models\SupportDepartment
+        nameFrom: name
+
+    assigned:
+        label: Asignación
+        type: group
+        conditions: assigned_to = :filtered
+        options:
+            unassigned: Sin asignar
+            assigned: Asignado
+
+    created_at:
+        label: Fecha de Creación
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'

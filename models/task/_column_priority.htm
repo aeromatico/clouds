@@ -1,0 +1,27 @@
+<?php
+$priorityLabels = [
+    'low' => 'Low',
+    'medium' => 'Medium',
+    'high' => 'High',
+    'urgent' => 'Urgent'
+];
+$priorityColors = [
+    'low' => '#17a2b8',
+    'medium' => '#007bff',
+    'high' => '#fd7e14',
+    'urgent' => '#dc3545'
+];
+$priorityIcons = [
+    'low' => 'icon-arrow-down',
+    'medium' => 'icon-minus',
+    'high' => 'icon-arrow-up',
+    'urgent' => 'icon-fire'
+];
+$priority = $record->priority ?? 'medium';
+$label = $priorityLabels[$priority] ?? $priority;
+$color = $priorityColors[$priority] ?? '#007bff';
+$icon = $priorityIcons[$priority] ?? 'icon-minus';
+?>
+<span class="label" style="background-color: <?= $color ?>; color: white; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600;">
+    <i class="<?= $icon ?>" style="font-size: 10px;"></i> <?= e($label) ?>
+</span>

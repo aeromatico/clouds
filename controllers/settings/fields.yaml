@@ -1,0 +1,251 @@
+tabs:
+    fields:
+        # ===== SEO TAB =====
+        site_name:
+            label: Site Name
+            type: text
+            tab: SEO
+            span: left
+            comment: Name that will appear in titles and meta tags
+
+        meta_author:
+            label: Author
+            type: text
+            tab: SEO
+            span: right
+            comment: Website author
+
+        site_description:
+            label: Site Description
+            type: textarea
+            tab: SEO
+            span: full
+            size: small
+            comment: General site description (max 500 characters)
+
+        meta_keywords:
+            label: Keywords
+            type: textarea
+            tab: SEO
+            span: full
+            size: small
+            comment: Comma-separated keywords
+
+        _seo_divider_1:
+            type: section
+            label: Open Graph (Facebook)
+            tab: SEO
+            comment: Configuration for social media sharing
+
+        og_type:
+            label: Content Type
+            type: text
+            tab: SEO
+            span: left
+            default: website
+            comment: website, article, etc.
+
+        og_image:
+            label: Open Graph Image
+            type: fileupload
+            mode: image
+            imageWidth: 1200
+            imageHeight: 630
+            tab: SEO
+            span: full
+            comment: Image for Facebook sharing (1200x630px recommended)
+
+        _seo_divider_2:
+            type: section
+            label: Twitter Card
+            tab: SEO
+            comment: Configuration for Twitter/X sharing
+
+        twitter_card_type:
+            label: Card Type
+            type: dropdown
+            tab: SEO
+            span: left
+            default: summary_large_image
+            options:
+                summary: Summary
+                summary_large_image: Summary Large Image
+                app: App
+                player: Player
+            comment: Twitter card type
+
+        twitter_image:
+            label: Twitter Image
+            type: fileupload
+            mode: image
+            imageWidth: 1200
+            imageHeight: 675
+            tab: SEO
+            span: full
+            comment: Image for Twitter sharing (1200x675px recommended)
+
+        _seo_divider_3:
+            type: section
+            label: Analytics & Tracking
+            tab: SEO
+            comment: Tracking and analytics IDs
+
+        google_analytics_id:
+            label: Google Analytics ID
+            type: text
+            tab: SEO
+            span: left
+            placeholder: G-XXXXXXXXXX
+            comment: Google Analytics 4 ID
+
+        google_tag_manager_id:
+            label: Google Tag Manager ID
+            type: text
+            tab: SEO
+            span: right
+            placeholder: GTM-XXXXXXX
+            comment: Google Tag Manager ID
+
+        favicon:
+            label: Favicon
+            type: fileupload
+            mode: image
+            imageWidth: 512
+            imageHeight: 512
+            tab: SEO
+            span: full
+            comment: Site icon (512x512px, PNG or ICO format)
+
+        # ===== PWA TAB =====
+        pwa_enabled:
+            label: Enable PWA
+            type: switch
+            tab: PWA
+            span: left
+            default: true
+            comment: Enable Progressive Web App functionality
+
+        pwa_show_install_prompt:
+            label: Show Install Prompt
+            type: switch
+            tab: PWA
+            span: right
+            default: true
+            comment: Show banner to install the app
+
+        pwa_name:
+            label: App Name
+            type: text
+            tab: PWA
+            span: left
+            comment: Full PWA application name
+
+        pwa_short_name:
+            label: Short Name
+            type: text
+            tab: PWA
+            span: right
+            comment: Short name for home screen (max 12 characters)
+
+        pwa_description:
+            label: App Description
+            type: textarea
+            tab: PWA
+            span: full
+            size: small
+            comment: PWA application description
+
+        _pwa_divider_1:
+            type: section
+            label: Colors & Appearance
+            tab: PWA
+            comment: PWA color configuration
+
+        pwa_theme_color:
+            label: Theme Color
+            type: text
+            tab: PWA
+            span: left
+            default: '#0ea5e9'
+            placeholder: '#0ea5e9'
+            comment: Address bar color (HEX format)
+
+        pwa_background_color:
+            label: Background Color
+            type: text
+            tab: PWA
+            span: right
+            default: '#ffffff'
+            placeholder: '#ffffff'
+            comment: Loading screen background color (HEX format)
+
+        pwa_install_prompt_delay:
+            label: Prompt Delay (ms)
+            type: number
+            tab: PWA
+            span: left
+            default: 3000
+            min: 0
+            max: 30000
+            step: 1000
+            comment: Wait time before showing prompt (in milliseconds)
+
+        _pwa_divider_2:
+            type: section
+            label: PWA Icons
+            tab: PWA
+            comment: Icons for different screen sizes
+
+        pwa_icon_192:
+            label: Icon 192x192
+            type: fileupload
+            mode: image
+            imageWidth: 192
+            imageHeight: 192
+            tab: PWA
+            span: left
+            comment: Icon for mobile devices (192x192px)
+
+        pwa_icon_512:
+            label: Icon 512x512
+            type: fileupload
+            mode: image
+            imageWidth: 512
+            imageHeight: 512
+            tab: PWA
+            span: right
+            comment: High resolution icon (512x512px)
+
+        _pwa_hint:
+            type: partial
+            path: hint
+            tab: PWA
+            span: full
+
+        # ===== EMAIL TAB =====
+        email_notifications_enabled:
+            label: Habilitar Notificaciones por Email
+            type: switch
+            tab: Email
+            span: left
+            default: true
+            comment: Activar o desactivar todas las notificaciones por correo electrónico del sistema
+
+        admin_emails:
+            label: Correos de Administradores
+            type: textarea
+            tab: Email
+            span: full
+            size: small
+            placeholder: admin@example.com, soporte@example.com
+            comment: Ingrese las direcciones de correo separadas por comas donde se enviarán las alertas y notificaciones del sistema
+
+        _email_hint:
+            type: partial
+            path: $/aero/clouds/controllers/settings/_hint_email.htm
+            tab: Email
+            span: full
+
+secondaryTabs:
+    stretch: true
+    cssClass: secondary-tabs

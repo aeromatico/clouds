@@ -5,10 +5,13 @@ use Model;
 class Invoice extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\LogsActivity;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_invoices';
 
     protected $fillable = [
+        'domain',
         'user_id',
         'invoice_number',
         'invoice_date',
@@ -16,22 +19,18 @@ class Invoice extends Model
         'status',
         'items',
         'subtotal',
-        'tax_rate',
-        'tax_amount',
-        'total_amount',
+        'tax',
+        'total',
         'notes',
-        'payment_method',
-        'payment_date'
+        'payment_gateway_id'
     ];
 
     protected $casts = [
         'invoice_date' => 'datetime',
         'due_date' => 'datetime',
-        'payment_date' => 'datetime',
         'subtotal' => 'decimal:2',
-        'tax_rate' => 'decimal:2',
-        'tax_amount' => 'decimal:2',
-        'total_amount' => 'decimal:2'
+        'tax' => 'decimal:2',
+        'total' => 'decimal:2'
     ];
 
     public $rules = [
@@ -41,15 +40,25 @@ class Invoice extends Model
         'due_date' => 'required|date',
         'status' => 'required|in:draft,sent,paid,overdue,cancelled,refunded',
         'subtotal' => 'nullable|numeric|min:0',
-        'tax_rate' => 'nullable|numeric|min:0|max:100',
-        'total_amount' => 'nullable|numeric|min:0',
-        'payment_method' => 'nullable|in:cash,credit_card,debit_card,bank_transfer,paypal,stripe,other'
+        'tax' => 'nullable|numeric|min:0',
+        'total' => 'nullable|numeric|min:0'
     ];
 
     public $belongsTo = [
         'user' => [
             'RainLab\User\Models\User',
             'key' => 'user_id'
+        ],
+        'payment_gateway' => [
+            'Aero\Clouds\Models\PaymentGateway',
+            'key' => 'payment_gateway_id'
+        ]
+    ];
+
+    public $hasMany = [
+        'orders' => [
+            'Aero\Clouds\Models\Order',
+            'key' => 'invoice_id'
         ]
     ];
 
@@ -109,19 +118,6 @@ class Invoice extends Model
         ];
     }
 
-    public function getPaymentMethodOptions()
-    {
-        return [
-            'cash' => 'Cash',
-            'credit_card' => 'Credit Card',
-            'debit_card' => 'Debit Card',
-            'bank_transfer' => 'Bank Transfer',
-            'paypal' => 'PayPal',
-            'stripe' => 'Stripe',
-            'other' => 'Other'
-        ];
-    }
-
     public function getUserIdOptions()
     {
         $users = \RainLab\User\Models\User::orderBy('email')->get();
@@ -156,25 +152,34 @@ class Invoice extends Model
             $this->subtotal = 0;
         }
 
-        // Calculate tax amount
-        if (!is_null($this->tax_rate) && !is_null($this->subtotal)) {
-            $this->tax_amount = ($this->subtotal * $this->tax_rate) / 100;
+        // If tax is not set, default to 0
+        if (is_null($this->tax)) {
+            $this->tax = 0;
         }
 
         // Calculate total
         if (!is_null($this->subtotal)) {
-            $this->total_amount = $this->subtotal + ($this->tax_amount ?? 0);
+            $this->total = $this->subtotal + ($this->tax ?? 0);
         }
     }
 
     public function generateInvoiceNumber()
     {
-        // Get the last invoice number
-        $lastInvoice = static::orderBy('id', 'desc')->first();
+        // IMPORTANTE: Usar withoutDomainScope() para obtener la última factura de TODOS los dominios
+        // Esto evita duplicados ya que invoice_number es único globalmente
+        $lastInvoice = static::withoutDomainScope()->orderBy('id', 'desc')->first();
 
         if ($lastInvoice && $lastInvoice->invoice_number) {
-            // Extract the numeric part (remove leading zeros for calculation)
-            $lastNumber = (int) $lastInvoice->invoice_number;
+            // Extract numeric part from various formats:
+            // '0001', '0002' -> 1, 2
+            // 'INV-000016' -> 16
+            // '1234' -> 1234
+            $invoiceNum = $lastInvoice->invoice_number;
+
+            // Remove any non-numeric characters and get the number
+            $numericPart = preg_replace('/[^0-9]/', '', $invoiceNum);
+            $lastNumber = $numericPart ? (int) $numericPart : 0;
+
             $newNumber = $lastNumber + 1;
         } else {
             $newNumber = 1;

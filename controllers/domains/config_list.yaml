@@ -1,0 +1,17 @@
+title: Domains
+modelClass: Aero\Clouds\Models\Domain
+list: $/aero/clouds/models/domain/columns.yaml
+recordUrl: aero/clouds/domains/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showPageNumbers: true
+showCheckboxes: true
+showSetup: true
+defaultSort:
+    column: created_at
+    direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+filter: $/aero/clouds/models/domain/scopes.yaml

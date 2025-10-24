@@ -1,0 +1,147 @@
+<button
+    type="button"
+    class="btn btn-primary btn-sm btn-check-availability">
+    <i class="icon-search"></i> Check Availability
+</button>
+
+<script>
+$(document).ready(function() {
+    // Use event delegation to handle dynamically added repeater items
+    $(document).on('click', '.btn-check-availability', function(e) {
+        e.preventDefault();
+
+        var $btn = $(this);
+        var $item = $btn.closest('.field-repeater-item');
+
+        // Try multiple selectors to find the fields
+        var $domain = $item.find('input[data-field-name=domain_name]').length
+            ? $item.find('input[data-field-name=domain_name]')
+            : $item.find('input[name*="[domain_name]"]');
+
+        var $ext = $item.find('select[data-field-name=extension_id]').length
+            ? $item.find('select[data-field-name=extension_id]')
+            : $item.find('select[name*="[extension_id]"]');
+
+        var $status = $item.find('input[data-field-name=availability_status]').length
+            ? $item.find('input[data-field-name=availability_status]')
+            : $item.find('input[name*="[availability_status]"]');
+
+        var $price = $item.find('input[data-field-name=price]').length
+            ? $item.find('input[data-field-name=price]')
+            : $item.find('input[name*="[price]"]');
+
+        console.log('=== Field Detection ===');
+        console.log('Domain field found:', $domain.length, $domain.attr('name'));
+        console.log('Extension field found:', $ext.length, $ext.attr('name'));
+        console.log('Status field found:', $status.length, $status.attr('name'));
+        console.log('Price field found:', $price.length, $price.attr('name'));
+
+        // Validate
+        if (!$domain.length || !$domain.val()) {
+            if ($status.length) {
+                $status.val('⚠ Enter domain name').css('color', 'orange');
+            }
+            alert('Please enter a domain name');
+            return;
+        }
+        if (!$ext.length || !$ext.val()) {
+            if ($status.length) {
+                $status.val('⚠ Select extension').css('color', 'orange');
+            }
+            alert('Please select an extension');
+            return;
+        }
+
+        // Get domain index
+        var index = $item.data('item-index') || $item.data('index') || $item.attr('data-item-index');
+
+        if (index === undefined) {
+            var nameAttr = $domain.attr('name');
+            if (nameAttr) {
+                var matches = nameAttr.match(/\[(\d+)\]/);
+                if (matches && matches[1]) {
+                    index = matches[1];
+                }
+            }
+        }
+
+        if (index === undefined || index === '') {
+            index = 0;
+        }
+
+        console.log('Checking domain at index:', index);
+
+        // Show loading state
+        if ($status.length) {
+            $status.val('⏳ Checking...').css('color', 'blue');
+        }
+        $btn.prop('disabled', true);
+
+        // Make AJAX request
+        $btn.request('onCheckDomainAvailability', {
+            data: {
+                domainIndex: index
+            },
+            success: function(data) {
+                console.log('=== Domain Check Success ===');
+                console.log('Full response data:', data);
+
+                var result = data.result;
+                console.log('Result object:', result);
+
+                if ($status.length) {
+                    if (result && result.available) {
+                        console.log('✓ Domain AVAILABLE');
+                        $status.val('✓ Available').css('color', 'green');
+                    } else {
+                        console.log('✗ Domain NOT available');
+                        $status.val('✗ Not Available').css('color', 'red');
+                    }
+                }
+
+                // Update price from sale_price
+                if (result && result.price) {
+                    console.log('Price from server:', result.price);
+                    var priceValue = parseFloat(result.price);
+
+                    if (!isNaN(priceValue)) {
+                        if ($price.length) {
+                            console.log('Setting price to:', priceValue.toFixed(2));
+                            $price.val(priceValue.toFixed(2));
+                            $price.trigger('change');
+                            $price.trigger('input');
+
+                            // Force visual update
+                            setTimeout(function() {
+                                $price.val(priceValue.toFixed(2));
+                            }, 100);
+
+                            console.log('✓ Price field updated. Current value:', $price.val());
+                        } else {
+                            console.error('❌ Price field NOT found!');
+                            alert('Price field not found. Price: $' + priceValue.toFixed(2));
+                        }
+                    } else {
+                        console.error('Invalid price value:', result.price);
+                    }
+                } else {
+                    console.warn('No price in result');
+                }
+
+                $btn.prop('disabled', false);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Domain check error:', textStatus, errorThrown);
+                console.error('Response:', jqXHR.responseText);
+
+                if ($status.length) {
+                    $status.val('❌ Error checking').css('color', 'red');
+                }
+
+                alert('Error: ' + (jqXHR.responseJSON?.error || textStatus));
+                $btn.prop('disabled', false);
+            }
+        });
+    });
+});
+</script>

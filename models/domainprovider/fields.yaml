@@ -1,0 +1,120 @@
+fields:
+    name:
+        label: Provider Name
+        type: text
+        span: left
+        required: true
+        placeholder: e.g., Namecheap, GoDaddy
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        placeholder: Auto-generated from name
+        comment: Unique identifier (auto-generated)
+
+    provider_type:
+        label: Provider Type
+        type: dropdown
+        span: left
+        required: true
+        options: getProviderTypeOptions
+
+    priority:
+        label: Priority
+        type: number
+        span: right
+        default: 0
+        comment: Higher priority providers are preferred (0-100)
+
+    section_status:
+        label: Status Settings
+        type: section
+
+    is_active:
+        label: Active
+        type: switch
+        span: left
+        default: true
+        comment: Enable or disable this provider
+
+    sandbox_mode:
+        label: Sandbox/Test Mode
+        type: switch
+        span: right
+        default: false
+        comment: Use sandbox/test API endpoint
+
+    section_api:
+        label: API Configuration
+        type: section
+        comment: API credentials for connecting to the domain provider
+
+    api_url:
+        label: API URL
+        type: text
+        span: full
+        placeholder: https://api.provider.com
+        comment: Base API endpoint URL
+
+    api_username:
+        label: API Username
+        type: text
+        span: left
+        placeholder: Optional username for API
+
+    api_key:
+        label: API Key
+        type: text
+        span: right
+        placeholder: Your API key
+        comment: Will be encrypted in database
+
+    api_secret:
+        label: API Secret
+        type: text
+        span: left
+        placeholder: Your API secret
+        comment: Will be encrypted in database
+
+    api_password:
+        label: API Password
+        type: text
+        span: right
+        placeholder: Optional password
+        comment: Will be encrypted in database
+
+    api_actions:
+        label: API Actions
+        type: partial
+        path: ~/plugins/aero/clouds/models/domainprovider/_api_actions.htm
+        span: full
+        context: update
+        comment: Test connection and sync pricing from registrar
+
+    section_advanced:
+        label: Advanced Settings
+        type: section
+
+    settings:
+        label: Additional Settings
+        type: codeeditor
+        size: small
+        language: json
+        span: full
+        comment: Provider-specific configuration in JSON format
+
+    notes:
+        label: Notes
+        type: textarea
+        size: small
+        span: full
+        placeholder: Internal notes about this provider
+
+tabs:
+    fields:
+        extensions:
+            label: Domain Extensions
+            type: partial
+            path: ~/plugins/aero/clouds/models/domainprovider/_extensions_tab.htm
+            tab: Extensions

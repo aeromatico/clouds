@@ -57,7 +57,7 @@ fields:
         default: false
         comment: SSH shell access included
 
-    ssl:
+    ssl_enabled:
         label: SSL Certificate
         type: switch
         span: left

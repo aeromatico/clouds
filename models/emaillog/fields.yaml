@@ -1,0 +1,72 @@
+fields:
+    template_code:
+        label: Código de Plantilla
+        type: text
+        disabled: true
+        span: left
+
+    status:
+        label: Estado
+        type: dropdown
+        disabled: true
+        span: right
+        options:
+            sent: Enviado
+            failed: Fallido
+            queued: En Cola
+
+    recipient_email:
+        label: Email Destinatario
+        type: email
+        disabled: true
+        span: left
+
+    recipient_name:
+        label: Nombre Destinatario
+        type: text
+        disabled: true
+        span: right
+
+    user_id:
+        label: Usuario
+        type: relation
+        disabled: true
+        span: left
+
+    duration_ms:
+        label: Duración (ms)
+        type: number
+        disabled: true
+        span: right
+
+    sent_at:
+        label: Fecha de Envío
+        type: datetime
+        disabled: true
+        span: left
+
+    created_at:
+        label: Fecha de Creación
+        type: datetime
+        disabled: true
+        span: right
+
+    data:
+        label: Datos de la Plantilla
+        type: codeeditor
+        language: json
+        disabled: true
+        size: large
+
+    metadata:
+        label: Metadata
+        type: codeeditor
+        language: json
+        disabled: true
+        size: large
+
+    error:
+        label: Error
+        type: textarea
+        disabled: true
+        size: large

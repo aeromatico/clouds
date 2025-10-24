@@ -1,0 +1,78 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+        width: 80px
+
+    created_at:
+        label: Date/Time
+        type: datetime
+        sortable: true
+        searchable: false
+        width: 180px
+
+    log_name:
+        label: Log Type
+        type: text
+        sortable: true
+        searchable: true
+        width: 120px
+
+    event:
+        label: Event
+        type: text
+        sortable: true
+        searchable: true
+        width: 100px
+
+    description:
+        label: Description
+        type: text
+        sortable: false
+        searchable: true
+
+    subject_type:
+        label: Subject
+        type: text
+        sortable: true
+        searchable: true
+        width: 180px
+        valueFrom: subject_type
+        displayFrom: subject_type
+
+    causer_type:
+        label: User Type
+        type: text
+        sortable: true
+        searchable: false
+        width: 150px
+        invisible: true
+
+    causer_id:
+        label: User ID
+        type: number
+        sortable: true
+        searchable: true
+        width: 100px
+        invisible: true
+
+    ip_address:
+        label: IP Address
+        type: text
+        sortable: false
+        searchable: true
+        width: 140px
+
+    properties:
+        label: Details
+        type: partial
+        path: $/aero/clouds/models/activitylog/_properties_column.htm
+        sortable: false
+        searchable: false
+        clickable: false

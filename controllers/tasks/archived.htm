@@ -1,0 +1,81 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('aero/clouds/tasks') ?>">Tasks</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<div class="control-toolbar">
+    <div class="toolbar-item">
+        <a href="<?= Backend::url('aero/clouds/tasks') ?>" class="btn btn-default oc-icon-arrow-left">
+            Back to Active Tasks
+        </a>
+    </div>
+</div>
+
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item">
+            <h4><?= count($tasks) ?></h4>
+            <p>Archived Tasks</p>
+        </div>
+    </div>
+</div>
+
+<div class="control-list">
+    <?php if (count($tasks) > 0): ?>
+        <table class="table data" data-control="rowlink">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th style="width: 100px;">Status</th>
+                    <th style="width: 100px;">Priority</th>
+                    <th style="width: 150px;">Archived At</th>
+                    <th style="width: 100px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tasks as $task): ?>
+                    <tr>
+                        <td>
+                            <a href="<?= Backend::url('aero/clouds/tasks/preview/' . $task->id) ?>">
+                                <?= e($task->title) ?>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="label" style="background-color: <?= ['todo' => '#6c757d', 'doing' => '#ffc107', 'done' => '#28a745'][$task->status] ?>; color: white;">
+                                <?= e(ucfirst($task->status)) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="label" style="background-color: <?= ['low' => '#17a2b8', 'medium' => '#007bff', 'high' => '#fd7e14', 'urgent' => '#dc3545'][$task->priority ?? 'medium'] ?>; color: white;">
+                                <?= e(ucfirst($task->priority ?? 'medium')) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?= $task->archived_at ? $task->archived_at->diffForHumans() : '-' ?>
+                        </td>
+                        <td>
+                            <button
+                                class="btn btn-sm btn-primary"
+                                data-request="onUnarchive"
+                                data-request-data="task_id: <?= $task->id ?>"
+                                data-request-confirm="Unarchive this task?"
+                                data-stripe-load-indicator>
+                                <i class="icon-undo"></i> Unarchive
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <div class="callout callout-info">
+            <div class="header">
+                <i class="icon-info"></i>
+                <h3>No Archived Tasks</h3>
+                <p>You don't have any archived tasks yet.</p>
+            </div>
+        </div>
+    <?php endif ?>
+</div>

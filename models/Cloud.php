@@ -9,22 +9,23 @@ class Cloud extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     use \Aero\Clouds\Traits\LogsActivity;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'aero_clouds_servers';
+    public $table = 'aero_clouds_clouds';
 
     /**
      * @var array Fillable fields
      */
     protected $fillable = [
+        'domain',
         'user_id',
         'service_id',
         'plan_id',
         'order_id',
         'name',
-        'domain',
         'panel_url',
         'panel_user',
         'panel_password',

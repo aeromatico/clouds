@@ -1,0 +1,41 @@
+scopes:
+    status:
+        label: Status
+        type: group
+        conditions: status = :filtered
+        options:
+            pending: Pending
+            active: Active
+            expired: Expired
+            suspended: Suspended
+            cancelled: Cancelled
+            transferred: Transferred
+
+    provider:
+        label: Provider
+        type: group
+        modelClass: Aero\Clouds\Models\DomainProvider
+        conditions: provider_id in (:filtered)
+        nameFrom: name
+
+    extension:
+        label: Extension
+        type: group
+        modelClass: Aero\Clouds\Models\DomainExtension
+        conditions: extension_id in (:filtered)
+        nameFrom: tld
+
+    is_locked:
+        label: Locked Status
+        type: checkbox
+        conditions: is_locked = true
+
+    auto_renew:
+        label: Auto Renew
+        type: checkbox
+        conditions: auto_renew = true
+
+    expiring_soon:
+        label: Expiring Soon (30 days)
+        type: checkbox
+        scope: expiringSoon

@@ -1,0 +1,95 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    ticket_number:
+        label: Número de Ticket
+        type: text
+        span: left
+        disabled: true
+        comment: Se genera automáticamente
+
+    status:
+        label: Estado
+        type: dropdown
+        span: right
+        required: true
+
+    user_id:
+        label: Usuario
+        type: relation
+        span: left
+        required: true
+        select: email
+
+    department_id:
+        label: Departamento
+        type: dropdown
+        span: right
+        required: true
+
+    priority:
+        label: Prioridad
+        type: dropdown
+        span: left
+        required: true
+        default: normal
+
+    assigned_to:
+        label: Asignado a
+        type: dropdown
+        span: right
+        emptyOption: Sin asignar
+
+    subject:
+        label: Asunto
+        type: text
+        span: full
+        required: true
+
+    message:
+        label: Mensaje
+        type: richeditor
+        size: large
+        span: full
+        required: true
+
+secondaryTabs:
+    fields:
+        replies:
+            label: Respuestas
+            type: partial
+            path: $/aero/clouds/models/ticket/_field_replies.htm
+            tab: Conversación
+
+        created_at:
+            label: Creado
+            type: datepicker
+            mode: datetime
+            span: left
+            disabled: true
+            tab: Información
+
+        closed_at:
+            label: Cerrado
+            type: datepicker
+            mode: datetime
+            span: right
+            disabled: true
+            tab: Información
+
+        last_reply_at:
+            label: Última Respuesta
+            type: datepicker
+            mode: datetime
+            span: left
+            disabled: true
+            tab: Información
+
+        last_reply_by:
+            label: Última Respuesta Por
+            type: text
+            span: right
+            disabled: true
+            tab: Información

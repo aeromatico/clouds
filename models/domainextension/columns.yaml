@@ -1,0 +1,68 @@
+columns:
+    tld:
+        label: TLD
+        searchable: true
+        sortable: true
+
+    name:
+        label: Name
+        searchable: true
+        sortable: true
+
+    provider:
+        label: Provider
+        relation: provider
+        select: name
+        searchable: true
+        sortable: true
+
+    category:
+        label: Category
+        sortable: true
+
+    currency:
+        label: Currency
+        searchable: true
+        sortable: true
+
+    registration_price:
+        label: Registration
+        type: partial
+        path: $/aero/clouds/models/domainextension/_column_price.htm
+        sortable: true
+
+    renewal_price:
+        label: Renewal
+        type: partial
+        path: $/aero/clouds/models/domainextension/_column_price.htm
+        sortable: true
+
+    sale_price:
+        label: Sale Price
+        type: partial
+        path: $/aero/clouds/models/domainextension/_column_price.htm
+        sortable: true
+
+    transfer_price:
+        label: Transfer
+        type: partial
+        path: $/aero/clouds/models/domainextension/_column_price.htm
+        sortable: true
+
+    is_available:
+        label: Available
+        type: switch
+        sortable: true
+
+    is_featured:
+        label: Featured
+        type: switch
+        sortable: true
+
+    min_years:
+        label: Min Years
+        sortable: true
+
+    max_years:
+        label: Max Years
+        sortable: true

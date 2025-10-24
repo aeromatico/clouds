@@ -1,0 +1,21 @@
+<?php
+$users = $record->assigned_users;
+?>
+
+<?php if ($users && count($users) > 0): ?>
+    <?php foreach ($users as $index => $user): ?>
+        <span class="label" style="background-color: #007bff; color: white; padding: 3px 6px; border-radius: 3px; font-size: 11px; margin-right: 3px;">
+            <i class="icon-user"></i> <?= e($user->login) ?>
+        </span>
+        <?php if ($index >= 2): ?>
+            <span class="label" style="background-color: #6c757d; color: white; padding: 3px 6px; border-radius: 3px; font-size: 11px;">
+                +<?= count($users) - 3 ?> more
+            </span>
+            <?php break; ?>
+        <?php endif ?>
+    <?php endforeach ?>
+<?php else: ?>
+    <span style="color: #999; font-style: italic; font-size: 11px;">
+        <i class="icon-user-o"></i> Unassigned
+    </span>
+<?php endif ?>

@@ -1,0 +1,16 @@
+list: $/aero/clouds/models/emaillog/columns.yaml
+modelClass: Aero\Clouds\Models\EmailLog
+title: Correos Electrónicos Enviados
+noRecordsMessage: No se han enviado correos
+recordsPerPage: 20
+showCheckboxes: true
+defaultSort:
+    column: created_at
+    direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Buscar por email, template o estado
+structure:
+    showTree: false
+    showReorder: false

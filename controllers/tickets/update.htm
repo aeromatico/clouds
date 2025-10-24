@@ -1,0 +1,61 @@
+<?= Form::open(['class' => 'layout']) ?>
+
+    <div class="layout-row">
+        <?= $this->formRender() ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+                type="submit"
+                data-request="onSave"
+                data-request-data="close:true"
+                data-hotkey="ctrl+enter, cmd+enter"
+                data-load-indicator="Guardando Ticket..."
+                class="btn btn-primary">
+                Guardar y Cerrar
+            </button>
+            <button
+                type="button"
+                data-request="onSave"
+                data-load-indicator="Guardando Ticket..."
+                class="btn btn-default">
+                Guardar
+            </button>
+
+            <?php if ($formModel->isOpen()): ?>
+                <button
+                    type="button"
+                    class="btn btn-warning"
+                    data-request="onClose"
+                    data-request-data="id: '<?= $formModel->id ?>'"
+                    data-load-indicator="Cerrando Ticket..."
+                    data-request-confirm="¿Cerrar este ticket?">
+                    <i class="icon-check-circle"></i> Cerrar Ticket
+                </button>
+            <?php else: ?>
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    data-request="onReopen"
+                    data-request-data="id: '<?= $formModel->id ?>'"
+                    data-load-indicator="Reabriendo Ticket...">
+                    <i class="icon-refresh"></i> Reabrir Ticket
+                </button>
+            <?php endif; ?>
+
+            <button
+                type="button"
+                class="oc-icon-trash-o btn-icon danger pull-right"
+                data-request="onDelete"
+                data-load-indicator="Eliminando Ticket..."
+                data-request-confirm="¿Eliminar este ticket?">
+            </button>
+
+            <span class="btn-text">
+                o <a href="<?= Backend::url('aero/clouds/tickets') ?>">Cancelar</a>
+            </span>
+        </div>
+    </div>
+
+<?= Form::close() ?>

@@ -1,0 +1,7 @@
+<?php
+    $count = $record->extensions()->count();
+    $available = $record->extensions()->where('is_available', true)->count();
+?>
+<span class="badge badge-info">
+    <?= $available ?> / <?= $count ?> available
+</span>

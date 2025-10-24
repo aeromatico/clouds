@@ -1,0 +1,188 @@
+fields:
+    provider:
+        label: Domain Provider
+        type: relation
+        nameFrom: name
+        emptyOption: Select a provider
+        required: true
+        span: left
+
+    category:
+        label: Category
+        type: dropdown
+        options: getCategoryOptions
+        emptyOption: Select category
+        required: true
+        span: right
+
+    tld:
+        label: TLD
+        placeholder: .com
+        comment: Extension including the dot (e.g., .com, .bo, .com.bo)
+        required: true
+        span: left
+
+    name:
+        label: Name
+        placeholder: COM - Commercial
+        comment: Human-readable name for this extension
+        required: true
+        span: right
+
+    currency:
+        label: Currency
+        type: dropdown
+        options:
+            USD: USD - US Dollar
+            BOB: BOB - Boliviano
+            EUR: EUR - Euro
+            GBP: GBP - British Pound
+        default: USD
+        required: true
+        span: left
+        comment: Currency for all prices
+
+    registration_price:
+        label: Registration Price
+        type: number
+        step: 0.01
+        min: 0
+        default: 0
+        required: true
+        span: right
+
+    renewal_price:
+        label: Renewal Price
+        type: number
+        step: 0.01
+        min: 0
+        default: 0
+        required: true
+        span: left
+
+    transfer_price:
+        label: Transfer Price
+        type: number
+        step: 0.01
+        min: 0
+        default: 0
+        span: right
+
+    redemption_price:
+        label: Redemption Price
+        type: number
+        step: 0.01
+        min: 0
+        default: 0
+        span: left
+        comment: Price to recover an expired domain
+
+    whois_privacy_price:
+        label: WHOIS Privacy Price
+        type: number
+        step: 0.01
+        min: 0
+        default: 0
+        span: right
+        comment: Annual WHOIS privacy protection price
+
+    section_registration:
+        label: Registration Settings
+        type: section
+
+    min_years:
+        label: Minimum Years
+        type: number
+        min: 1
+        max: 10
+        default: 1
+        span: left
+
+    max_years:
+        label: Maximum Years
+        type: number
+        min: 1
+        max: 10
+        default: 10
+        span: right
+
+    default_years:
+        label: Default Years
+        type: number
+        min: 1
+        max: 10
+        default: 1
+        span: left
+        comment: Default registration period
+
+    section_features:
+        label: Features & Availability
+        type: section
+
+    is_available:
+        label: Available for Registration
+        type: checkbox
+        default: true
+        span: left
+        comment: Enable this extension for public registration
+
+    is_featured:
+        label: Featured Extension
+        type: checkbox
+        default: false
+        span: right
+        comment: Show this extension prominently
+
+    whois_privacy_available:
+        label: WHOIS Privacy Available
+        type: checkbox
+        default: true
+        span: left
+
+    auto_renew_enabled:
+        label: Auto-Renew Enabled
+        type: checkbox
+        default: true
+        span: right
+
+    epp_code_required:
+        label: EPP Code Required
+        type: checkbox
+        default: true
+        span: left
+        comment: Required for transfers
+
+    section_requirements:
+        label: Requirements & Notes
+        type: section
+
+    special_requirements:
+        label: Special Requirements
+        type: textarea
+        size: small
+        placeholder: Any special requirements for registering this TLD
+        comment: e.g., "Requires local presence in Bolivia"
+
+    notes:
+        label: Internal Notes
+        type: textarea
+        size: small
+        placeholder: Internal notes about this extension
+
+tabs:
+    fields:
+        created_at:
+            label: Created
+            type: datepicker
+            mode: datetime
+            disabled: true
+            tab: System
+            span: left
+
+        updated_at:
+            label: Updated
+            type: datepicker
+            mode: datetime
+            disabled: true
+            tab: System
+            span: right

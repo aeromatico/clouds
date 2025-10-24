@@ -1,0 +1,45 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Nombre
+        type: text
+        span: left
+        required: true
+        placeholder: Ej: Soporte Técnico
+
+    slug:
+        label: Slug
+        type: text
+        span: right
+        required: true
+        placeholder: soporte-tecnico
+        comment: Se genera automáticamente desde el nombre
+
+    description:
+        label: Descripción
+        type: textarea
+        size: small
+        span: full
+
+    email:
+        label: Email
+        type: email
+        span: left
+        placeholder: soporte@ejemplo.com
+        comment: Email asociado a este departamento
+
+    is_active:
+        label: Activo
+        type: switch
+        span: right
+        default: true
+
+    sort_order:
+        label: Orden
+        type: number
+        span: left
+        default: 0
+        comment: Orden de visualización (menor primero)

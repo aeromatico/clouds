@@ -1,0 +1,12 @@
+name: Email Logs
+form: $/aero/clouds/models/emaillog/fields.yaml
+modelClass: Aero\Clouds\Models\EmailLog
+defaultRedirect: aero/clouds/emaillogs
+create:
+    redirect: aero/clouds/emaillogs/update/:id
+    redirectClose: aero/clouds/emaillogs
+update:
+    redirect: aero/clouds/emaillogs
+    redirectClose: aero/clouds/emaillogs
+preview:
+    redirect: aero/clouds/emaillogs

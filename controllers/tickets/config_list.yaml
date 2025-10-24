@@ -1,0 +1,19 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: Tickets de Soporte
+list: $/aero/clouds/models/ticket/columns.yaml
+modelClass: Aero\Clouds\Models\Ticket
+recordUrl: aero/clouds/tickets/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showPageNumbers: true
+defaultSort:
+    column: created_at
+    direction: desc
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+filter: config_filter.yaml

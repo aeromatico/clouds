@@ -1,0 +1,12 @@
+name: Domain Extension
+form: ~/plugins/aero/clouds/models/domainextension/fields.yaml
+modelClass: Aero\Clouds\Models\DomainExtension
+defaultRedirect: aero/clouds/domainextensions
+create:
+    redirect: aero/clouds/domainextensions/update/:id
+    redirectClose: aero/clouds/domainextensions
+update:
+    redirect: aero/clouds/domainextensions
+    redirectClose: aero/clouds/domainextensions
+preview:
+    redirect: aero/clouds/domainextensions

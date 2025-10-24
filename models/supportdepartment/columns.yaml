@@ -1,0 +1,40 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    name:
+        label: Nombre
+        type: text
+        searchable: true
+        sortable: true
+
+    slug:
+        label: Slug
+        type: text
+        searchable: true
+        sortable: true
+
+    email:
+        label: Email
+        type: text
+        searchable: true
+
+    is_active:
+        label: Activo
+        type: switch
+
+    open_tickets_count:
+        label: Tickets Abiertos
+        type: number
+        sortable: false
+
+    sort_order:
+        label: Orden
+        type: number
+        sortable: true
+
+    created_at:
+        label: Creado
+        type: datetime
+        sortable: true

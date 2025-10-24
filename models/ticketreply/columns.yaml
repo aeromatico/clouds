@@ -1,0 +1,23 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    author_name:
+        label: Autor
+        type: text
+        sortable: false
+
+    message:
+        label: Mensaje
+        type: text
+        sortable: false
+
+    is_internal:
+        label: Interno
+        type: switch
+
+    created_at:
+        label: Fecha
+        type: datetime
+        sortable: true

@@ -25,11 +25,40 @@ columns:
         label: Status
         sortable: true
 
-    total_amount:
-        label: Total
+    payment_gateway:
+        label: Payment Gateway
+        relation: payment_gateway
+        select: name
+        searchable: false
         sortable: true
+
+    # transaction_id:
+    #     label: Transaction ID
+    #     searchable: true
+    #     sortable: false
+    #     invisible: true
+
+    # transaction_fee:
+    #     label: Fee
+    #     type: number
+    #     sortable: true
+    #     format: "%.2f"
+    #     invisible: true
+
+    total:
+        label: Total
+        type: number
+        sortable: true
+        format: "%.2f"
+
+    # payment_date:
+    #     label: Paid Date
+    #     type: datetime
+    #     sortable: true
+    #     invisible: true
 
     created_at:
         label: Created
         type: datetime
         sortable: true
+        invisible: true

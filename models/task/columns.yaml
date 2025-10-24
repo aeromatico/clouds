@@ -1,0 +1,54 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+        width: 60px
+
+    title:
+        label: Task
+        type: text
+        searchable: true
+        sortable: true
+
+    status:
+        label: Status
+        type: partial
+        path: $/aero/clouds/models/task/_column_status.htm
+        sortable: true
+        width: 100px
+
+    priority:
+        label: Priority
+        type: partial
+        path: $/aero/clouds/models/task/_column_priority.htm
+        sortable: true
+        width: 100px
+
+    assigned_users:
+        label: Assigned To
+        type: partial
+        path: $/aero/clouds/models/task/_column_assigned.htm
+        sortable: false
+        width: 200px
+
+    due_date:
+        label: Due Date
+        type: date
+        format: M j, Y
+        sortable: true
+        width: 120px
+
+    created_at:
+        label: Created
+        type: timetense
+        sortable: true
+        width: 120px
+
+    updated_at:
+        label: Updated
+        type: timetense
+        sortable: true
+        width: 120px
+        invisible: true

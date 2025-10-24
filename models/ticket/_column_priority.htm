@@ -1,0 +1,20 @@
+<?php
+$badges = [
+    'low' => 'badge-success',
+    'normal' => 'badge-info',
+    'high' => 'badge-warning',
+    'urgent' => 'badge-error'
+];
+
+$labels = [
+    'low' => 'Baja',
+    'normal' => 'Normal',
+    'high' => 'Alta',
+    'urgent' => 'Urgente'
+];
+
+$badgeClass = $badges[$value] ?? 'badge-ghost';
+$label = $labels[$value] ?? $value;
+?>
+
+<span class="badge <?= $badgeClass ?>"><?= $label ?></span>

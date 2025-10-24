@@ -1,0 +1,64 @@
+<?php
+    $extensions = $formModel->extensions()->orderBy('tld')->get();
+?>
+
+<div class="callout callout-info">
+    <div class="header">
+        <i class="icon-globe"></i>
+        <h3>Domain Extensions</h3>
+    </div>
+    <div class="content">
+        <p>
+            <strong><?= $extensions->count() ?></strong> total extensions
+            | <strong><?= $extensions->where('is_available', true)->count() ?></strong> available
+            | <strong><?= $extensions->where('is_featured', true)->count() ?></strong> featured
+        </p>
+        <?php if ($formModel->exists): ?>
+        <p>
+            <a href="<?= Backend::url('aero/clouds/domainextensions?provider_id=' . $formModel->id) ?>" class="btn btn-primary">
+                Manage Extensions
+            </a>
+        </p>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if ($extensions->count() > 0): ?>
+<table class="table data" data-control="rowlink">
+    <thead>
+        <tr>
+            <th>TLD</th>
+            <th>Name</th>
+            <th>Registration Price</th>
+            <th>Renewal Price</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($extensions as $extension): ?>
+        <tr>
+            <td>
+                <a href="<?= Backend::url('aero/clouds/domainextensions/update/' . $extension->id) ?>">
+                    <strong><?= e($extension->tld) ?></strong>
+                </a>
+            </td>
+            <td><?= e($extension->name) ?></td>
+            <td>Bs <?= number_format($extension->registration_price, 2) ?></td>
+            <td>Bs <?= number_format($extension->renewal_price, 2) ?></td>
+            <td>
+                <?php if ($extension->is_available): ?>
+                    <span class="label label-success">Available</span>
+                <?php else: ?>
+                    <span class="label label-default">Unavailable</span>
+                <?php endif; ?>
+                <?php if ($extension->is_featured): ?>
+                    <span class="label label-info">Featured</span>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else: ?>
+<p class="text-muted">No extensions configured for this provider yet.</p>
+<?php endif; ?>

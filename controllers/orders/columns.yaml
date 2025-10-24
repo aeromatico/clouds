@@ -4,11 +4,18 @@ columns:
         searchable: true
         sortable: true
 
-    user_id:
+    user:
         label: Customer
         relation: user
-        useController: false
-        searchable: false
+        select: concat(first_name, ' ', last_name, ' (', email, ')')
+        searchable: true
+        sortable: true
+
+    invoice_number:
+        label: Invoice #
+        relation: invoice
+        select: invoice_number
+        searchable: true
         sortable: true
 
     order_date:
@@ -16,15 +23,20 @@ columns:
         type: datetime
         sortable: true
 
-    status:
-        label: Status
-        sortable: true
-
     total_amount:
         label: Total
+        type: number
+        format: '%.2f'
+        prefix: '$'
         sortable: true
 
     created_at:
         label: Created
         type: datetime
+        sortable: true
+
+    status:
+        label: Status
+        type: partial
+        path: $/aero/clouds/controllers/orders/_status_badge.htm
         sortable: true

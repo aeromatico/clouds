@@ -1,0 +1,18 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    message:
+        label: Mensaje
+        type: richeditor
+        size: large
+        span: full
+        required: true
+
+    is_internal:
+        label: Nota Interna
+        type: switch
+        span: full
+        comment: Las notas internas no son visibles para el cliente
+        default: false

@@ -1,0 +1,142 @@
+<?php
+$task = $model;
+// Eager load replies with user relationship to avoid N+1 queries
+$replies = $task->exists ? $task->replies()->with('user')->get() : [];
+$currentUser = BackendAuth::getUser();
+?>
+
+<div class="task-replies-container" data-task-id="<?= $task->id ?>">
+    <style>
+        .task-replies-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 15px;
+        }
+        .task-reply {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #0ea5e9;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .task-reply-header {
+            display: flex;
+            justify-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        .task-reply-author {
+            font-weight: 600;
+        }
+        .task-reply-message {
+            white-space: pre-wrap;
+        }
+        .task-reply-form {
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .empty-replies {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.5;
+        }
+    </style>
+
+    <?php if ($task->exists): ?>
+        <!-- Replies List -->
+        <div class="task-replies-list">
+            <?php if (count($replies) > 0): ?>
+                <?php foreach ($replies as $reply): ?>
+                    <div class="task-reply">
+                        <div class="task-reply-header">
+                            <span class="task-reply-author">
+                                <i class="icon-user"></i> <?= e($reply->user->login ?? 'Unknown') ?>
+                            </span>
+                            <span class="task-reply-date">
+                                <?= $reply->created_at->diffForHumans() ?>
+                            </span>
+                        </div>
+                        <div class="task-reply-message">
+                            <?= e($reply->message) ?>
+                        </div>
+                    </div>
+                <?php endforeach ?>
+            <?php else: ?>
+                <div class="empty-replies">
+                    <i class="icon-comments" style="font-size: 48px;"></i>
+                    <p>No replies yet. Be the first to add one!</p>
+                </div>
+            <?php endif ?>
+        </div>
+
+        <!-- Reply Form -->
+        <div class="task-reply-form">
+            <div class="form-group">
+                <textarea
+                    id="reply-message-<?= $task->id ?>"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Write your reply here..."
+                    style="resize: vertical;"
+                ></textarea>
+            </div>
+            <button
+                type="button"
+                class="btn btn-primary"
+                onclick="addTaskReply_<?= $task->id ?>()"
+            >
+                <i class="icon-paper-plane"></i> Add Reply
+            </button>
+        </div>
+
+        <script>
+        function addTaskReply_<?= $task->id ?>() {
+            var message = $('#reply-message-<?= $task->id ?>').val();
+
+            if (!message || message.trim() === '') {
+                $.oc.flashMsg({
+                    text: 'Please enter a message',
+                    class: 'error',
+                    interval: 3
+                });
+                return;
+            }
+
+            $.request('onAddTaskReply', {
+                data: {
+                    task_id: <?= $task->id ?>,
+                    reply_message: message
+                },
+                success: function(data) {
+                    $('#reply-message-<?= $task->id ?>').val('');
+                    $.oc.flashMsg({
+                        text: 'Reply added successfully',
+                        class: 'success',
+                        interval: 2
+                    });
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 500);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('Error:', jqXHR.responseText);
+                    $.oc.flashMsg({
+                        text: 'Failed to add reply: ' + textStatus,
+                        class: 'error',
+                        interval: 3
+                    });
+                }
+            });
+        }
+        </script>
+    <?php else: ?>
+        <div class="callout callout-info">
+            <p><i class="icon-info-circle"></i> Save the task first to enable replies.</p>
+        </div>
+    <?php endif ?>
+</div>

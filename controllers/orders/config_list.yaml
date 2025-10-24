@@ -9,3 +9,16 @@ toolbar:
     buttons: list_toolbar
     search:
         prompt: backend::lang.list.search_prompt
+
+filter:
+    scopes:
+        status:
+            label: Status
+            type: group
+            conditions: status = :value
+            options:
+                pending: Pending
+                processing: Processing
+                completed: Completed
+                cancelled: Cancelled
+                refunded: Refunded

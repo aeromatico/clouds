@@ -1,0 +1,12 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+replies:
+    label: Respuestas
+    view:
+        list: $/aero/clouds/models/ticketreply/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/aero/clouds/models/ticketreply/fields.yaml
+        recordsPerPage: 10

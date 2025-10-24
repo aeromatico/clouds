@@ -1,0 +1,65 @@
+<?php
+    // Get the current provider type
+    $providerType = $formModel->provider_type ?? null;
+
+    // Check if sync is supported for this provider
+    $supportedProviders = ['dynadot', 'resellerclub']; // Add more as implemented
+    $isSyncSupported = in_array($providerType, $supportedProviders);
+
+    // Check if provider has an API key configured
+    $hasApiKey = !empty($formModel->api_key);
+?>
+
+<div class="form-group">
+    <div class="btn-group">
+        <button
+            type="button"
+            class="btn btn-info"
+            data-request="onTestConnection"
+            data-request-data="redirect: 0"
+            data-stripe-load-indicator
+            <?= !$hasApiKey ? 'disabled title="API Key required"' : '' ?>
+        >
+            <i class="icon-plug"></i> Test Connection
+        </button>
+
+        <?php if ($isSyncSupported): ?>
+            <button
+                type="button"
+                class="btn btn-primary"
+                data-request="onSyncPricing"
+                data-request-data="redirect: 0"
+                data-stripe-load-indicator
+                data-request-confirm="This will sync all domain extensions and pricing from <?= e($formModel->name) ?>. Continue?"
+                <?= !$hasApiKey ? 'disabled title="API Key required"' : '' ?>
+            >
+                <i class="icon-refresh"></i> Sync Pricing
+            </button>
+        <?php else: ?>
+            <button
+                type="button"
+                class="btn btn-default"
+                disabled
+                title="Sync not yet implemented for <?= e($providerType) ?>"
+            >
+                <i class="icon-refresh"></i> Sync Pricing (Not Available)
+            </button>
+        <?php endif; ?>
+    </div>
+
+    <p class="help-block">
+        <?php if (!$hasApiKey): ?>
+            <span class="text-warning">
+                <i class="icon-warning"></i> Please configure API credentials first
+            </span>
+        <?php elseif ($isSyncSupported): ?>
+            Test the API connection and sync domain pricing from the registrar.
+            <strong>Note:</strong> Syncing will update all extensions and prices for this provider.
+        <?php else: ?>
+            <span class="text-muted">
+                <i class="icon-info"></i> Automatic pricing sync is not yet available for this provider type.
+                Currently supported: <?= implode(', ', $supportedProviders) ?>
+            </span>
+        <?php endif; ?>
+    </p>
+</div>

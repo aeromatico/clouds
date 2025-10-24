@@ -1,0 +1,27 @@
+<?php
+    $statusColors = [
+        'pending' => 'warning',
+        'active' => 'success',
+        'expired' => 'danger',
+        'suspended' => 'danger',
+        'cancelled' => 'secondary',
+        'transferred' => 'info'
+    ];
+
+    $statusIcons = [
+        'pending' => 'icon-clock',
+        'active' => 'icon-check-circle',
+        'expired' => 'icon-exclamation-circle',
+        'suspended' => 'icon-pause-circle',
+        'cancelled' => 'icon-ban',
+        'transferred' => 'icon-exchange'
+    ];
+
+    $color = $statusColors[$record->status] ?? 'secondary';
+    $icon = $statusIcons[$record->status] ?? 'icon-circle';
+?>
+
+<span class="badge bg-<?= $color ?>">
+    <i class="<?= $icon ?>"></i>
+    <?= ucfirst($record->status) ?>
+</span>

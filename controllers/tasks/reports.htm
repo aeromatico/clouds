@@ -1,0 +1,595 @@
+<?php Block::put('breadcrumb') ?>
+    <ul>
+        <li><a href="<?= Backend::url('aero/clouds/tasks') ?>">Tasks</a></li>
+        <li><?= e($this->pageTitle) ?></li>
+    </ul>
+<?php Block::endPut() ?>
+
+<?php
+$summary = $reportData['summary'];
+$userPerformance = $reportData['user_performance'];
+$priorityBreakdown = $reportData['priority_breakdown'];
+$dailyCompletions = $reportData['daily_completions'];
+?>
+
+<style>
+.reports-container {
+    padding: 20px;
+}
+
+.report-filters {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.filter-row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.filter-group select,
+.filter-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filter-group button {
+    padding: 8px 20px;
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.filter-group button:hover {
+    background: #0284c7;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-left: 4px solid #0ea5e9;
+}
+
+.metric-card.success {
+    border-left-color: #10b981;
+}
+
+.metric-card.warning {
+    border-left-color: #f59e0b;
+}
+
+.metric-card.danger {
+    border-left-color: #ef4444;
+}
+
+.metric-card.info {
+    border-left-color: #8b5cf6;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.metric-label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.metric-sublabel {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.chart-card h3 {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+.performance-table {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.performance-table h3 {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.performance-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.performance-table th {
+    background: #f8fafc;
+    padding: 12px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.performance-table td {
+    padding: 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.performance-table tr:hover {
+    background: #f8fafc;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #10b981;
+    transition: width 0.3s ease;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.period-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.period-tab {
+    padding: 8px 16px;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.period-tab:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+}
+
+.period-tab.active {
+    background: #0ea5e9;
+    border-color: #0ea5e9;
+    color: white;
+}
+</style>
+
+<div class="reports-container">
+    <!-- Filters -->
+    <div class="report-filters">
+        <form method="GET" action="<?= Backend::url('aero/clouds/tasks/reports') ?>">
+            <div class="period-tabs">
+                <a href="?period=day" class="period-tab <?= $currentPeriod == 'day' ? 'active' : '' ?>">Today</a>
+                <a href="?period=week" class="period-tab <?= $currentPeriod == 'week' ? 'active' : '' ?>">This Week</a>
+                <a href="?period=month" class="period-tab <?= $currentPeriod == 'month' ? 'active' : '' ?>">This Month</a>
+                <a href="?period=year" class="period-tab <?= $currentPeriod == 'year' ? 'active' : '' ?>">This Year</a>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>User Filter</label>
+                    <select name="user_id">
+                        <option value="">All Users</option>
+                        <?php foreach ($users as $id => $name): ?>
+                            <option value="<?= $id ?>" <?= $currentUserId == $id ? 'selected' : '' ?>>
+                                <?= e($name) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Custom Start Date</label>
+                    <input type="date" name="start_date" value="<?= input('start_date') ?>">
+                </div>
+
+                <div class="filter-group">
+                    <label>Custom End Date</label>
+                    <input type="date" name="end_date" value="<?= input('end_date') ?>">
+                </div>
+
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button type="submit">
+                        <i class="icon-filter"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <p style="margin-top: 15px; font-size: 13px; color: #64748b;">
+            <strong>Period:</strong> <?= $startDate->format('M j, Y') ?> - <?= $endDate->format('M j, Y') ?>
+        </p>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value"><?= $summary['total_tasks'] ?></div>
+            <div class="metric-label">Total Tasks</div>
+        </div>
+
+        <div class="metric-card success">
+            <div class="metric-value"><?= $summary['completed_tasks'] ?></div>
+            <div class="metric-label">Completed Tasks</div>
+            <div class="metric-sublabel"><?= $summary['completion_rate'] ?>% completion rate</div>
+        </div>
+
+        <div class="metric-card warning">
+            <div class="metric-value"><?= $summary['in_progress_tasks'] ?></div>
+            <div class="metric-label">In Progress</div>
+        </div>
+
+        <div class="metric-card info">
+            <div class="metric-value"><?= $summary['todo_tasks'] ?></div>
+            <div class="metric-label">To Do</div>
+        </div>
+
+        <div class="metric-card danger">
+            <div class="metric-value"><?= $summary['overdue_tasks'] ?></div>
+            <div class="metric-label">Overdue Tasks</div>
+        </div>
+
+        <div class="metric-card info">
+            <div class="metric-value"><?= $summary['frozen_tasks'] ?></div>
+            <div class="metric-label">Frozen Tasks</div>
+            <div class="metric-sublabel">Strict mode + overdue</div>
+        </div>
+
+        <div class="metric-card success">
+            <div class="metric-value"><?= $summary['completed_on_time'] ?></div>
+            <div class="metric-label">On Time Completions</div>
+        </div>
+
+        <div class="metric-card warning">
+            <div class="metric-value"><?= $summary['completed_late'] ?></div>
+            <div class="metric-label">Late Completions</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-value"><?= round($summary['average_completion_hours'], 1) ?>h</div>
+            <div class="metric-label">Avg. Completion Time</div>
+            <div class="metric-sublabel">Hours from creation to done</div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+        <div class="chart-card">
+            <h3><i class="icon-line-chart"></i> Completion Trend</h3>
+            <div class="chart-container">
+                <canvas id="completionTrendChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3><i class="icon-pie-chart"></i> Status Distribution</h3>
+            <div class="chart-container">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3><i class="icon-bar-chart"></i> Priority Breakdown</h3>
+            <div class="chart-container">
+                <canvas id="priorityChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3><i class="icon-check-circle"></i> On-Time vs Late</h3>
+            <div class="chart-container">
+                <canvas id="timelinessChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Performance Table -->
+    <div class="performance-table">
+        <h3><i class="icon-users"></i> User Performance Rankings</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Total Tasks</th>
+                    <th>Completed</th>
+                    <th>In Progress</th>
+                    <th>To Do</th>
+                    <th>Overdue</th>
+                    <th>Completion Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (count($userPerformance) > 0): ?>
+                    <?php foreach ($userPerformance as $index => $perf): ?>
+                        <tr>
+                            <td>
+                                <?php if ($index === 0): ?>
+                                    <span style="font-size: 20px;">🥇</span>
+                                <?php elseif ($index === 1): ?>
+                                    <span style="font-size: 20px;">🥈</span>
+                                <?php elseif ($index === 2): ?>
+                                    <span style="font-size: 20px;">🥉</span>
+                                <?php else: ?>
+                                    #<?= $index + 1 ?>
+                                <?php endif ?>
+                            </td>
+                            <td><strong><?= e($perf['user']) ?></strong></td>
+                            <td><?= $perf['total'] ?></td>
+                            <td><span class="badge badge-success"><?= $perf['completed'] ?></span></td>
+                            <td><span class="badge badge-warning"><?= $perf['in_progress'] ?></span></td>
+                            <td><?= $perf['todo'] ?></td>
+                            <td>
+                                <?php if ($perf['overdue'] > 0): ?>
+                                    <span class="badge badge-danger"><?= $perf['overdue'] ?></span>
+                                <?php else: ?>
+                                    <span style="color: #10b981;">✓</span>
+                                <?php endif ?>
+                            </td>
+                            <td>
+                                <div>
+                                    <strong><?= $perf['completion_rate'] ?>%</strong>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: <?= $perf['completion_rate'] ?>%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px; color: #94a3b8;">
+                            No data available for this period
+                        </td>
+                    </tr>
+                <?php endif ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Chart.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+// Chart colors
+const colors = {
+    primary: '#0ea5e9',
+    success: '#10b981',
+    warning: '#f59e0b',
+    danger: '#ef4444',
+    purple: '#8b5cf6',
+    gray: '#64748b'
+};
+
+// Completion Trend Chart
+const completionTrendCtx = document.getElementById('completionTrendChart').getContext('2d');
+new Chart(completionTrendCtx, {
+    type: 'line',
+    data: {
+        labels: <?= json_encode(array_column($dailyCompletions, 'label')) ?>,
+        datasets: [{
+            label: 'Tasks Completed',
+            data: <?= json_encode(array_column($dailyCompletions, 'count')) ?>,
+            borderColor: colors.success,
+            backgroundColor: colors.success + '20',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+// Status Distribution Chart
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Completed', 'In Progress', 'To Do'],
+        datasets: [{
+            data: [
+                <?= $summary['completed_tasks'] ?>,
+                <?= $summary['in_progress_tasks'] ?>,
+                <?= $summary['todo_tasks'] ?>
+            ],
+            backgroundColor: [
+                colors.success,
+                colors.warning,
+                colors.gray
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+
+// Priority Breakdown Chart
+const priorityCtx = document.getElementById('priorityChart').getContext('2d');
+new Chart(priorityCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Low', 'Medium', 'High', 'Urgent'],
+        datasets: [{
+            label: 'Tasks by Priority',
+            data: [
+                <?= $priorityBreakdown['low'] ?>,
+                <?= $priorityBreakdown['medium'] ?>,
+                <?= $priorityBreakdown['high'] ?>,
+                <?= $priorityBreakdown['urgent'] ?>
+            ],
+            backgroundColor: [
+                colors.primary,
+                colors.success,
+                colors.warning,
+                colors.danger
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+
+// Timeliness Chart
+const timelinessCtx = document.getElementById('timelinessChart').getContext('2d');
+new Chart(timelinessCtx, {
+    type: 'pie',
+    data: {
+        labels: ['On Time', 'Late'],
+        datasets: [{
+            data: [
+                <?= $summary['completed_on_time'] ?>,
+                <?= $summary['completed_late'] ?>
+            ],
+            backgroundColor: [
+                colors.success,
+                colors.danger
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
+    }
+});
+</script>

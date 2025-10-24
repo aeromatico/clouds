@@ -1,0 +1,146 @@
+<?= Form::open(['class' => 'layout']) ?>
+
+    <div class="layout-row">
+        <?= $this->formRender() ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+                type="submit"
+                data-request="onSave"
+                data-hotkey="ctrl+s, cmd+s"
+                data-load-indicator="Saving Domain..."
+                class="btn btn-primary">
+                <u>S</u>ave
+            </button>
+            <button
+                type="button"
+                data-request="onSave"
+                data-request-data="close:1"
+                data-hotkey="ctrl+enter, cmd+enter"
+                data-load-indicator="Saving Domain..."
+                class="btn btn-default">
+                Save and Close
+            </button>
+            <button
+                type="button"
+                class="oc-icon-trash-o btn-icon danger pull-right"
+                data-request="onDelete"
+                data-load-indicator="Deleting Domain..."
+                data-request-confirm="Delete this domain?">
+            </button>
+            <span class="btn-text">
+                or <a href="<?= Backend::url('aero/clouds/domains') ?>">Cancel</a>
+            </span>
+        </div>
+    </div>
+
+<?= Form::close() ?>
+
+<!-- Domain Management Actions Section -->
+<div class="scoreboard">
+    <div data-control="toolbar">
+        <div class="scoreboard-item title-value">
+            <h4>Domain Management Actions</h4>
+        </div>
+    </div>
+</div>
+
+<div class="form-buttons" style="margin-top: 20px;">
+    <div class="loading-indicator-container">
+        <!-- Activate Domain -->
+        <?php if ($formModel->status === 'pending'): ?>
+            <button
+                type="button"
+                class="btn btn-success oc-icon-check"
+                data-request="onActivate"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Activate this domain?"
+                data-load-indicator="Activating...">
+                Activate Domain
+            </button>
+        <?php endif ?>
+
+        <!-- Sync Nameservers -->
+        <?php if ($formModel->status === 'active'): ?>
+            <button
+                type="button"
+                class="btn btn-info oc-icon-refresh"
+                data-request="onSyncNameservers"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-load-indicator="Syncing Nameservers...">
+                <i class="icon-server"></i> Sync Nameservers
+            </button>
+
+            <!-- Sync DNS -->
+            <button
+                type="button"
+                class="btn btn-info oc-icon-refresh"
+                data-request="onSyncDns"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-load-indicator="Syncing DNS...">
+                <i class="icon-list"></i> Sync DNS Records
+            </button>
+
+            <!-- Lock/Unlock -->
+            <?php if ($formModel->is_locked): ?>
+                <button
+                    type="button"
+                    class="btn btn-warning oc-icon-unlock"
+                    data-request="onUnlock"
+                    data-request-data="id: <?= $formModel->id ?>"
+                    data-request-confirm="Unlock this domain? It will be transferable."
+                    data-load-indicator="Unlocking...">
+                    Unlock Domain
+                </button>
+            <?php else: ?>
+                <button
+                    type="button"
+                    class="btn btn-success oc-icon-lock"
+                    data-request="onLock"
+                    data-request-data="id: <?= $formModel->id ?>"
+                    data-request-confirm="Lock this domain to prevent transfers?"
+                    data-load-indicator="Locking...">
+                    Lock Domain
+                </button>
+            <?php endif ?>
+
+            <!-- Get EPP Code -->
+            <button
+                type="button"
+                class="btn btn-default oc-icon-key"
+                data-request="onGetAuthCode"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-load-indicator="Getting EPP Code...">
+                Get EPP Code
+            </button>
+        <?php endif ?>
+
+        <!-- Suspend Domain -->
+        <?php if ($formModel->status === 'active'): ?>
+            <button
+                type="button"
+                class="btn btn-warning oc-icon-pause"
+                data-request="onSuspend"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Suspend this domain?"
+                data-load-indicator="Suspending...">
+                Suspend Domain
+            </button>
+        <?php endif ?>
+
+        <!-- Cancel Domain -->
+        <?php if (in_array($formModel->status, ['active', 'suspended', 'expired'])): ?>
+            <button
+                type="button"
+                class="btn btn-danger oc-icon-ban pull-right"
+                data-request="onCancel"
+                data-request-data="id: <?= $formModel->id ?>"
+                data-request-confirm="Cancel this domain? This action should be done carefully."
+                data-load-indicator="Cancelling...">
+                Cancel Domain
+            </button>
+        <?php endif ?>
+    </div>
+</div>

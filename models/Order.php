@@ -1,20 +1,24 @@
 <?php namespace Aero\Clouds\Models;
 
 use Model;
+use Aero\Clouds\Models\EmailEvent;
 
 class Order extends Model
 {
     use \October\Rain\Database\Traits\Validation;
     use \Aero\Clouds\Traits\LogsActivity;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_orders';
 
     protected $fillable = [
+        'domain',
         'user_id',
         'invoice_id',
         'order_date',
         'status',
         'items',
+        'domains',
         'total_amount',
         'notes'
     ];
@@ -49,6 +53,12 @@ class Order extends Model
             'key' => 'id',
             'otherKey' => 'plan_id',
             'pivot' => ['quantity', 'billing_cycle', 'price']
+        ],
+        'extensions' => [
+            'Aero\Clouds\Models\DomainExtension',
+            'table' => 'aero_clouds_orders',
+            'key' => 'id',
+            'otherKey' => 'extension_id'
         ]
     ];
 
@@ -96,6 +106,50 @@ class Order extends Model
         $this->attributes['items'] = '[]';
     }
 
+    /**
+     * Get domains attribute - handle both string and array from database
+     */
+    public function getDomainsAttribute($value)
+    {
+        // If null or empty, return empty array
+        if (empty($value)) {
+            return [];
+        }
+
+        // If already an array, return it
+        if (is_array($value)) {
+            return $value;
+        }
+
+        // If string, decode it
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+
+        return [];
+    }
+
+    /**
+     * Set domains attribute - always store as JSON string
+     */
+    public function setDomainsAttribute($value)
+    {
+        // If already a string, use it
+        if (is_string($value)) {
+            $this->attributes['domains'] = $value;
+            return;
+        }
+
+        // If array, encode it
+        if (is_array($value)) {
+            $this->attributes['domains'] = json_encode($value);
+            return;
+        }
+
+        $this->attributes['domains'] = '[]';
+    }
+
     public function getStatusOptions()
     {
         return [
@@ -140,6 +194,13 @@ class Order extends Model
         return $options;
     }
 
+    public function getExtensionIdOptions()
+    {
+        return DomainExtension::where('is_available', true)
+            ->orderBy('tld')
+            ->lists('tld', 'id');
+    }
+
     public function beforeSave()
     {
         // Always auto-calculate total from items
@@ -178,6 +239,12 @@ class Order extends Model
     {
         // Auto-generate invoice after order is created
         $this->generateInvoice();
+
+        // If order is created with "processing" status, send notification
+        if ($this->status === 'processing') {
+            $this->provisionCloudServers();
+            $this->sendInvoiceCreatedNotification();
+        }
     }
 
     public function generateInvoice()
@@ -225,7 +292,7 @@ class Order extends Model
             'status' => 'draft',
             'items' => $invoiceItems,
             'subtotal' => $this->total_amount ?? 0,
-            'tax_rate' => 0,
+            'tax' => 0,
             'notes' => 'Auto-generated from Order #' . $this->id
         ]);
 
@@ -242,7 +309,49 @@ class Order extends Model
         // Check if status changed to 'processing'
         if ($this->status === 'processing' && $this->getOriginal('status') !== 'processing') {
             $this->provisionCloudServers();
+
+            // Send invoice created notification
+            $this->sendInvoiceCreatedNotification();
         }
+    }
+
+    /**
+     * Send invoice created notification email
+     */
+    protected function sendInvoiceCreatedNotification()
+    {
+        // Make sure we have an invoice
+        if (!$this->invoice_id) {
+            return;
+        }
+
+        // Load the invoice with user
+        $invoice = $this->invoice()->with('user')->first();
+        if (!$invoice) {
+            return;
+        }
+
+        // Prepare context data for email template
+        $context = [
+            'invoice_id' => $invoice->id,
+            'invoice_number' => $invoice->invoice_number,
+            'order_id' => $this->id,
+            'user' => [
+                'name' => $invoice->user->full_name ?? $invoice->user->email,
+                'email' => $invoice->user->email,
+                'first_name' => $invoice->user->first_name ?? '',
+            ],
+            'invoice_date' => $invoice->invoice_date->format('d/m/Y'),
+            'due_date' => $invoice->due_date->format('d/m/Y'),
+            'subtotal' => number_format($invoice->subtotal, 2),
+            'tax' => number_format($invoice->tax, 2),
+            'total' => number_format($invoice->total, 2),
+            'items' => $invoice->items,
+            'status' => $invoice->status,
+        ];
+
+        // Trigger the email event
+        EmailEvent::fire('invoice_created', $context, $invoice->user);
     }
 
     /**

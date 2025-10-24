@@ -5,16 +5,20 @@ use Model;
 class Addon extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\LogsActivity;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_addons';
 
     protected $fillable = [
+        'domain',
         'name',
         'slug',
         'description',
         'pricing',
         'is_active',
-        'sort_order'
+        'sort_order',
+        'icon'
     ];
 
     protected $casts = [

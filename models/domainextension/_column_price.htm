@@ -1,0 +1,17 @@
+<?php
+    $symbols = [
+        'USD' => '$',
+        'BOB' => 'Bs ',
+        'EUR' => '€',
+        'GBP' => '£',
+    ];
+
+    $currency = $record->currency ?? 'USD';
+    $symbol = $symbols[$currency] ?? $currency . ' ';
+
+    if ($value > 0) {
+        echo $symbol . number_format($value, 2);
+    } else {
+        echo '—';
+    }
+?>

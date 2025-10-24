@@ -1,0 +1,25 @@
+<div data-control="toolbar">
+    <button
+        class="btn btn-danger oc-icon-trash-o"
+        data-request="onClearAllLogs"
+        data-request-confirm="Are you sure you want to delete ALL activity logs? This action cannot be undone!"
+        data-stripe-load-indicator>
+        Clear All Logs
+    </button>
+    <button
+        class="btn btn-warning oc-icon-calendar-minus-o"
+        data-request="onDeleteOldLogs"
+        data-request-data="days: 30"
+        data-request-confirm="Are you sure you want to delete logs older than 30 days?"
+        data-stripe-load-indicator>
+        Delete Logs Older Than 30 Days
+    </button>
+    <button
+        class="btn btn-default oc-icon-calendar-minus-o"
+        data-request="onDeleteOldLogs"
+        data-request-data="days: 90"
+        data-request-confirm="Are you sure you want to delete logs older than 90 days?"
+        data-stripe-load-indicator>
+        Delete Logs Older Than 90 Days
+    </button>
+</div>

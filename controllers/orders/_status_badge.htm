@@ -1,0 +1,21 @@
+<?php
+    $statusColors = [
+        'pending' => 'warning',
+        'processing' => 'info',
+        'completed' => 'success',
+        'cancelled' => 'secondary',
+        'refunded' => 'danger'
+    ];
+
+    $statusLabels = [
+        'pending' => 'Pending',
+        'processing' => 'Processing',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+        'refunded' => 'Refunded'
+    ];
+
+    $color = $statusColors[$value] ?? 'secondary';
+    $label = $statusLabels[$value] ?? ucfirst($value);
+?>
+<span class="badge bg-<?= $color ?>"><?= $label ?></span>

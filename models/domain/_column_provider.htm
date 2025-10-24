@@ -1,0 +1,8 @@
+<?php if ($record->provider): ?>
+    <div class="d-flex align-items-center">
+        <i class="icon-cog text-muted mr-2"></i>
+        <?= e($record->provider->name) ?>
+    </div>
+<?php else: ?>
+    <span class="text-muted">-</span>
+<?php endif; ?>

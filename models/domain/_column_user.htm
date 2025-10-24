@@ -1,0 +1,10 @@
+<?php if ($record->user): ?>
+    <div>
+        <div><?= e($record->user->email) ?></div>
+        <?php if ($record->user->username): ?>
+            <small class="text-muted">@<?= e($record->user->username) ?></small>
+        <?php endif; ?>
+    </div>
+<?php else: ?>
+    <span class="text-muted">-</span>
+<?php endif; ?>

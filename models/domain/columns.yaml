@@ -1,0 +1,64 @@
+columns:
+    id:
+        label: ID
+        searchable: true
+        sortable: true
+        width: 80px
+
+    domain_name:
+        label: Domain
+        type: partial
+        path: $/aero/clouds/models/domain/_column_domain.htm
+        searchable: true
+        sortable: true
+
+    user:
+        label: User
+        type: partial
+        path: $/aero/clouds/models/domain/_column_user.htm
+        searchable: true
+        sortable: false
+
+    extension:
+        label: Extension
+        type: partial
+        path: $/aero/clouds/models/domain/_column_extension.htm
+        sortable: false
+
+    provider:
+        label: Provider
+        type: partial
+        path: $/aero/clouds/models/domain/_column_provider.htm
+        sortable: false
+
+    registration_date:
+        label: Registration
+        type: date
+        sortable: true
+
+    expiration_date:
+        label: Expiration
+        type: partial
+        path: $/aero/clouds/models/domain/_column_expiration.htm
+        sortable: true
+
+    status:
+        label: Status
+        type: partial
+        path: $/aero/clouds/models/domain/_column_status.htm
+        sortable: true
+
+    is_locked:
+        label: Locked
+        type: switch
+        sortable: true
+
+    auto_renew:
+        label: Auto Renew
+        type: switch
+        sortable: true
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true

@@ -1,0 +1,35 @@
+<div class="callout callout-info">
+    <div class="header">
+        <i class="icon-envelope-open"></i>
+        <h3>Configuración de Notificaciones por Email</h3>
+    </div>
+    <div class="content">
+        <p><strong>Esta sección configura los ajustes globales de email:</strong></p>
+        <ul>
+            <li><strong>Habilitar/Deshabilitar:</strong> El switch principal activa o desactiva TODAS las notificaciones del sistema</li>
+            <li><strong>Correos de Administradores:</strong> Los emails configurados aquí recibirán las notificaciones de eventos del sistema</li>
+        </ul>
+
+        <hr>
+
+        <p><strong>Para gestionar eventos individuales y vincularlos con plantillas:</strong></p>
+        <p>
+            <a href="<?= Backend::url('aero/clouds/emailevents') ?>" class="btn btn-primary">
+                <i class="icon-envelope-open"></i> Ir a Email Events
+            </a>
+        </p>
+
+        <p class="text-muted">
+            <small>
+                En <strong>Email Events</strong> puedes:
+                <ul class="text-muted">
+                    <li>Configurar qué eventos disparan notificaciones</li>
+                    <li>Vincular eventos con plantillas de correo específicas</li>
+                    <li>Definir si se notifica a usuarios, administradores o ambos</li>
+                    <li>Establecer prioridades de envío</li>
+                    <li>Activar/desactivar eventos individuales</li>
+                </ul>
+            </small>
+        </p>
+    </div>
+</div>

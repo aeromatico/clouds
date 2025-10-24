@@ -1,0 +1,186 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        # Basic Information Tab
+        name:
+            label: Gateway Name
+            type: text
+            span: left
+            required: true
+            tab: Basic Info
+            placeholder: e.g., Stripe Payments
+
+        slug:
+            label: Slug
+            type: text
+            span: right
+            required: true
+            tab: Basic Info
+            placeholder: e.g., stripe-payments
+            comment: URL-friendly identifier (lowercase, alphanumeric, dashes only)
+
+        type:
+            label: Gateway Type
+            type: dropdown
+            span: left
+            required: true
+            tab: Basic Info
+            options:
+                stripe: Stripe
+                paypal: PayPal
+                crypto: Cryptocurrency
+                bank_transfer: Bank Transfer
+                qr_code: QR Code Payment
+                manual: Manual Payment
+                other: Other
+
+        logo:
+            label: Logo
+            type: fileupload
+            mode: image
+            span: right
+            tab: Basic Info
+            imageHeight: 100
+            imageWidth: 100
+            thumbOptions:
+                mode: crop
+                quality: 95
+
+        description:
+            label: Description
+            type: textarea
+            size: small
+            span: full
+            tab: Basic Info
+            placeholder: Brief description of this payment gateway
+
+        # Status & Settings Tab
+        is_active:
+            label: Active
+            type: checkbox
+            span: left
+            tab: Settings
+            default: true
+            comment: Enable/disable this payment gateway
+
+        is_default:
+            label: Default Gateway
+            type: checkbox
+            span: right
+            tab: Settings
+            comment: Set as the default payment method (only one can be default)
+
+        sort_order:
+            label: Sort Order
+            type: number
+            span: left
+            tab: Settings
+            default: 0
+            comment: Display order (lower numbers appear first)
+
+        supported_currencies:
+            label: Supported Currencies
+            type: taglist
+            mode: array
+            span: right
+            tab: Settings
+            separator: comma
+            placeholder: USD, EUR, BOB
+            comment: Enter currency codes separated by commas
+
+        # Transaction Fees Tab
+        transaction_fee_type:
+            label: Fee Type
+            type: dropdown
+            span: full
+            tab: Transaction Fees
+            emptyOption: No fees
+            options:
+                fixed: Fixed Amount
+                percentage: Percentage
+                both: Fixed + Percentage
+            comment: How to calculate transaction fees
+
+        transaction_fee_amount:
+            label: Fixed Fee Amount
+            type: number
+            span: left
+            tab: Transaction Fees
+            step: 0.01
+            min: 0
+            placeholder: 0.00
+            comment: Fixed amount charged per transaction
+            trigger:
+                action: show
+                field: transaction_fee_type
+                condition: value[fixed,both]
+
+        transaction_fee_percentage:
+            label: Fee Percentage
+            type: number
+            span: right
+            tab: Transaction Fees
+            step: 0.01
+            min: 0
+            max: 100
+            placeholder: 0.00
+            comment: Percentage of transaction amount (e.g., 2.9 for 2.9%)
+            trigger:
+                action: show
+                field: transaction_fee_type
+                condition: value[percentage,both]
+
+        # Amount Limits Tab
+        min_amount:
+            label: Minimum Amount
+            type: number
+            span: left
+            tab: Limits
+            step: 0.01
+            min: 0
+            placeholder: 0.00
+            comment: Minimum transaction amount (leave empty for no limit)
+
+        max_amount:
+            label: Maximum Amount
+            type: number
+            span: right
+            tab: Limits
+            step: 0.01
+            min: 0
+            placeholder: 0.00
+            comment: Maximum transaction amount (leave empty for no limit)
+
+        # Configuration Tab (Gateway-specific settings)
+        _config_section:
+            label: Gateway Configuration
+            type: section
+            tab: Configuration
+            comment: Gateway-specific settings (API keys, credentials, etc.)
+
+        configuration:
+            label: Configuration (JSON)
+            type: codeeditor
+            language: json
+            span: full
+            tab: Configuration
+            size: large
+            comment: |
+                Gateway-specific configuration in JSON format.
+                Examples:
+                - Stripe: {"api_key": "sk_xxx", "webhook_secret": "whsec_xxx"}
+                - PayPal: {"client_id": "xxx", "secret": "xxx", "mode": "sandbox"}
+                - Bank Transfer: {"bank_name": "xxx", "account_number": "xxx", "account_holder": "xxx"}
+
+        # Instructions Tab (for manual payment methods)
+        instructions:
+            label: Payment Instructions
+            type: richeditor
+            size: huge
+            span: full
+            tab: Instructions
+            toolbarButtons: bold|italic|underline|strikeThrough|link|insertTable|insertImage
+            comment: Instructions shown to customers (for manual payment methods like bank transfer, QR codes, etc.)

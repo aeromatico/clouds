@@ -1,0 +1,7 @@
+<?php if ($record->extension): ?>
+    <span class="badge bg-info">
+        <?= e($record->extension->tld) ?>
+    </span>
+<?php else: ?>
+    <span class="text-muted">-</span>
+<?php endif; ?>

@@ -1,0 +1,14 @@
+name: Domain
+modelClass: Aero\Clouds\Models\Domain
+form: $/aero/clouds/models/domain/fields.yaml
+defaultRedirect: aero/clouds/domains
+create:
+    title: Create Domain
+    redirect: aero/clouds/domains/update/:id
+    redirectClose: aero/clouds/domains
+update:
+    title: Edit Domain
+    redirect: aero/clouds/domains
+    redirectClose: aero/clouds/domains
+preview:
+    title: Preview Domain

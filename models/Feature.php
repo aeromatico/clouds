@@ -5,10 +5,13 @@ use Model;
 class Feature extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\LogsActivity;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_features';
 
     protected $fillable = [
+        'domain',
         'name',
         'slug',
         'description',

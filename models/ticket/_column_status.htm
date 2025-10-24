@@ -1,0 +1,22 @@
+<?php
+$badges = [
+    'open' => 'badge-success',
+    'in_progress' => 'badge-primary',
+    'waiting_on_customer' => 'badge-warning',
+    'waiting_on_staff' => 'badge-info',
+    'closed' => 'badge-ghost'
+];
+
+$labels = [
+    'open' => 'Abierto',
+    'in_progress' => 'En Progreso',
+    'waiting_on_customer' => 'Esperando Cliente',
+    'waiting_on_staff' => 'Esperando Staff',
+    'closed' => 'Cerrado'
+];
+
+$badgeClass = $badges[$value] ?? 'badge-ghost';
+$label = $labels[$value] ?? $value;
+?>
+
+<span class="badge <?= $badgeClass ?>"><?= $label ?></span>

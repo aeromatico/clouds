@@ -19,21 +19,9 @@ columns:
     user_id:
         label: Customer
         relation: user
-        select: email
-        searchable: false
-        sortable: true
-
-    domain:
-        label: Domain
-        type: text
+        select: concat(first_name, ' ', last_name, ' (', email, ')')
         searchable: true
         sortable: true
-
-    ip_address:
-        label: IP Address
-        type: text
-        searchable: true
-        sortable: false
 
     service_id:
         label: Service
@@ -49,24 +37,11 @@ columns:
         searchable: false
         sortable: true
 
-    server_type:
-        label: Type
+    ip_address:
+        label: IP Address
         type: text
-        sortable: true
-        invisible: true
-
-    status:
-        label: Status
-        type: partial
-        path: $/aero/clouds/models/cloud/_status_column.htm
-        sortable: true
-        searchable: false
-
-    panel_url:
-        label: Panel URL
-        type: text
+        searchable: true
         sortable: false
-        invisible: true
 
     created_date:
         label: Created
@@ -77,6 +52,25 @@ columns:
         label: Expires
         type: date
         sortable: true
+
+    status:
+        label: Status
+        type: partial
+        path: $/aero/clouds/models/cloud/_status_column.htm
+        sortable: true
+        searchable: false
+
+    server_type:
+        label: Type
+        type: text
+        sortable: true
+        invisible: true
+
+    panel_url:
+        label: Panel URL
+        type: text
+        sortable: false
+        invisible: true
 
     last_renewal_date:
         label: Last Renewed

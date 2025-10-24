@@ -1,0 +1,52 @@
+columns:
+    id:
+        label: ID
+        type: number
+        searchable: true
+        sortable: true
+        width: 80px
+
+    template_code:
+        label: Plantilla
+        type: text
+        searchable: true
+        sortable: true
+
+    recipient_email:
+        label: Destinatario
+        type: text
+        searchable: true
+        sortable: true
+
+    recipient_name:
+        label: Nombre
+        type: text
+        searchable: true
+        sortable: true
+
+    status:
+        label: Estado
+        type: partial
+        path: $/aero/clouds/models/emaillog/_status_badge.htm
+        searchable: true
+        sortable: true
+        width: 100px
+
+    duration_ms:
+        label: Duración
+        type: text
+        valueFrom: formatted_duration
+        sortable: true
+        width: 100px
+
+    sent_at:
+        label: Enviado
+        type: datetime
+        sortable: true
+        width: 150px
+
+    created_at:
+        label: Creado
+        type: datetime
+        sortable: true
+        width: 150px

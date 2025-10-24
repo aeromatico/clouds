@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center">
+    <i class="icon-globe text-primary mr-2"></i>
+    <div>
+        <div class="font-weight-bold">
+            <?= e($record->full_domain) ?>
+        </div>
+        <?php if ($record->is_locked): ?>
+            <small class="text-muted">
+                <i class="icon-lock"></i> Locked
+            </small>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<?php if ($record->expiration_date): ?>
+    <div>
+        <?= $record->expiration_date->format('d/m/Y') ?>
+    </div>
+    <?php
+        $daysLeft = $record->days_until_expiration;
+        if ($daysLeft !== null):
+    ?>
+        <?php if ($daysLeft < 0): ?>
+            <small class="text-danger font-weight-bold">
+                <i class="icon-exclamation-circle"></i> Expired
+            </small>
+        <?php elseif ($daysLeft <= 30): ?>
+            <small class="text-warning font-weight-bold">
+                <i class="icon-exclamation-triangle"></i> <?= $daysLeft ?> days
+            </small>
+        <?php else: ?>
+            <small class="text-muted">
+                <?= $daysLeft ?> days
+            </small>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php else: ?>
+    <span class="text-muted">-</span>
+<?php endif; ?>

@@ -33,8 +33,16 @@ fields:
     is_active:
         label: Active
         type: switch
-        span: full
+        span: left
         default: true
+
+    icon:
+        label: Icon HTML
+        type: codeeditor
+        language: html
+        span: right
+        size: small
+        comment: 'HTML for icon - Examples: <i class="fa fa-rocket"></i> or SVG code'
 
     description:
         label: Description

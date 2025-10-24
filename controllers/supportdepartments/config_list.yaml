@@ -1,0 +1,15 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: Departamentos de Soporte
+list: $/aero/clouds/models/supportdepartment/columns.yaml
+modelClass: Aero\Clouds\Models\SupportDepartment
+recordUrl: aero/clouds/supportdepartments/update/:id
+noRecordsMessage: backend::lang.list.no_records
+recordsPerPage: 20
+showPageNumbers: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

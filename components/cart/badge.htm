@@ -1,0 +1,20 @@
+<!-- Cart Badge Component (localStorage) -->
+<a href="/cart" class="btn btn-ghost btn-circle relative" title="Carrito de compras" x-data="{
+    count: 0,
+    init() {
+        this.updateCount();
+        window.addEventListener('cart-updated', () => this.updateCount());
+    },
+    updateCount() {
+        this.count = window.cart ? window.cart.getCount() : 0;
+    }
+}">
+    <i class="fas fa-shopping-cart text-lg"></i>
+    <span
+        x-show="count > 0"
+        x-text="count"
+        class="absolute -top-1 -right-1 text-sm font-bold"
+        style="color: #38bdf8;"
+        x-transition
+    ></span>
+</a>

@@ -1,0 +1,23 @@
+title: Tasks
+list: $/aero/clouds/models/task/columns.yaml
+modelClass: Aero\Clouds\Models\Task
+
+recordUrl: aero/clouds/tasks/update/:id
+
+noRecordsMessage: backend::lang.list.no_records
+
+showSetup: true
+showCheckboxes: true
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+filter:
+    scopes: scopes
+
+recordsPerPage: 20
+
+structure:
+    showTree: false

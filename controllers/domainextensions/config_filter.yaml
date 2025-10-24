@@ -1,0 +1,23 @@
+scopes:
+    provider:
+        label: Provider
+        modelClass: Aero\Clouds\Models\DomainProvider
+        nameFrom: name
+        conditions: provider_id = :filtered
+
+    category:
+        label: Category
+        type: group
+        conditions: category in (:filtered)
+        modelClass: Aero\Clouds\Models\DomainExtension
+        options: getCategoryOptions
+
+    is_available:
+        label: Availability
+        type: checkbox
+        conditions: is_available = true
+
+    is_featured:
+        label: Featured
+        type: checkbox
+        conditions: is_featured = true

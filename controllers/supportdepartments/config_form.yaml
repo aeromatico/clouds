@@ -1,0 +1,20 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Departamento de Soporte
+form: $/aero/clouds/models/supportdepartment/fields.yaml
+modelClass: Aero\Clouds\Models\SupportDepartment
+
+create:
+    title: Crear Departamento
+    redirect: aero/clouds/supportdepartments/update/:id
+    redirectClose: aero/clouds/supportdepartments
+
+update:
+    title: Editar Departamento
+    redirect: aero/clouds/supportdepartments
+    redirectClose: aero/clouds/supportdepartments
+
+preview:
+    title: Ver Departamento

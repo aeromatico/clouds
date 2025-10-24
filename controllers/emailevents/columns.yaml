@@ -1,0 +1,51 @@
+columns:
+    enabled:
+        label: Estado
+        type: switch
+        sortable: true
+        width: 80px
+
+    event_code:
+        label: Código
+        type: text
+        searchable: true
+        sortable: true
+
+    event_name:
+        label: Nombre del Evento
+        type: text
+        searchable: true
+        sortable: true
+
+    event_category:
+        label: Categoría
+        type: text
+        sortable: true
+
+    notify_user:
+        label: Usuario
+        type: partial
+        path: _column_notify.htm
+        sortable: false
+        width: 80px
+
+    notify_admin:
+        label: Admin
+        type: partial
+        path: _column_notify.htm
+        sortable: false
+        width: 80px
+
+    user_template_code:
+        label: Plantilla Usuario
+        type: text
+
+    admin_template_code:
+        label: Plantilla Admin
+        type: text
+
+    priority:
+        label: Prioridad
+        type: number
+        sortable: true
+        width: 100px

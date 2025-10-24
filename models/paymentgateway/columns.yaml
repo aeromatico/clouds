@@ -1,0 +1,92 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    logo:
+        label: Logo
+        type: image
+        width: 80px
+        sortable: false
+        imageWidth: 50
+        imageHeight: 50
+
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+
+    type_label:
+        label: Type
+        type: text
+        searchable: false
+        sortable: false
+
+    description:
+        label: Description
+        type: text
+        searchable: true
+        sortable: false
+        invisible: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    is_default:
+        label: Default
+        type: switch
+        sortable: true
+
+    transaction_fee_type:
+        label: Fee Type
+        type: text
+        sortable: true
+        invisible: true
+
+    transaction_fee_amount:
+        label: Fixed Fee
+        type: number
+        sortable: true
+        invisible: true
+        format: "%.2f"
+
+    transaction_fee_percentage:
+        label: Fee %
+        type: number
+        sortable: true
+        format: "%.2f"
+
+    min_amount:
+        label: Min Amount
+        type: number
+        sortable: true
+        invisible: true
+        format: "%.2f"
+
+    max_amount:
+        label: Max Amount
+        type: number
+        sortable: true
+        invisible: true
+        format: "%.2f"
+
+    sort_order:
+        label: Order
+        type: number
+        sortable: true
+        width: 80px
+
+    created_at:
+        label: Created
+        type: datetime
+        sortable: true
+        invisible: true
+
+    updated_at:
+        label: Updated
+        type: datetime
+        sortable: true
+        invisible: true

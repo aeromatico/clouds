@@ -1,0 +1,152 @@
+<?php
+$priorityLabels = [
+    'low' => 'Low',
+    'medium' => 'Medium',
+    'high' => 'High',
+    'urgent' => 'Urgent'
+];
+$priority = $task->priority ?? 'medium';
+$priorityLabel = $priorityLabels[$priority] ?? $priority;
+
+$isOverdue = $task->due_date && $task->due_date->isPast() && $task->status !== 'done';
+$isFrozen = $task->isFrozen();
+$currentUser = \BackendAuth::getUser();
+$canEdit = $task->canUserEdit($currentUser ? $currentUser->id : null);
+$canMoveToCompleted = $task->canUserMoveToCompleted($currentUser ? $currentUser->id : null);
+
+// Calculate time remaining
+$timeRemaining = null;
+$timeRemainingText = '';
+$timeRemainingClass = '';
+if ($task->due_date && $task->status !== 'done') {
+    $now = \Carbon\Carbon::now();
+    $due = $task->due_date;
+
+    if ($due->isPast()) {
+        $diff = $now->diff($due);
+        $timeRemainingClass = 'time-overdue';
+        $days = $diff->days;
+        $hours = $diff->h;
+        $minutes = $diff->i;
+
+        if ($days > 0) {
+            $timeRemainingText = "-{$days}d {$hours}h";
+        } elseif ($hours > 0) {
+            $timeRemainingText = "-{$hours}h {$minutes}m";
+        } else {
+            $timeRemainingText = "-{$minutes}m";
+        }
+    } else {
+        $diff = $now->diff($due);
+        $days = $diff->days;
+        $hours = $diff->h;
+        $minutes = $diff->i;
+
+        // Set class based on urgency
+        if ($days == 0 && $hours < 2) {
+            $timeRemainingClass = 'time-critical'; // Less than 2 hours
+        } elseif ($days == 0) {
+            $timeRemainingClass = 'time-urgent'; // Same day
+        } elseif ($days <= 1) {
+            $timeRemainingClass = 'time-soon'; // 1 day
+        } else {
+            $timeRemainingClass = 'time-normal'; // More than 1 day
+        }
+
+        if ($days > 0) {
+            $timeRemainingText = "{$days}d {$hours}h";
+        } elseif ($hours > 0) {
+            $timeRemainingText = "{$hours}h {$minutes}m";
+        } else {
+            $timeRemainingText = "{$minutes}m";
+        }
+    }
+
+    $timeRemaining = [
+        'text' => $timeRemainingText,
+        'class' => $timeRemainingClass,
+        'timestamp' => $due->timestamp,
+        'is_overdue' => $due->isPast()
+    ];
+}
+?>
+
+<div class="kanban-card <?= $isFrozen ? 'frozen-card' : '' ?>"
+     data-task-id="<?= $task->id ?>"
+     data-can-edit="<?= $canEdit ? '1' : '0' ?>"
+     data-can-complete="<?= $canMoveToCompleted ? '1' : '0' ?>"
+     data-is-frozen="<?= $isFrozen ? '1' : '0' ?>"
+     data-creator-id="<?= $task->created_by ?>">
+    <div class="kanban-card-title">
+        <?= e($task->title) ?>
+    </div>
+
+    <div class="kanban-card-meta">
+        <span class="kanban-card-priority priority-<?= $priority ?>">
+            <?= e($priorityLabel) ?>
+        </span>
+
+        <?php if ($task->strict_mode): ?>
+            <span class="kanban-card-strict" title="Strict mode enabled - will freeze after deadline">
+                <i class="icon-lock"></i> STRICT
+            </span>
+        <?php endif ?>
+
+        <?php if ($isFrozen): ?>
+            <span class="kanban-card-frozen" title="Task is frozen - only creator can move to Done">
+                <i class="icon-snowflake-o"></i> FROZEN
+            </span>
+        <?php endif ?>
+
+        <?php if ($task->assigned_users && count($task->assigned_users) > 0): ?>
+            <?php
+            $assignedUsers = $task->assigned_users;
+            $maxVisible = 2; // Show max 2 users, then "+X more"
+            $visibleUsers = $assignedUsers->take($maxVisible);
+            $remaining = count($assignedUsers) - $maxVisible;
+            ?>
+            <?php foreach ($visibleUsers as $user): ?>
+                <span class="kanban-card-assigned">
+                    <i class="icon-user"></i> <?= e($user->login) ?>
+                </span>
+            <?php endforeach ?>
+
+            <?php if ($remaining > 0): ?>
+                <span class="kanban-card-assigned" style="background: #f8f9fa; color: #6c757d;">
+                    +<?= $remaining ?> more
+                </span>
+            <?php endif ?>
+        <?php endif ?>
+
+        <?php if ($task->due_date): ?>
+            <span class="kanban-card-due <?= $isOverdue ? 'kanban-card-overdue' : '' ?>">
+                <i class="icon-calendar"></i> <?= $task->due_date->format('M j') ?>
+                <?php if ($isOverdue): ?>
+                    <i class="icon-warning"></i>
+                <?php endif ?>
+            </span>
+        <?php endif ?>
+    </div>
+
+    <?php if ($timeRemaining): ?>
+        <div class="kanban-card-time <?= $timeRemaining['class'] ?>"
+             data-due-timestamp="<?= $timeRemaining['timestamp'] ?>">
+            <i class="icon-clock-o"></i>
+            <span class="time-value"><?= $timeRemaining['text'] ?></span>
+            <?php if ($timeRemaining['is_overdue']): ?>
+                <span class="time-label">overdue</span>
+            <?php else: ?>
+                <span class="time-label">remaining</span>
+            <?php endif ?>
+        </div>
+    <?php endif ?>
+
+    <div class="kanban-card-actions">
+        <a href="<?= Backend::url('aero/clouds/tasks/update/' . $task->id) ?>">
+            <i class="icon-pencil"></i> Edit
+        </a>
+        <a href="<?= Backend::url('aero/clouds/tasks/preview/' . $task->id) ?>">
+            <i class="icon-eye"></i> View
+        </a>
+    </div>
+</div>

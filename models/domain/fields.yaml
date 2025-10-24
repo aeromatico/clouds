@@ -1,0 +1,164 @@
+fields:
+    # Domain Information Tab
+    domain_name:
+        label: Domain Name
+        span: left
+        required: true
+        placeholder: example
+        comment: Enter domain name without extension
+        tab: Domain Info
+
+    extension_id:
+        label: Extension
+        type: dropdown
+        span: right
+        required: true
+        tab: Domain Info
+
+    user_id:
+        label: User
+        type: dropdown
+        span: left
+        required: true
+        tab: Domain Info
+
+    provider_id:
+        label: Provider
+        type: dropdown
+        span: right
+        required: true
+        tab: Domain Info
+
+    order_id:
+        label: Order
+        type: dropdown
+        span: left
+        emptyOption: No Order
+        tab: Domain Info
+
+    status:
+        label: Status
+        type: dropdown
+        span: right
+        required: true
+        default: pending
+        options:
+            pending: Pending
+            active: Active
+            expired: Expired
+            suspended: Suspended
+            cancelled: Cancelled
+            transferred: Transferred
+        tab: Domain Info
+
+    # Dates Tab
+    registration_date:
+        label: Registration Date
+        type: datepicker
+        mode: date
+        span: left
+        required: true
+        tab: Dates
+
+    expiration_date:
+        label: Expiration Date
+        type: datepicker
+        mode: date
+        span: right
+        required: true
+        tab: Dates
+
+    auto_renew:
+        label: Auto Renew
+        type: switch
+        span: left
+        default: true
+        comment: Automatically renew domain before expiration
+        tab: Dates
+
+    # Security Tab
+    is_locked:
+        label: Domain Lock
+        type: switch
+        span: left
+        default: true
+        comment: Prevent unauthorized transfers
+        tab: Security
+
+    whois_privacy:
+        label: WHOIS Privacy
+        type: switch
+        span: right
+        default: false
+        comment: Enable WHOIS privacy protection
+        tab: Security
+
+    epp_code:
+        label: EPP/Auth Code
+        span: full
+        readOnly: true
+        comment: Transfer authorization code
+        tab: Security
+
+    # Nameservers Tab
+    nameservers:
+        label: Nameservers
+        type: repeater
+        span: full
+        prompt: Add Nameserver
+        tab: Nameservers
+        displayMode: builder
+        form:
+            fields:
+                nameserver:
+                    label: Nameserver
+                    type: text
+                    placeholder: ns1.example.com
+                    span: full
+
+    # DNS Records Tab
+    dns_records:
+        label: DNS Records
+        type: repeater
+        span: full
+        prompt: Add DNS Record
+        tab: DNS Records
+        displayMode: builder
+        form:
+            fields:
+                type:
+                    label: Type
+                    type: dropdown
+                    span: left
+                    default: A
+                    options:
+                        A: A Record
+                        AAAA: AAAA Record
+                        CNAME: CNAME
+                        MX: MX Record
+                        TXT: TXT Record
+                        NS: NS Record
+                subdomain:
+                    label: Subdomain
+                    type: text
+                    span: right
+                    placeholder: www or @ for root
+                value:
+                    label: Value
+                    type: text
+                    span: left
+                    placeholder: IP address or hostname
+                priority:
+                    label: Priority
+                    type: number
+                    span: right
+                    placeholder: For MX records
+                    comment: Only for MX records
+
+    # Notes Tab
+    notes:
+        label: Notes
+        type: textarea
+        size: large
+        span: full
+        tab: Notes

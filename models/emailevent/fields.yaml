@@ -1,0 +1,154 @@
+tabs:
+    fields:
+        # ===== GENERAL TAB =====
+        enabled:
+            label: Evento Activo
+            type: switch
+            tab: General
+            span: left
+            default: true
+            comment: Activar o desactivar este evento
+
+        priority:
+            label: Prioridad
+            type: number
+            tab: General
+            span: right
+            default: 5
+            min: 0
+            max: 100
+            comment: Mayor número = mayor prioridad (0-100)
+
+        event_code:
+            label: Código del Evento
+            type: text
+            tab: General
+            span: left
+            required: true
+            comment: 'Identificador único del evento (usar snake_case, ej: order_created)'
+
+        event_category:
+            label: Categoría
+            type: dropdown
+            tab: General
+            span: right
+            required: true
+            options:
+                orders: Pedidos
+                invoices: Facturas
+                payments: Pagos
+                clouds: Servidores Cloud
+                domains: Dominios
+                support: Soporte
+                tasks: Tareas
+                users: Usuarios
+                general: General
+            comment: Categoría del evento
+
+        event_name:
+            label: Nombre del Evento
+            type: text
+            tab: General
+            span: full
+            required: true
+            comment: Nombre descriptivo del evento
+
+        description:
+            label: Descripción
+            type: textarea
+            tab: General
+            span: full
+            size: small
+            comment: Descripción detallada del evento y cuándo se dispara
+
+        # ===== TEMPLATES TAB =====
+        _templates_section_user:
+            type: section
+            label: Plantilla para Usuarios
+            tab: Plantillas
+            comment: Configuración de notificación para usuarios finales
+
+        notify_user:
+            label: Notificar a Usuario
+            type: switch
+            tab: Plantillas
+            span: left
+            default: false
+            comment: Enviar email al usuario involucrado en el evento
+
+        user_template_code:
+            label: Código de Plantilla (Usuario)
+            type: text
+            tab: Plantillas
+            span: right
+            placeholder: 'user:template-name'
+            comment: 'Código de la plantilla de correo (ej: user:new-order)'
+            trigger:
+                action: show
+                field: notify_user
+                condition: checked
+
+        _templates_hint_user:
+            type: partial
+            path: $/aero/clouds/models/emailevent/_hint_templates.htm
+            tab: Plantillas
+            span: full
+            trigger:
+                action: show
+                field: notify_user
+                condition: checked
+
+        _templates_section_admin:
+            type: section
+            label: Plantilla para Administradores
+            tab: Plantillas
+            comment: Configuración de notificación para administradores
+
+        notify_admin:
+            label: Notificar a Administradores
+            type: switch
+            tab: Plantillas
+            span: left
+            default: false
+            comment: Enviar email a los administradores configurados
+
+        admin_template_code:
+            label: Código de Plantilla (Admin)
+            type: text
+            tab: Plantillas
+            span: right
+            placeholder: 'backend:template-name'
+            comment: 'Código de la plantilla de correo (ej: backend:new-order)'
+            trigger:
+                action: show
+                field: notify_admin
+                condition: checked
+
+        _templates_hint_admin:
+            type: partial
+            path: $/aero/clouds/models/emailevent/_hint_templates.htm
+            tab: Plantillas
+            span: full
+            trigger:
+                action: show
+                field: notify_admin
+                condition: checked
+
+        # ===== CONTEXT TAB =====
+        context_vars:
+            label: Variables de Contexto
+            type: textarea
+            tab: Contexto
+            span: full
+            size: large
+            comment: 'Variables disponibles para las plantillas (formato JSON array). Ejemplo: ["order_id", "user", "total"]'
+
+        _context_hint:
+            type: partial
+            path: $/aero/clouds/models/emailevent/_hint_context.htm
+            tab: Contexto
+            span: full
+
+secondaryTabs:
+    stretch: true
+    cssClass: secondary-tabs

@@ -106,3 +106,59 @@ tabs:
                         span: right
                         required: true
                         comment: Enter the price for this item
+
+        domains:
+            label: Domains
+            type: repeater
+            tab: Domains
+            span: full
+            prompt: Add Domain
+            form:
+                fields:
+                    domain_name:
+                        label: Domain Name
+                        type: text
+                        span: left
+                        required: true
+                        placeholder: example.com
+                        comment: Enter domain name without www
+
+                    extension_id:
+                        label: Extension
+                        type: dropdown
+                        span: right
+                        required: true
+                        emptyOption: Select extension
+                        comment: Select the TLD extension
+
+                    years:
+                        label: Years
+                        type: number
+                        span: left
+                        default: 1
+                        min: 1
+                        max: 10
+                        required: true
+                        comment: Registration period in years
+
+                    price:
+                        label: Price (USD)
+                        type: number
+                        step: 0.01
+                        span: right
+                        required: true
+                        comment: Domain registration price
+
+                    availability_status:
+                        label: Availability
+                        type: text
+                        span: left
+                        disabled: true
+                        cssClass: domain-availability-status
+                        comment: Check availability using button below
+
+                    _check_availability:
+                        label: ''
+                        type: partial
+                        path: $/aero/clouds/controllers/orders/_check_availability.htm
+                        span: right

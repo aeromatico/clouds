@@ -1,0 +1,13 @@
+name: Email Event
+form: fields.yaml
+modelClass: Aero\Clouds\Models\EmailEvent
+
+create:
+    title: Crear Evento
+    redirect: aero/clouds/emailevents/update/:id
+    redirectClose: aero/clouds/emailevents
+
+update:
+    title: Editar Evento
+    redirect: aero/clouds/emailevents
+    redirectClose: aero/clouds/emailevents

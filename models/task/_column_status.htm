@@ -1,0 +1,18 @@
+<?php
+$statusLabels = [
+    'todo' => 'To Do',
+    'doing' => 'Doing',
+    'done' => 'Done'
+];
+$statusColors = [
+    'todo' => '#6c757d',
+    'doing' => '#ffc107',
+    'done' => '#28a745'
+];
+$status = $record->status;
+$label = $statusLabels[$status] ?? $status;
+$color = $statusColors[$status] ?? '#6c757d';
+?>
+<span class="label" style="background-color: <?= $color ?>; color: white; padding: 3px 8px; border-radius: 3px; font-size: 11px; font-weight: 600;">
+    <?= e($label) ?>
+</span>

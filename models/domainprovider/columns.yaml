@@ -1,0 +1,38 @@
+columns:
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+
+    provider_type:
+        label: Provider Type
+        type: text
+        searchable: true
+        sortable: true
+
+    is_active:
+        label: Active
+        type: switch
+        sortable: true
+
+    sandbox_mode:
+        label: Sandbox Mode
+        type: switch
+        sortable: true
+
+    priority:
+        label: Priority
+        type: number
+        sortable: true
+
+    extensions:
+        label: Extensions
+        type: partial
+        path: ~/plugins/aero/clouds/models/domainprovider/_extensions_count.htm
+        sortable: false
+
+    updated_at:
+        label: Last Updated
+        type: datetime
+        sortable: true

@@ -1,0 +1,16 @@
+name: Task
+form: $/aero/clouds/models/task/fields.yaml
+modelClass: Aero\Clouds\Models\Task
+
+create:
+    title: Create Task
+    redirect: aero/clouds/tasks/update/:id
+    redirectClose: aero/clouds/tasks
+
+update:
+    title: Edit Task
+    redirect: aero/clouds/tasks
+    redirectClose: aero/clouds/tasks
+
+preview:
+    title: View Task

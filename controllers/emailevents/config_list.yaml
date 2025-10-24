@@ -1,0 +1,14 @@
+title: Email Events
+modelClass: Aero\Clouds\Models\EmailEvent
+list: columns.yaml
+
+recordUrl: aero/clouds/emailevents/update/:id
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt
+
+showCheckboxes: false
+
+recordsPerPage: 50

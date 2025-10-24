@@ -36,18 +36,33 @@ fields:
         required: true
         default: draft
 
-    payment_method:
-        label: Payment Method
-        type: dropdown
-        span: right
-        comment: How the invoice was/will be paid
-
-    payment_date:
-        label: Payment Date
-        type: datepicker
-        mode: datetime
+    payment_gateway:
+        label: Payment Gateway
+        type: relation
         span: left
-        comment: Date when payment was received
+        nameFrom: name
+        descriptionFrom: type_label
+        emptyOption: Select a payment gateway
+        comment: Select the payment gateway for this invoice
+
+    # payment_method:
+    #     label: Payment Method (Legacy)
+    #     type: dropdown
+    #     span: right
+    #     comment: Legacy field - use Payment Gateway instead
+
+    # payment_date:
+    #     label: Payment Date
+    #     type: datepicker
+    #     mode: datetime
+    #     span: left
+    #     comment: Date when payment was received
+
+    # transaction_id:
+    #     label: Transaction ID
+    #     type: text
+    #     span: right
+    #     comment: External transaction/payment reference ID
 
     notes:
         label: Notes
@@ -97,31 +112,39 @@ tabs:
             span: left
             comment: Leave empty to auto-calculate from items
 
-        tax_rate:
-            label: Tax Rate (%)
-            type: number
-            step: 0.01
-            tab: Totals
-            span: right
-            default: 0
-            min: 0
-            max: 100
-            comment: Tax percentage to apply
-
-        tax_amount:
+        tax:
             label: Tax Amount
             type: number
             step: 0.01
             tab: Totals
             span: left
-            disabled: true
-            comment: Auto-calculated based on subtotal and tax rate
+            comment: Tax amount (leave empty to auto-calculate)
 
-        total_amount:
+        # tax_rate:
+        #     label: Tax Rate (%)
+        #     type: number
+        #     step: 0.01
+        #     tab: Totals
+        #     span: right
+        #     default: 0
+        #     min: 0
+        #     max: 100
+        #     comment: Tax percentage to apply
+
+        # transaction_fee:
+        #     label: Transaction Fee
+        #     type: number
+        #     step: 0.01
+        #     tab: Totals
+        #     span: right
+        #     disabled: true
+        #     comment: Auto-calculated based on payment gateway fees
+
+        total:
             label: Total Amount
             type: number
             step: 0.01
             tab: Totals
-            span: right
+            span: full
             disabled: true
             comment: Auto-calculated (Subtotal + Tax)

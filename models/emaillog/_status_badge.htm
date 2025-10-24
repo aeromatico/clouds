@@ -1,0 +1,7 @@
+<?php
+$badges = [
+    'sent' => '<span class="badge bg-success">Enviado</span>',
+    'failed' => '<span class="badge bg-danger">Fallido</span>',
+    'queued' => '<span class="badge bg-info">En Cola</span>',
+];
+echo $badges[$value] ?? $value;

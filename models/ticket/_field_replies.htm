@@ -1,0 +1,128 @@
+<?php
+$ticket = $model;
+$replies = $ticket->replies()->orderBy('created_at', 'asc')->get();
+?>
+
+<div class="ticket-replies">
+    <!-- Original Message -->
+    <div class="ticket-message original-message">
+        <div class="message-header">
+            <strong><?= e($ticket->user->email ?? 'Usuario') ?></strong>
+            <span class="text-muted"><?= $ticket->created_at->diffForHumans() ?></span>
+        </div>
+        <div class="message-body">
+            <?= $ticket->message ?>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Replies -->
+    <?php if ($replies->count() > 0): ?>
+        <?php foreach ($replies as $reply): ?>
+            <div class="ticket-message reply-message <?= $reply->is_internal ? 'internal-reply' : '' ?>">
+                <div class="message-header">
+                    <strong>
+                        <?php if ($reply->admin_id): ?>
+                            <i class="icon-user-tie"></i> <?= e($reply->admin->full_name ?? 'Staff') ?>
+                        <?php else: ?>
+                            <i class="icon-user"></i> <?= e($reply->user->email ?? 'Usuario') ?>
+                        <?php endif; ?>
+                    </strong>
+                    <span class="text-muted"><?= $reply->created_at->diffForHumans() ?></span>
+                    <?php if ($reply->is_internal): ?>
+                        <span class="badge badge-warning">Nota Interna</span>
+                    <?php endif; ?>
+                </div>
+                <div class="message-body">
+                    <?= $reply->message ?>
+                </div>
+            </div>
+            <hr />
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p class="text-muted">No hay respuestas aún.</p>
+    <?php endif; ?>
+
+    <!-- Add Reply Form -->
+    <?php if (!$ticket->isClosed()): ?>
+        <div class="add-reply-form">
+            <h4>Agregar Respuesta</h4>
+            <form data-request="onAddReply" data-request-data="ticket_id: '<?= $ticket->id ?>'">
+                <div class="form-group">
+                    <label>Mensaje</label>
+                    <textarea
+                        name="message"
+                        class="form-control"
+                        rows="5"
+                        required
+                        placeholder="Escribe tu respuesta aquí..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="is_internal" value="1" />
+                        Nota interna (no visible para el cliente)
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="icon-reply"></i> Enviar Respuesta
+                </button>
+            </form>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info">
+            <i class="icon-info-circle"></i> Este ticket está cerrado.
+        </div>
+    <?php endif; ?>
+</div>
+
+<style>
+.ticket-replies {
+    padding: 15px;
+}
+
+.ticket-message {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.ticket-message.original-message {
+    background: #e3f2fd;
+}
+
+.ticket-message.internal-reply {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+}
+
+.message-header {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.message-header strong {
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.message-body {
+    line-height: 1.6;
+}
+
+.add-reply-form {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.add-reply-form h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+</style>

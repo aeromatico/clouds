@@ -1,0 +1,20 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Payment Gateway
+form: $/aero/clouds/models/paymentgateway/fields.yaml
+modelClass: Aero\Clouds\Models\PaymentGateway
+
+create:
+    title: Create Payment Gateway
+    redirect: aero/clouds/paymentgateways/update/:id
+    redirectClose: aero/clouds/paymentgateways
+
+update:
+    title: Edit Payment Gateway
+    redirect: aero/clouds/paymentgateways
+    redirectClose: aero/clouds/paymentgateways
+
+preview:
+    title: Preview Payment Gateway

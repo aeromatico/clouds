@@ -9,3 +9,41 @@ toolbar:
     buttons: list_toolbar
     search:
         prompt: backend::lang.list.search_prompt
+
+filter:
+    scopes:
+        status:
+            label: Status
+            type: group
+            conditions: status = :value
+            options:
+                draft: Draft
+                sent: Sent
+                paid: Paid
+                overdue: Overdue
+                cancelled: Cancelled
+                refunded: Refunded
+
+        payment_method:
+            label: Payment Method
+            type: group
+            conditions: payment_method = :value
+            options:
+                cash: Cash
+                credit_card: Credit Card
+                debit_card: Debit Card
+                bank_transfer: Bank Transfer
+                qr_code: QR Code
+                paypal: PayPal
+                stripe: Stripe
+                other: Other
+
+        invoice_date:
+            label: Invoice Date
+            type: daterange
+            conditions: invoice_date >= ':after' AND invoice_date <= ':before'
+
+        due_date:
+            label: Due Date
+            type: daterange
+            conditions: due_date >= ':after' AND due_date <= ':before'

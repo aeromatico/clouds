@@ -1,0 +1,35 @@
+<div class="callout callout-warning">
+    <div class="header">
+        <i class="icon-code"></i>
+        <h3>Variables de Contexto</h3>
+    </div>
+    <div class="content">
+        <p><strong>Las variables de contexto son los datos que se pasan a las plantillas de correo.</strong></p>
+
+        <p>Formato JSON array de strings:</p>
+        <pre><code>["order_id", "user", "total", "items"]</code></pre>
+
+        <p><strong>Ejemplo de uso en plantillas:</strong></p>
+        <pre><code>Hola {{ user.name }},
+
+Tu pedido #{{ order_id }} ha sido creado.
+Total: ${{ total }}
+
+Gracias por tu compra.</code></pre>
+
+        <p class="text-muted">
+            <small>
+                Las variables deben ser pasadas cuando se dispara el evento desde el código.<br>
+                Esta lista es solo informativa para documentar qué variables están disponibles.
+            </small>
+        </p>
+
+        <p><strong>Variables comunes:</strong></p>
+        <ul class="text-muted">
+            <li><code>user</code> - Objeto del usuario (name, email, etc.)</li>
+            <li><code>order_id</code>, <code>invoice_id</code>, <code>ticket_id</code> - IDs de registros</li>
+            <li><code>total</code>, <code>amount</code> - Montos</li>
+            <li><code>date</code>, <code>expiration_date</code> - Fechas</li>
+        </ul>
+    </div>
+</div>

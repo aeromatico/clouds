@@ -1,0 +1,8 @@
+name: Global Settings
+form: fields.yaml
+modelClass: Aero\Clouds\Models\Setting
+
+update:
+    title: Global Settings
+    redirect: aero/clouds/settings
+    redirectClose: aero/clouds/settings

@@ -64,3 +64,76 @@
 1.5.1:
     - Change icon field in addons to text type for HTML support
     - add_icon_html_to_addons.php
+1.6.0:
+    - Create domain providers table for domain registrar integrations
+    - create_domain_providers_table.php
+1.6.1:
+    - Create domain extensions table for TLD management
+    - create_domain_extensions_table.php
+1.6.2:
+    - Add currency field to domain extensions table
+    - add_currency_to_domain_extensions.php
+1.6.3:
+    - Add domains field to orders table for domain registration
+    - add_domains_to_orders.php
+1.6.4:
+    - Add sale_price field to domain extensions for pricing markup
+    - add_sale_price_to_domain_extensions.php
+1.7.0:
+    - Create domains table for user domain management
+    - create_domains_table.php
+1.8.0:
+    - Create support departments table for ticket categorization
+    - create_support_departments_table.php
+1.8.1:
+    - Create tickets table for support ticket management
+    - create_tickets_table.php
+1.8.2:
+    - Create ticket replies table for ticket conversations
+    - create_ticket_replies_table.php
+1.9.0:
+    - Create email logs table for email tracking
+    - create_email_logs_table.php
+2.0.0:
+    - Add domain column to all tables for multi-domain support
+    - add_domain_column_to_all_tables.php
+2.1.0:
+    - Create settings table for global configuration (SEO, PWA)
+    - create_settings_table.php
+2.2.0:
+    - Create tasks table for team task management (Cloud Teams)
+    - create_tasks_table.php
+2.2.1:
+    - Update tasks table with notes and archived_at fields
+    - update_tasks_table_v2.php
+2.2.2:
+    - Create task-user pivot table for multiple assignments
+    - create_task_user_pivot_table.php
+2.2.3:
+    - Create task replies table for team interactions
+    - create_task_replies_table.php
+2.2.4:
+    - Add strict mode to tasks for deadline enforcement
+    - add_strict_mode_to_tasks.php
+2.3.0:
+    - Add email notification settings for admin alerts
+    - add_email_notifications_to_settings.php
+2.4.0:
+    - Create email events table for template mapping
+    - create_email_events_table.php
+    - seed_email_events.php
+2.4.1:
+    - Add missing columns to payment gateways table
+    - add_missing_columns_to_payment_gateways_table.php
+2.4.2:
+    - Update clouds table column names to match model
+    - update_clouds_table_column_names.php
+2.4.3:
+    - Add deleted_at column to tasks table for soft deletes
+    - add_deleted_at_to_tasks.php
+2.4.4:
+    - Add order column to tasks table for kanban ordering
+    - add_order_to_tasks.php
+2.4.5:
+    - Add timestamps to task_user pivot table
+    - add_timestamps_to_task_user_pivot.php

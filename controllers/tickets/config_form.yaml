@@ -1,0 +1,20 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: Ticket de Soporte
+form: $/aero/clouds/models/ticket/fields.yaml
+modelClass: Aero\Clouds\Models\Ticket
+
+create:
+    title: Crear Ticket
+    redirect: aero/clouds/tickets/update/:id
+    redirectClose: aero/clouds/tickets
+
+update:
+    title: Ver Ticket
+    redirect: aero/clouds/tickets
+    redirectClose: aero/clouds/tickets
+
+preview:
+    title: Ver Ticket

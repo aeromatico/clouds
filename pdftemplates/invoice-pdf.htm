@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice #{{ invoice.invoice_number }}</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', sans-serif;
+            font-size: 12px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #0ea5e9;
+        }
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0ea5e9;
+            margin-bottom: 5px;
+        }
+        .invoice-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .info-section {
+            margin-bottom: 20px;
+        }
+        .info-row {
+            margin-bottom: 5px;
+        }
+        .label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table thead {
+            background-color: #f3f4f6;
+        }
+        table th {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #0ea5e9;
+            font-weight: bold;
+        }
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .totals {
+            margin-top: 20px;
+            float: right;
+            width: 300px;
+        }
+        .totals-row {
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .totals-row.final {
+            border-top: 2px solid #0ea5e9;
+            border-bottom: 2px solid #0ea5e9;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0ea5e9;
+        }
+        .footer {
+            clear: both;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 10px;
+            color: #6b7280;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .status-paid {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .status-draft {
+            background-color: #e0e7ff;
+            color: #3730a3;
+        }
+        .status-sent {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .status-overdue {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="company-name">Clouds.com.bo</div>
+        <div style="color: #6b7280; font-size: 11px;">Cloud Hosting & Services</div>
+    </div>
+
+    <!-- Invoice Title and Status -->
+    <div style="margin-bottom: 30px;">
+        <div class="invoice-title">
+            INVOICE #{{ invoice.invoice_number }}
+            <span class="status-badge status-{{ invoice.status }}">
+                {{ invoice.status|upper }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div style="margin-bottom: 30px;">
+        <div style="width: 48%; float: left;">
+            <div class="info-section">
+                <h3 style="color: #0ea5e9; margin-bottom: 10px;">Bill To:</h3>
+                {% if invoice.user %}
+                <div><strong>{{ invoice.user.first_name }} {{ invoice.user.last_name }}</strong></div>
+                <div>{{ invoice.user.email }}</div>
+                {% else %}
+                <div>Customer information not available</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="width: 48%; float: right;">
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="label">Invoice Date:</span>
+                    <span>{{ invoice.invoice_date|date('Y-m-d') }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Due Date:</span>
+                    <span>{{ invoice.due_date|date('Y-m-d') }}</span>
+                </div>
+                {% if invoice.payment_date %}
+                <div class="info-row">
+                    <span class="label">Payment Date:</span>
+                    <span>{{ invoice.payment_date|date('Y-m-d') }}</span>
+                </div>
+                {% endif %}
+                {% if invoice.payment_gateway %}
+                <div class="info-row">
+                    <span class="label">Payment Method:</span>
+                    <span>{{ invoice.payment_gateway.name }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <!-- Items Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-right">Unit Price</th>
+                <th class="text-right">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if invoice.items %}
+                {% for item in invoice.items %}
+                <tr>
+                    <td>{{ item.description }}</td>
+                    <td class="text-center">{{ item.quantity }}</td>
+                    <td class="text-right">${{ item.unit_price|number_format(2) }}</td>
+                    <td class="text-right">${{ (item.quantity * item.unit_price)|number_format(2) }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center" style="color: #6b7280;">No items</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <!-- Totals -->
+    <div class="totals">
+        <div class="totals-row">
+            <span style="float: left;">Subtotal:</span>
+            <span style="float: right;">${{ invoice.subtotal|number_format(2) }}</span>
+            <div style="clear: both;"></div>
+        </div>
+
+        {% if invoice.tax_amount and invoice.tax_amount > 0 %}
+        <div class="totals-row">
+            <span style="float: left;">Tax ({{ invoice.tax_rate }}%):</span>
+            <span style="float: right;">${{ invoice.tax_amount|number_format(2) }}</span>
+            <div style="clear: both;"></div>
+        </div>
+        {% endif %}
+
+        {% if invoice.transaction_fee and invoice.transaction_fee > 0 %}
+        <div class="totals-row">
+            <span style="float: left;">Transaction Fee:</span>
+            <span style="float: right;">${{ invoice.transaction_fee|number_format(2) }}</span>
+            <div style="clear: both;"></div>
+        </div>
+        {% endif %}
+
+        <div class="totals-row final">
+            <span style="float: left;">TOTAL:</span>
+            <span style="float: right;">${{ invoice.total_amount|number_format(2) }}</span>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <!-- Notes -->
+    {% if invoice.notes %}
+    <div style="margin-top: 40px; padding: 15px; background-color: #f9fafb; border-left: 4px solid #0ea5e9;">
+        <strong>Notes:</strong><br>
+        {{ invoice.notes|nl2br }}
+    </div>
+    {% endif %}
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Thank you for your business!</p>
+        <p>Clouds.com.bo - Cloud Hosting & Services</p>
+        <p>https://clouds.com.bo | support@clouds.com.bo</p>
+    </div>
+</body>
+</html>

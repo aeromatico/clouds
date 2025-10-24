@@ -1,0 +1,12 @@
+list: ~/plugins/aero/clouds/models/domainprovider/columns.yaml
+modelClass: Aero\Clouds\Models\DomainProvider
+title: Domain Providers
+noRecordsMessage: backend::lang.list.no_records
+recordUrl: aero/clouds/domainproviders/update/:id
+recordsPerPage: 20
+showSetup: true
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

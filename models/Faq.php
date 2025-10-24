@@ -5,10 +5,12 @@ use Model;
 class Faq extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_faqs';
 
     protected $fillable = [
+        'domain',
         'question',
         'answer',
         'links',

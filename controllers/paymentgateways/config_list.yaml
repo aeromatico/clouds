@@ -1,0 +1,18 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: Payment Gateways
+list: $/aero/clouds/models/paymentgateway/columns.yaml
+modelClass: Aero\Clouds\Models\PaymentGateway
+recordUrl: aero/clouds/paymentgateways/update/:id
+recordsPerPage: 20
+showPageNumbers: true
+defaultSort:
+    column: sort_order
+    direction: asc
+
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: backend::lang.list.search_prompt

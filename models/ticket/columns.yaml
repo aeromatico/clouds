@@ -1,0 +1,61 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    ticket_number:
+        label: Número
+        type: text
+        searchable: true
+        sortable: true
+
+    subject:
+        label: Asunto
+        type: text
+        searchable: true
+        sortable: true
+
+    user:
+        label: Usuario
+        type: relation
+        select: email
+        searchable: true
+
+    department:
+        label: Departamento
+        type: relation
+        select: name
+        sortable: true
+
+    priority:
+        label: Prioridad
+        type: partial
+        path: $/aero/clouds/models/ticket/_column_priority.htm
+        sortable: true
+
+    status:
+        label: Estado
+        type: partial
+        path: $/aero/clouds/models/ticket/_column_status.htm
+        sortable: true
+
+    assigned_user:
+        label: Asignado a
+        type: relation
+        select: full_name
+        default: Sin asignar
+
+    replies_count:
+        label: Respuestas
+        type: number
+        sortable: false
+
+    last_reply_at:
+        label: Última Respuesta
+        type: datetime
+        sortable: true
+
+    created_at:
+        label: Creado
+        type: datetime
+        sortable: true

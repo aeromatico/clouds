@@ -1,4 +1,11 @@
 columns:
+    icon_preview:
+        label: Icon
+        type: partial
+        path: $/aero/clouds/controllers/addons/_icon_column.htm
+        sortable: false
+        width: 80px
+
     name:
         label: Name
         type: text

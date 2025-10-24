@@ -1,0 +1,24 @@
+# ===================================
+#  Filter Scope Definitions
+# ===================================
+
+scopes:
+    log_name:
+        label: Log Type
+        type: group
+        conditions: log_name = :value
+
+    event:
+        label: Event Type
+        type: group
+        conditions: event = :value
+
+    subject_type:
+        label: Subject Type
+        type: group
+        conditions: subject_type = :value
+
+    date_range:
+        label: Date Range
+        type: daterange
+        conditions: created_at >= ':after' AND created_at <= ':before'

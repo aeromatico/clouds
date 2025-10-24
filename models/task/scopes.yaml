@@ -1,0 +1,32 @@
+scopes:
+    status:
+        label: Status
+        type: checkbox
+        conditions: status in (:filtered)
+        options:
+            todo: To Do
+            doing: Doing
+            done: Done
+
+    priority:
+        label: Priority
+        type: checkbox
+        conditions: priority in (:filtered)
+        options:
+            low: Low
+            medium: Medium
+            high: High
+            urgent: Urgent
+
+    assigned_users:
+        label: Assigned To
+        type: group
+        conditions: id in (select task_id from aero_clouds_task_user where user_id in (:filtered))
+        modelClass: Backend\Models\User
+        nameFrom: login
+        options: listAssignableUsers
+
+    overdue:
+        label: Overdue Tasks
+        type: switch
+        conditions: due_date < NOW() AND status != 'done'

@@ -5,10 +5,12 @@ use Model;
 class Doc extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \Aero\Clouds\Traits\DomainScoped;
 
     protected $table = 'aero_clouds_docs';
 
     protected $fillable = [
+        'domain',
         'title',
         'slug',
         'content',

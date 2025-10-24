@@ -1,0 +1,86 @@
+tabs:
+    fields:
+        # ===== MAIN TAB =====
+        title:
+            label: Task Title
+            type: text
+            span: full
+            required: true
+            placeholder: Enter task title...
+            tab: Task Details
+
+        description:
+            label: Description
+            type: markdown
+            size: large
+            span: full
+            placeholder: Add task description, notes, or details...
+            tab: Task Details
+
+        notes:
+            label: Important Notes
+            type: markdown
+            size: small
+            span: full
+            placeholder: Pin important information here...
+            tab: Task Details
+            comment: Use this for pinned information that needs to stand out
+
+        status:
+            label: Status
+            type: dropdown
+            span: left
+            required: true
+            default: todo
+            tab: Task Details
+            comment: Current status of the task
+
+        priority:
+            label: Priority
+            type: dropdown
+            span: right
+            default: medium
+            tab: Task Details
+            comment: Task priority level
+
+        # ===== ASSIGNMENT TAB =====
+        assigned_users:
+            label: Assigned To
+            type: relation
+            nameFrom: login
+            span: full
+            tab: Assignment
+            comment: Select one or more team members responsible for this task
+
+        due_date:
+            label: Due Date
+            type: datepicker
+            mode: datetime
+            span: left
+            tab: Assignment
+            comment: When should this task be completed?
+
+        strict_mode:
+            label: Strict Mode
+            type: switch
+            span: right
+            default: false
+            tab: Assignment
+            comment: If enabled, task will be frozen after due date and only creator can move it to Done
+
+        # ===== ATTACHMENTS TAB =====
+        attachments:
+            label: Task Files
+            type: fileupload
+            mode: file
+            span: full
+            tab: Attachments
+            comment: Upload any files related to this task
+
+        # ===== REPLIES TAB =====
+        replies:
+            label: Task Replies
+            type: partial
+            path: $/aero/clouds/models/task/_field_replies.htm
+            tab: Replies
+            span: full
