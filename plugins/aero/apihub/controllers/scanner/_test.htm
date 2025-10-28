@@ -1,0 +1,102 @@
+<div class="callout callout-info">
+    <div class="header">
+        <h3>🧪 Sistema de Prueba - Diagnóstico AJAX</h3>
+    </div>
+    <div class="content">
+        <p>Vamos a probar si AJAX funciona correctamente.</p>
+
+        <button
+            type="button"
+            id="testBtn"
+            class="btn btn-primary"
+            data-request="onTestAjax"
+            data-request-update="'test': '#testResult'">
+            <i class="icon-play"></i> PRUEBA CLICK AQUÍ
+        </button>
+
+        <div id="testResult" style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 5px;">
+            <p>Esperando click...</p>
+        </div>
+
+        <hr>
+
+        <h4>Logs de Diagnóstico:</h4>
+        <div id="logs" style="background: #000; color: #0f0; padding: 10px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto;">
+            <div>Sistema iniciado...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const log = function(msg) {
+        const logsDiv = document.getElementById('logs');
+        const time = new Date().toLocaleTimeString();
+        logsDiv.innerHTML += '<div>[' + time + '] ' + msg + '</div>';
+        logsDiv.scrollTop = logsDiv.scrollHeight;
+        console.log('[Test]', msg);
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        log('DOM cargado');
+
+        if (typeof $ === 'undefined') {
+            log('❌ ERROR: jQuery NO está cargado!');
+        } else {
+            log('✓ jQuery versión: ' + $.fn.jquery);
+        }
+
+        if (typeof $.request === 'undefined') {
+            log('❌ ERROR: October AJAX framework NO está cargado!');
+        } else {
+            log('✓ October AJAX framework está cargado');
+        }
+
+        const testBtn = document.getElementById('testBtn');
+        if (testBtn) {
+            log('✓ Botón de prueba encontrado');
+
+            // Listener nativo
+            testBtn.addEventListener('click', function() {
+                log('Click detectado (listener nativo)');
+            });
+
+            // Listener jQuery
+            $('#testBtn').on('click', function() {
+                log('Click detectado (listener jQuery)');
+            });
+
+            // Listener AJAX
+            $(document).on('ajaxSetup', '[data-request="onTestAjax"]', function(event, context) {
+                log('AJAX Setup iniciado');
+            });
+
+            $(document).on('ajaxPromise', '[data-request="onTestAjax"]', function(event, context) {
+                log('AJAX Promise creado');
+            });
+
+            $(document).on('ajaxFail', '[data-request="onTestAjax"]', function(event, context, textStatus, jqXHR) {
+                log('❌ AJAX FAILED: ' + textStatus);
+                log('Response: ' + jqXHR.responseText);
+            });
+
+            $(document).on('ajaxError', '[data-request="onTestAjax"]', function(event, context, textStatus, jqXHR) {
+                log('❌ AJAX ERROR: ' + textStatus);
+            });
+
+            $(document).on('ajaxSuccess', '[data-request="onTestAjax"]', function(event, context, data, textStatus, jqXHR) {
+                log('✅ AJAX SUCCESS!');
+                log('Data recibida: ' + JSON.stringify(data));
+            });
+
+            $(document).on('ajaxComplete', '[data-request="onTestAjax"]', function(event, context, textStatus, jqXHR) {
+                log('AJAX Completado (status: ' + textStatus + ')');
+            });
+        } else {
+            log('❌ ERROR: Botón de prueba NO encontrado!');
+        }
+
+        log('Sistema de diagnóstico listo');
+    });
+})();
+</script>

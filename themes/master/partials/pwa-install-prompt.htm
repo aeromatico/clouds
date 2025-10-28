@@ -1,7 +1,6 @@
-==
 {# PWA Install Prompt Partial #}
 {# Configuration from Settings plugin aero/clouds #}
-
+<?php
 function onStart() {
     try {
         $this['settings'] = \Aero\Clouds\Models\Setting::getCurrentSettings();
@@ -9,7 +8,7 @@ function onStart() {
         $this['settings'] = null;
     }
 }
-==
+?>
 {% set pwaEnabled = settings ? settings.pwa_enabled : true %}
 {% set pwaShowPrompt = settings ? settings.pwa_show_install_prompt : true %}
 {% set pwaDelay = settings ? settings.pwa_install_prompt_delay : 3000 %}

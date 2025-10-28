@@ -1,0 +1,159 @@
+<?php
+$status = $status ?? 'idle';
+$results = $results ?? [];
+$search_term = $search_term ?? '';
+?>
+
+<?php if ($status === 'processing'): ?>
+    <div class="callout callout-info">
+        <div class="header">
+            <i class="icon-spinner icon-spin"></i>
+            <h3>Searching RapidAPI via Apify...</h3>
+        </div>
+        <div class="content">
+            <p><strong>Please wait 30-60 seconds</strong> while we scrape RapidAPI for: <code><?= e($search_term) ?></code></p>
+            <p class="text-muted"><small>This page will update automatically when results are ready.</small></p>
+        </div>
+    </div>
+<?php elseif ($status === 'completed' && empty($results)): ?>
+    <div class="callout callout-warning">
+        <div class="header">
+            <i class="icon-exclamation-triangle"></i>
+            <h3>No Results Found</h3>
+        </div>
+        <div class="content">
+            <p>No APIs found for: <code><?= e($search_term) ?></code></p>
+            <p class="text-muted"><small>Try a different search term or check the APIs list - some results may have been filtered.</small></p>
+        </div>
+    </div>
+<?php elseif ($status === 'completed' && !empty($results)): ?>
+    <div class="callout callout-success">
+        <div class="header">
+            <i class="icon-check"></i>
+            <h3>Apify Results (<?= count($results) ?>)</h3>
+        </div>
+        <div class="content">
+            <p>Found <strong><?= count($results) ?></strong> APIs on RapidAPI for: <code><?= e($search_term) ?></code></p>
+            <p class="text-muted"><small>Review the APIs below and click <strong>Import</strong> on each one you want to add to your hub.</small></p>
+        </div>
+    </div>
+
+    <div class="control-list">
+        <table class="table data">
+            <thead>
+                <tr>
+                    <th width="20%">API Name</th>
+                    <th width="15%">Category</th>
+                    <th width="12%">Pricing</th>
+                    <th width="40%">Description</th>
+                    <th width="13%" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($results as $api): ?>
+                    <?php
+                        // Clean description
+                        $cleanDescription = preg_replace('/[\x00-\x1F\x7F]/u', ' ', $api['description'] ?? '');
+                        $cleanDescription = str_replace(["\r", "\n", "\t"], ' ', $cleanDescription);
+                        $cleanDescription = trim(preg_replace('/\s+/', ' ', $cleanDescription));
+
+                        // Prepare data for import
+                        $importData = [
+                            'name' => $api['name'],
+                            'description' => $cleanDescription,
+                            'category' => $api['category'],
+                            'pricing' => $api['pricing'] ?? null,
+                            'endpoints' => $api['endpoints'] ?? [],
+                            'base_url' => $api['base_url'] ?? null,
+                            'rapidapi_id' => $api['rapidapi_id'] ?? null,
+                        ];
+                    ?>
+                    <tr>
+                        <td>
+                            <strong><?= e($api['name']) ?></strong>
+                            <?php if (!empty($api['base_url'])): ?>
+                                <br><small class="text-muted"><?= e($api['base_url']) ?></small>
+                            <?php endif ?>
+                        </td>
+                        <td>
+                            <span class="label label-info"><?= e($api['category'] ?? 'Other') ?></span>
+                        </td>
+                        <td>
+                            <?php if (!empty($api['pricing'])): ?>
+                                <span class="label label-<?= strpos(strtolower($api['pricing']), 'free') !== false ? 'success' : 'warning' ?>">
+                                    <?= e($api['pricing']) ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="text-muted">N/A</span>
+                            <?php endif ?>
+                        </td>
+                        <td class="description-cell" style="max-width: 300px;">
+                            <small><?= e(substr($cleanDescription, 0, 150)) ?><?= strlen($cleanDescription) > 150 ? '...' : '' ?></small>
+                            <?php if (!empty($api['endpoints'])): ?>
+                                <br><small class="text-muted"><i class="icon-code"></i> <?= count($api['endpoints']) ?> endpoints</small>
+                            <?php endif ?>
+                        </td>
+                        <td class="text-center">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-request="onImportApifySingle"
+                                data-request-data="<?= e(json_encode($importData)) ?>"
+                                data-request-confirm="Import '<?= e($api['name']) ?>'? This will create the API with its endpoints in your hub."
+                                title="Click to import this API">
+                                <i class="icon-download"></i> Import
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 15px; padding: 10px; background: #f5f5f5; border-left: 3px solid #9b59b6;">
+            <p class="text-muted" style="margin: 0;">
+                <i class="icon-info-circle"></i>
+                <strong>Showing <?= count($results) ?> result(s) from RapidAPI.</strong>
+                Click <strong>Import</strong> button on any API to add it to your hub.
+                Imports are processed immediately.
+            </p>
+        </div>
+    </div>
+<?php elseif ($status === 'failed'): ?>
+    <?php
+        $isRentalError = isset($error) && strpos($error, 'Rental Required') !== false;
+    ?>
+    <div class="callout callout-danger">
+        <div class="header">
+            <i class="icon-exclamation-circle"></i>
+            <h3><?= $isRentalError ? '⚠️ Apify Actor Rental Required' : 'Search Failed' ?></h3>
+        </div>
+        <div class="content">
+            <?php if ($isRentalError): ?>
+                <p><strong>The Apify RapidAPI scraper requires a paid subscription.</strong></p>
+                <p>The free trial has expired. To use Apify scraping:</p>
+                <ol>
+                    <li>Go to <a href="https://console.apify.com/actors/OuGwCW6c1ZMftAVn6" target="_blank">Apify Console</a></li>
+                    <li>Rent the RapidAPI Scraper actor (~$0.01-0.10 per search)</li>
+                    <li>Return here and try searching again</li>
+                </ol>
+                <p class="text-muted"><strong>Alternative:</strong> Use the free APIs.guru tab instead - it has 2500+ APIs at no cost.</p>
+            <?php else: ?>
+                <p>Apify scraping failed. Please try again.</p>
+                <?php if (!empty($error)): ?>
+                    <p class="text-danger"><small><?= e($error) ?></small></p>
+                <?php endif ?>
+            <?php endif ?>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="callout callout-info">
+        <div class="header">
+            <i class="icon-info-circle"></i>
+            <h3>No Search Yet</h3>
+        </div>
+        <div class="content">
+            <p>Enter a search term above to scrape RapidAPI via Apify.</p>
+            <p class="text-muted"><small><strong>Note:</strong> Apify searches take 30-60 seconds and consume credits (~$0.01-0.10 per search).</small></p>
+        </div>
+    </div>
+<?php endif ?>

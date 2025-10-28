@@ -1,0 +1,101 @@
+subject = "Factura #{{ invoice_number }} Pagada - Clouds.com.bo"
+description = "Confirmación de pago de factura"
+==
+Hola {{ user.first_name }},
+
+¡Hemos recibido el pago de tu factura!
+
+Detalles de la Factura Pagada:
+- Número de Factura: {{ invoice_number }}
+- Monto Pagado: Bs. {{ amount }}
+- Método de Pago: {{ payment_method }}
+- Fecha de Pago: {{ "now"|date("d/m/Y H:i") }}
+
+Tu pago ha sido procesado exitosamente. Los servicios asociados a esta factura han sido activados.
+
+Para ver los detalles completos, ingresa a tu cuenta en clouds.com.bo
+
+Gracias por tu pago,
+Equipo de Clouds
+
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; background-color: #10b981; color: white; padding: 20px; border-radius: 5px;">
+            <h2 style="margin: 0;">✓ Pago Recibido</h2>
+        </div>
+
+        <p style="margin-top: 20px;">Hola <strong>{{ user.first_name }}</strong>,</p>
+
+        <p style="font-size: 1.1em;">¡Excelente noticia! Hemos recibido el pago de tu factura exitosamente.</p>
+
+        <div style="background-color: #d1fae5; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #10b981;">
+            <h3 style="margin-top: 0; color: #065f46;">Detalles del Pago</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px 0;"><strong>Número de Factura:</strong></td>
+                    <td style="padding: 8px 0;">{{ invoice_number }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0;"><strong>Monto Pagado:</strong></td>
+                    <td style="padding: 8px 0; color: #10b981; font-size: 1.2em;"><strong>Bs. {{ amount }}</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0;"><strong>Método de Pago:</strong></td>
+                    <td style="padding: 8px 0;">{{ payment_method }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0;"><strong>Fecha de Pago:</strong></td>
+                    <td style="padding: 8px 0;">{{ "now"|date("d/m/Y H:i") }}</td>
+                </tr>
+            </table>
+        </div>
+
+        {% if invoice.items %}
+        <div style="margin: 20px 0;">
+            <h3 style="color: #0ea5e9;">Servicios Activados</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                <thead>
+                    <tr style="background-color: #f9fafb;">
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: left;">Servicio/Producto</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">Cantidad</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.items %}
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">{{ item.description }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">{{ item.quantity }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Bs. {{ item.unit_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div style="background-color: #eff6ff; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <p style="margin: 0;">
+                <strong>✓ Estado:</strong> Tu pago ha sido procesado exitosamente y los servicios asociados a esta factura han sido activados.
+            </p>
+        </div>
+
+        <p>Para ver los detalles completos y gestionar tus servicios, <a href="https://clouds.com.bo" style="color: #0ea5e9; text-decoration: none; font-weight: bold;">ingresa a tu cuenta</a> en clouds.com.bo</p>
+
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+        <p style="color: #6b7280; font-size: 0.9em;">
+            Gracias por tu pago y confianza,<br>
+            <strong>Equipo de Clouds</strong><br>
+            <a href="https://clouds.com.bo" style="color: #0ea5e9;">clouds.com.bo</a> |
+            <a href="mailto:soporte@clouds.com.bo" style="color: #0ea5e9;">soporte@clouds.com.bo</a>
+        </p>
+    </div>
+</body>
+</html>

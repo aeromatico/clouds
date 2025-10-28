@@ -1,0 +1,29 @@
+{% if groupByMethod and endpoints is iterable %}
+    <!-- Grouped by Method -->
+    {% for method, items in endpoints %}
+    <div class="mb-6">
+        <h3 class="text-xl font-bold mb-3">
+            <span class="badge badge-lg badge-{{ method == 'GET' ? 'success' : (method == 'POST' ? 'primary' : (method == 'DELETE' ? 'error' : 'warning')) }}">
+                {{ method }}
+            </span>
+        </h3>
+
+        <div class="space-y-3">
+            {% for endpoint in items %}
+            {{ partial('@endpoint', { endpoint: endpoint }) }}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <!-- Flat List -->
+    <div class="space-y-3">
+        {% for endpoint in endpoints %}
+        {{ partial('@endpoint', { endpoint: endpoint }) }}
+        {% else %}
+        <div class="alert alert-info">
+            <span>No endpoints found</span>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}

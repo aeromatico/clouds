@@ -1,0 +1,56 @@
+<div class="endpoint-list" x-data="{ method: '', search: '' }">
+    <!-- API Header -->
+    {% if api %}
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold">{{ api.name }}</h1>
+        {% if api.description %}
+        <p class="text-lg mt-2">{{ api.description }}</p>
+        {% endif %}
+
+        <div class="flex gap-2 mt-4">
+            {% if api.category %}
+            <div class="badge badge-primary badge-lg">{{ api.category }}</div>
+            {% endif %}
+            <div class="badge badge-outline badge-lg">
+                {{ api.endpoints_count }} endpoints
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="endpoint-filters mb-6">
+        <div class="flex gap-4">
+            <div class="flex-1">
+                <input
+                    type="text"
+                    x-model="search"
+                    placeholder="Search endpoints..."
+                    class="input input-bordered w-full"
+                    @input.debounce.500ms="$wire.onFilter({ search: search })"
+                >
+            </div>
+
+            <div class="w-48">
+                <select
+                    x-model="method"
+                    class="select select-bordered w-full"
+                    @change="$wire.onFilter({ method: method })">
+                    <option value="">All Methods</option>
+                    {% for m in methods %}
+                    <option value="{{ m }}">{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Endpoints List -->
+    <div id="endpointList">
+        {{ partial('@list') }}
+    </div>
+    {% else %}
+    <div class="alert alert-error">
+        <span>API not found</span>
+    </div>
+    {% endif %}
+</div>

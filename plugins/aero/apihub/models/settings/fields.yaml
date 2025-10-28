@@ -1,0 +1,93 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        # Import Source Selection
+        import_source:
+            tab: General
+            label: Preferred Import Source
+            type: dropdown
+            span: full
+            default: apis_guru
+            options:
+                apis_guru: APIs.guru (Free, 2500+ APIs with OpenAPI specs)
+                apify: RapidAPI via Apify (Paid, search specific APIs)
+                manual: Manual Entry
+            comment: Select your preferred API import source
+
+        # APIs.guru Configuration
+        apiguru_info:
+            tab: APIs.guru
+            type: partial
+            path: $/aero/apihub/models/settings/_apiguru_info.htm
+            span: full
+
+        # Apify Configuration
+        apify_api_token:
+            tab: Apify
+            label: Apify API Token
+            type: text
+            span: full
+            comment: Your Apify API token (will be encrypted). Get it from https://apify.com
+            placeholder: apify_api_xxxxxxxxxxxxx
+
+        apify_info:
+            tab: Apify
+            type: partial
+            path: $/aero/apihub/models/settings/_apify_info.htm
+            span: full
+
+        # Cache Configuration
+        cache_ttl:
+            tab: Cache
+            label: Cache TTL (seconds)
+            type: number
+            span: left
+            default: 3600
+            comment: How long to cache API data (3600 = 1 hour)
+            required: true
+
+        apis_list_cache_ttl:
+            tab: Cache
+            label: APIs List Cache (seconds)
+            type: number
+            span: right
+            default: 86400
+            comment: How long to cache the full APIs list (86400 = 24 hours)
+            required: true
+
+        # Import Configuration
+        default_import_limit:
+            tab: Import
+            label: Default Import Limit
+            type: number
+            span: left
+            default: 20
+            comment: Maximum number of APIs to return in search results
+            required: true
+
+        auto_sync:
+            tab: Import
+            label: Enable Auto Sync
+            type: switch
+            span: right
+            default: false
+            comment: Automatically re-sync imported APIs on schedule
+
+        sync_frequency:
+            tab: Import
+            label: Sync Frequency
+            type: dropdown
+            span: left
+            default: daily
+            options:
+                daily: Daily
+                weekly: Weekly
+            comment: How often to run automatic sync
+            dependsOn: auto_sync
+            trigger:
+                action: show
+                field: auto_sync
+                condition: checked

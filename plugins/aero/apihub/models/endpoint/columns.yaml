@@ -1,0 +1,39 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+        sortable: true
+        width: 80px
+
+    name:
+        label: Name
+        searchable: true
+        sortable: true
+
+    method:
+        label: Method
+        type: partial
+        path: $/aero/apihub/models/endpoint/_method_badge.htm
+        sortable: true
+        width: 100px
+
+    route:
+        label: Route
+        searchable: true
+        sortable: true
+
+    description:
+        label: Description
+        searchable: true
+        sortable: false
+
+    created_at:
+        label: Created
+        type: date
+        format: Y-m-d H:i:s
+        sortable: true
+        width: 150px

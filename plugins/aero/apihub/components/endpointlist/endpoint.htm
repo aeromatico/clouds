@@ -1,0 +1,103 @@
+<div class="card bg-base-200" x-data="{ expanded: false }">
+    <div class="card-body">
+        <div class="flex items-center justify-between">
+            <div class="flex-1">
+                <div class="flex items-center gap-3">
+                    <span class="badge badge-{{ endpoint.method_color }}">
+                        {{ endpoint.method }}
+                    </span>
+                    <code class="text-sm">{{ endpoint.route }}</code>
+                </div>
+                <h4 class="font-bold mt-2">{{ endpoint.name }}</h4>
+                {% if endpoint.description %}
+                <p class="text-sm mt-1">{{ endpoint.description }}</p>
+                {% endif %}
+            </div>
+
+            {% if showParameters and (endpoint.parameters or endpoint.headers) %}
+            <button
+                @click="expanded = !expanded"
+                class="btn btn-sm btn-circle">
+                <i class="fa" :class="expanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </button>
+            {% endif %}
+        </div>
+
+        <!-- Expanded Details -->
+        {% if showParameters %}
+        <div x-show="expanded" x-collapse>
+            <div class="divider"></div>
+
+            <!-- Parameters -->
+            {% if endpoint.parameters %}
+            <div class="mb-4">
+                <h5 class="font-bold mb-2">Parameters:</h5>
+                <div class="overflow-x-auto">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for param in endpoint.parameters %}
+                            <tr>
+                                <td><code>{{ param.name }}</code></td>
+                                <td>{{ param.type }}</td>
+                                <td>
+                                    {% if param.required %}
+                                    <span class="badge badge-error badge-sm">Required</span>
+                                    {% else %}
+                                    <span class="badge badge-ghost badge-sm">Optional</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ param.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Headers -->
+            {% if endpoint.headers %}
+            <div>
+                <h5 class="font-bold mb-2">Headers:</h5>
+                <div class="overflow-x-auto">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for header in endpoint.headers %}
+                            <tr>
+                                <td><code>{{ header.name }}</code></td>
+                                <td>{{ header.type }}</td>
+                                <td>
+                                    {% if header.required %}
+                                    <span class="badge badge-error badge-sm">Required</span>
+                                    {% else %}
+                                    <span class="badge badge-ghost badge-sm">Optional</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ header.description }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>

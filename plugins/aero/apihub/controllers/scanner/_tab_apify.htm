@@ -1,0 +1,118 @@
+<?= Form::open(['id' => 'apifyForm']) ?>
+    <div class="layout-item stretch layout-column">
+        <!-- Connection Status -->
+        <?php if ($apifyConnected): ?>
+            <div class="callout callout-success">
+                <div class="header">
+                    <i class="icon-check-circle"></i>
+                    <h3>✅ Connected to Apify</h3>
+                </div>
+                <div class="content">
+                    <p><strong>RapidAPI scraper active</strong> - Search for specific APIs not in APIs.guru</p>
+                    <p class="text-muted"><small>Scraping takes ~30-60 seconds. Results are queued in background.</small></p>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="callout callout-danger">
+                <div class="header">
+                    <i class="icon-exclamation-circle"></i>
+                    <h3>❌ Apify Not Configured</h3>
+                </div>
+                <div class="content">
+                    <p><strong>Error:</strong> <?= $apifyError ?? 'Apify API token not configured' ?></p>
+                    <p>Go to <a href="<?= Backend::url('system/settings/update/aero/apihub/settings') ?>">Settings</a> to configure your Apify API token.</p>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <!-- Diagnostic Test Button -->
+        <div class="callout callout-warning" style="background: #fff3cd; border-left-color: #ff9800;">
+            <h4><i class="icon-flask"></i> Diagnóstico AJAX</h4>
+            <p>Primero prueba este botón simple antes de hacer una búsqueda real:</p>
+            <button
+                type="button"
+                class="btn btn-warning"
+                data-request="onTestApifySimple"
+                data-request-update="'apify_results': '#apifyResults'"
+                data-request-success="alert('✅ AJAX funciona! Revisa la consola para detalles.')">
+                <i class="icon-flask"></i> Test Simple AJAX (sin Job dispatch)
+            </button>
+            <p class="help-block" style="margin-top: 10px;">
+                <strong>Abre la consola (F12)</strong> antes de hacer clic. Si este botón funciona pero "Search" no, el problema es el Job dispatch.
+            </p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="form-group">
+            <label>Search RapidAPI (via Apify Scraper)</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search_term"
+                    id="apifySearchInput"
+                    class="form-control"
+                    placeholder="Enter search term (e.g., weather api, payment gateway)"
+                    value=""
+                    <?= !$apifyConnected ? 'disabled' : '' ?>>
+                <span class="input-group-btn">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="apifySearchBtn"
+                        data-request="onSearchApify"
+                        data-request-update="'apify_results': '#apifyResults'"
+                        <?= !$apifyConnected ? 'disabled' : '' ?>>
+                        <i class="icon-search"></i> Search
+                    </button>
+                </span>
+            </div>
+            <p class="help-block">
+                <i class="icon-info-circle"></i>
+                Search RapidAPI and review results before importing. Processing takes ~30-60 seconds.
+            </p>
+        </div>
+
+        <!-- Advanced Options -->
+        <div class="form-group">
+            <label>Max Results</label>
+            <select name="max_items" class="form-control" style="width: 200px;" <?= !$apifyConnected ? 'disabled' : '' ?>>
+                <option value="5">5 APIs</option>
+                <option value="10" selected>10 APIs</option>
+                <option value="20">20 APIs</option>
+                <option value="50">50 APIs</option>
+            </select>
+            <p class="help-block text-warning">
+                <i class="icon-exclamation-triangle"></i>
+                <strong>Cost Warning:</strong> More results = more Apify credits consumed (~$0.01-0.10)
+            </p>
+        </div>
+
+        <!-- Info Box -->
+        <div class="callout callout-info">
+            <div class="header">
+                <h3>How Apify Search Works</h3>
+            </div>
+            <div class="content">
+                <ol>
+                    <li>Enter search term and click "Search"</li>
+                    <li>Apify scraper launches and searches RapidAPI (~30-60 seconds)</li>
+                    <li>Results appear below - review before importing</li>
+                    <li>Click "Import" on individual APIs you want to add</li>
+                </ol>
+                <p class="text-muted">
+                    <small>
+                        <strong>Best for:</strong> Specific APIs not available in APIs.guru<br>
+                        <strong>Not recommended for:</strong> Bulk importing (use APIs.guru instead)
+                    </small>
+                </p>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="apifyResults" class="layout-item stretch" style="margin-top: 20px;">
+            <?= $this->makePartial('apify_results', ['status' => 'idle']) ?>
+        </div>
+    </div>
+<?= Form::close() ?>
+
+<!-- Script moved to index.htm to load globally -->

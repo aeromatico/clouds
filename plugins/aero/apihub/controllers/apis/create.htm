@@ -1,0 +1,31 @@
+<?= Form::open(['class' => 'layout']) ?>
+
+    <div class="layout-row">
+        <?= $this->formRender() ?>
+    </div>
+
+    <div class="form-buttons">
+        <div class="loading-indicator-container">
+            <button
+                type="submit"
+                data-request="onSave"
+                data-request-data="close:1"
+                data-hotkey="ctrl+enter, cmd+enter"
+                data-load-indicator="Creating API..."
+                class="btn btn-primary">
+                Create and Close
+            </button>
+            <button
+                type="button"
+                data-request="onSave"
+                data-load-indicator="Creating API..."
+                class="btn btn-default">
+                Create
+            </button>
+            <span class="btn-text">
+                or <a href="<?= Backend::url('aero/apihub/apis') ?>">Cancel</a>
+            </span>
+        </div>
+    </div>
+
+<?= Form::close() ?>

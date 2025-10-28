@@ -1,0 +1,227 @@
+subject = "Nueva Factura #{{ invoice_number }} - Clouds.com.bo"
+description = "Notificación de nueva factura generada"
+==
+Hola {{ user.first_name }},
+
+Se ha generado una nueva factura para tu pedido.
+
+Detalles de la Factura:
+- Número de Factura: {{ invoice_number }}
+- Número de Pedido: #{{ order_id }}
+- Fecha de Emisión: {{ invoice_date_formatted }}
+- Fecha de Vencimiento: {{ due_date_formatted }}
+- Estado: {{ status }}
+
+Productos/Servicios:
+{% for item in items %}
+- {{ item.description }} - Cantidad: {{ item.quantity }} - Precio Unitario: Bs. {{ item.unit_price }}
+{% endfor %}
+
+Resumen de Pago:
+- Subtotal: Bs. {{ subtotal_formatted }}
+- Impuestos: Bs. {{ tax_formatted }}
+- TOTAL A PAGAR: Bs. {{ total_formatted }}
+
+Por favor, procede con el pago antes de la fecha de vencimiento para evitar cargos adicionales.
+
+Para ver los detalles completos de tu factura, ingresa a tu cuenta en clouds.com.bo
+
+Gracias por tu preferencia,
+Equipo de Clouds
+
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f3f4f6;">
+    <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: white; padding: 30px 20px; text-align: center;">
+            <h1 style="margin: 0; font-size: 28px; font-weight: bold;">📄 Nueva Factura Generada</h1>
+            <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.95;">Factura #{{ invoice_number }}</p>
+        </div>
+
+        <!-- Content -->
+        <div style="padding: 30px 20px;">
+
+            <!-- Greeting -->
+            <p style="font-size: 16px; margin: 0 0 20px 0;">Hola <strong>{{ user.first_name }}</strong>,</p>
+
+            <p style="font-size: 15px; color: #4b5563; margin: 0 0 25px 0;">
+                Se ha generado una nueva factura para tu pedido. A continuación encontrarás todos los detalles de tu compra.
+            </p>
+
+            <!-- Invoice Info Box -->
+            <div style="background-color: #dbeafe; border-left: 4px solid #0ea5e9; padding: 15px; margin-bottom: 25px; border-radius: 4px;">
+                <p style="margin: 0; color: #1e40af; font-size: 15px;">
+                    <strong>💡 Información Importante:</strong> Esta factura fue generada automáticamente para tu pedido #{{ order_id }}.
+                </p>
+            </div>
+
+            <!-- Invoice Details -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #0ea5e9; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                    📋 Detalles de la Factura
+                </h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 10px; background-color: #f9fafb; width: 180px; border: 1px solid #e5e7eb;"><strong>Número de Factura:</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;"><strong style="color: #0ea5e9;">#{{ invoice_number }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb;"><strong>Número de Pedido:</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">#{{ order_id }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb;"><strong>Fecha de Emisión:</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">{{ invoice_date_formatted }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb;"><strong>Fecha de Vencimiento:</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                            <strong style="color: #f59e0b;">{{ due_date_formatted }}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; background-color: #f9fafb; border: 1px solid #e5e7eb;"><strong>Estado:</strong></td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">
+                            <span style="background-color: #fbbf24; color: white; padding: 4px 12px; border-radius: 4px; font-size: 13px; font-weight: bold; text-transform: uppercase;">
+                                {{ status }}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Customer Information -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #0ea5e9; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                    👤 Información del Cliente
+                </h2>
+                <div style="background-color: #f9fafb; padding: 15px; border-radius: 4px; border: 1px solid #e5e7eb;">
+                    <p style="margin: 0; color: #374151; font-size: 14px;">
+                        <strong>Nombre:</strong> {{ user.name }}<br>
+                        <strong>Email:</strong> {{ user.email }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Products/Services -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #0ea5e9; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                    📦 Productos/Servicios
+                </h2>
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                    <thead>
+                        <tr style="background-color: #f3f4f6;">
+                            <th style="padding: 12px; border: 1px solid #e5e7eb; text-align: left; font-size: 13px;">Descripción</th>
+                            <th style="padding: 12px; border: 1px solid #e5e7eb; text-align: center; font-size: 13px;">Cant.</th>
+                            <th style="padding: 12px; border: 1px solid #e5e7eb; text-align: right; font-size: 13px;">P. Unit.</th>
+                            <th style="padding: 12px; border: 1px solid #e5e7eb; text-align: right; font-size: 13px;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb; font-size: 14px;">{{ item.description }}</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb; text-align: center; font-size: 14px;">{{ item.quantity }}</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb; text-align: right; font-size: 14px;">Bs. {{ item.unit_price }}</td>
+                            <td style="padding: 12px; border: 1px solid #e5e7eb; text-align: right; font-size: 14px;">
+                                <strong>Bs. {% set item_total = item.unit_price * item.quantity %}{{ item_total|number_format(2) }}</strong>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Payment Summary -->
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 25px; border: 1px solid #e5e7eb;">
+                <h3 style="margin: 0 0 15px 0; color: #0ea5e9; font-size: 18px;">💰 Resumen de Pago</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 8px 0; text-align: right; color: #6b7280; font-size: 15px;">Subtotal:</td>
+                        <td style="padding: 8px 0; text-align: right; width: 130px; font-size: 15px;"><strong>Bs. {{ subtotal_formatted }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px 0; text-align: right; color: #6b7280; font-size: 15px;">Impuestos:</td>
+                        <td style="padding: 8px 0; text-align: right; font-size: 15px;"><strong>Bs. {{ tax_formatted }}</strong></td>
+                    </tr>
+                    <tr style="border-top: 2px solid #0ea5e9;">
+                        <td style="padding: 12px 0; text-align: right; color: #0284c7; font-size: 18px;"><strong>TOTAL A PAGAR:</strong></td>
+                        <td style="padding: 12px 0; text-align: right; font-size: 22px; color: #0ea5e9;"><strong>Bs. {{ total_formatted }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Payment Warning -->
+            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                <p style="margin: 0; color: #92400e;">
+                    <strong>⚠️ Importante:</strong> Por favor, procede con el pago antes del <strong>{{ due_date_formatted }}</strong> para evitar cargos adicionales o suspensión del servicio.
+                </p>
+            </div>
+
+            <!-- Payment Methods (Optional - customize as needed) -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #0ea5e9; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                    💳 Métodos de Pago
+                </h2>
+                <div style="background-color: #f9fafb; padding: 15px; border-radius: 4px; border: 1px solid #e5e7eb;">
+                    <p style="margin: 0 0 10px 0; color: #374151; font-size: 14px;">
+                        Puedes realizar el pago de tu factura mediante:
+                    </p>
+                    <ul style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px;">
+                        <li style="padding: 3px 0;">Transferencia Bancaria</li>
+                        <li style="padding: 3px 0;">Tarjeta de Crédito/Débito</li>
+                        <li style="padding: 3px 0;">Pasarelas de Pago Online</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://clouds.com.bo/account/invoices" style="display: inline-block; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); color: white; padding: 14px 40px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3);">
+                    📄 Ver Factura Completa
+                </a>
+            </div>
+
+            <!-- Next Steps -->
+            <div style="background-color: #eff6ff; padding: 15px; border-radius: 4px; border-left: 4px solid #0ea5e9; margin-top: 20px;">
+                <p style="margin: 0 0 10px 0; color: #1e40af; font-weight: bold;">📌 Próximos Pasos:</p>
+                <ol style="margin: 0; padding-left: 20px; color: #374151; font-size: 14px;">
+                    <li style="padding: 3px 0;">Revisa los detalles de tu factura</li>
+                    <li style="padding: 3px 0;">Realiza el pago antes de la fecha de vencimiento</li>
+                    <li style="padding: 3px 0;">Recibirás confirmación una vez procesado el pago</li>
+                    <li style="padding: 3px 0;">Tu servicio será activado automáticamente</li>
+                </ol>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div style="background-color: #f3f4f6; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+            <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 14px;">
+                Gracias por tu preferencia,<br>
+                <strong style="color: #0ea5e9;">Equipo de Clouds</strong>
+            </p>
+            <p style="margin: 0; font-size: 13px;">
+                <a href="https://clouds.com.bo" style="color: #0ea5e9; text-decoration: none;">clouds.com.bo</a> |
+                <a href="https://clouds.com.bo/contact" style="color: #0ea5e9; text-decoration: none;">Soporte</a>
+            </p>
+        </div>
+
+        <!-- Legal Notice -->
+        <div style="padding: 15px 20px; background-color: #f9fafb;">
+            <p style="margin: 0; color: #9ca3af; font-size: 12px; text-align: center;">
+                Si tienes alguna pregunta sobre esta factura, no dudes en <a href="https://clouds.com.bo/contact" style="color: #0ea5e9; text-decoration: none;">contactarnos</a>.<br>
+                Este es un correo automático, por favor no respondas a este mensaje.
+            </p>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        type: text
+        span: left
+        required: true
+
+    method:
+        label: Method
+        type: dropdown
+        span: right
+        required: true
+        options:
+            GET: GET
+            POST: POST
+            PUT: PUT
+            PATCH: PATCH
+            DELETE: DELETE
+            HEAD: HEAD
+            OPTIONS: OPTIONS
+
+    route:
+        label: Route
+        type: text
+        span: full
+        required: true
+        placeholder: /api/v1/resource
+
+    description:
+        label: Description
+        type: textarea
+        span: full
+        size: large
+
+    parameters:
+        label: Parameters
+        type: codeeditor
+        language: json
+        span: full
+        comment: JSON array of parameter definitions
+
+    headers:
+        label: Headers
+        type: codeeditor
+        language: json
+        span: full
+        comment: JSON array of header definitions
+
+    response_example:
+        label: Response Example
+        type: codeeditor
+        language: json
+        span: full
+        comment: Example response data

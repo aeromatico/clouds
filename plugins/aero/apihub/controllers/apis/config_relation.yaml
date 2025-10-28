@@ -1,0 +1,13 @@
+# ===================================
+#  Relation Behavior Config
+# ===================================
+
+endpoints:
+    label: Endpoints
+    view:
+        list: $/aero/apihub/models/endpoint/columns.yaml
+        toolbarButtons: create|delete
+        recordsPerPage: 20
+    manage:
+        form: $/aero/apihub/models/endpoint/fields.yaml
+        recordsPerPage: 20

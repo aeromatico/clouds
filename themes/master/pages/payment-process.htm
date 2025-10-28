@@ -1,0 +1,273 @@
+title = "Procesando Pago"
+url = "/payment/process/:order_id"
+layout = "dashboard"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Aero\Clouds\Models\Order;
+use Aero\Clouds\Models\Invoice;
+use Aero\Clouds\Models\PaymentGateway;
+use Aero\Clouds\Models\Cloud;
+
+function onStart()
+{
+    $user = Auth::getUser();
+
+    if (!$user) {
+        return Redirect::to('/login');
+    }
+
+    $orderId = $this->param('order_id');
+
+    // Get the order
+    $order = Order::where('id', $orderId)
+        ->where('user_id', $user->id)
+        ->with(['invoice', 'invoice.payment_gateway'])
+        ->first();
+
+    if (!$order) {
+        Flash::error('Orden no encontrada');
+        return Redirect::to('/dashboard/clouds');
+    }
+
+    $this['order'] = $order;
+    $this['invoice'] = $order->invoice;
+    $this['gateway'] = $order->invoice->payment_gateway;
+
+    // Determinar si debemos auto-redirigir
+    $this['autoRedirect'] = false;
+
+    // Si el gateway es offline, mostrar instrucciones
+    if ($order->invoice && $order->invoice->payment_gateway) {
+        $gateway = $order->invoice->payment_gateway;
+        $this['isOfflinePayment'] = $gateway->isOfflinePayment();
+    } else {
+        $this['isOfflinePayment'] = false;
+    }
+}
+
+function onConfirmPayment()
+{
+    $user = Auth::getUser();
+    $orderId = post('order_id');
+
+    $order = Order::where('id', $orderId)
+        ->where('user_id', $user->id)
+        ->with('invoice')
+        ->first();
+
+    if (!$order || !$order->invoice) {
+        throw new \ApplicationException('Orden no encontrada');
+    }
+
+    try {
+        // Marcar la factura como pagada
+        $invoice = $order->invoice;
+        $invoice->status = 'paid';
+        $invoice->save();
+
+        // Marcar la orden como completada
+        $order->status = 'completed';
+        $order->save();
+
+        // Crear los servidores cloud para cada item de la orden
+        $items = is_string($order->items) ? json_decode($order->items, true) : $order->items;
+
+        if ($items) {
+            foreach ($items as $item) {
+                $planId = $item['plan_id'] ?? null;
+                $quantity = $item['quantity'] ?? 1;
+                $billingCycle = $item['billing_cycle'] ?? 'monthly';
+
+                if ($planId) {
+                    $plan = \Aero\Clouds\Models\Plan::find($planId);
+
+                    if ($plan) {
+                        for ($i = 0; $i < $quantity; $i++) {
+                            // Calcular fecha de expiración según el ciclo
+                            $expirationDate = now();
+                            switch ($billingCycle) {
+                                case 'monthly':
+                                    $expirationDate = $expirationDate->addMonth();
+                                    break;
+                                case 'quarterly':
+                                    $expirationDate = $expirationDate->addMonths(3);
+                                    break;
+                                case 'semi_annually':
+                                    $expirationDate = $expirationDate->addMonths(6);
+                                    break;
+                                case 'annually':
+                                    $expirationDate = $expirationDate->addYear();
+                                    break;
+                                case 'biennially':
+                                    $expirationDate = $expirationDate->addYears(2);
+                                    break;
+                                case 'triennially':
+                                    $expirationDate = $expirationDate->addYears(3);
+                                    break;
+                            }
+
+                            Cloud::create([
+                                'user_id' => $user->id,
+                                'service_id' => $plan->service_id,
+                                'plan_id' => $plan->id,
+                                'order_id' => $order->id,
+                                'status' => 'active',
+                                'name' => $plan->name . ' - ' . $user->email,
+                                'created_date' => now(),
+                                'expiration_date' => $expirationDate,
+                                'auto_renew' => true,
+                                'notes' => 'Servidor creado automáticamente desde la orden #' . $order->id . '. Ciclo de facturación: ' . $billingCycle . '. Precio: Bs. ' . ($item['price'] ?? 0)
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
+        Flash::success('¡Pago confirmado! Tus servicios han sido activados.');
+
+        return [
+            'redirect' => '/dashboard/clouds'
+        ];
+
+    } catch (\Exception $e) {
+        \Log::error('Payment confirmation error: ' . $e->getMessage());
+        throw new \ApplicationException('Error al confirmar el pago: ' . $e->getMessage());
+    }
+}
+?>
+==
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-3xl mx-auto">
+        <!-- Success Message -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-24 h-24 bg-success/20 rounded-full mb-6">
+                <i class="fas fa-check-circle text-5xl text-success"></i>
+            </div>
+
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                ¡Orden Recibida!
+            </h1>
+
+            <p class="text-lg text-gray-600 dark:text-gray-400">
+                Tu orden #{{ order.id }} ha sido creada exitosamente
+            </p>
+        </div>
+
+        <!-- Order Summary Card -->
+        <div class="card bg-base-100 shadow-xl border border-base-300 mb-6">
+            <div class="card-body">
+                <h2 class="card-title mb-4">
+                    <i class="fas fa-file-invoice mr-2"></i>
+                    Detalles de la Orden
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Número de Orden</p>
+                        <p class="font-semibold">#{{ order.id }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Fecha</p>
+                        <p class="font-semibold">{{ order.order_date|date('d/m/Y H:i') }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Estado</p>
+                        <span class="badge badge-warning">{{ order.status }}</span>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Total</p>
+                        <p class="font-semibold text-lg text-primary">Bs. {{ order.total_amount }}</p>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="font-semibold mb-3">Método de Pago</h3>
+                {% if gateway %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <div class="font-semibold">{{ gateway.name }}</div>
+                            {% if gateway.instructions %}
+                                <p class="text-sm mt-2">{{ gateway.instructions }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Payment Instructions for Offline Gateways -->
+        {% if isOfflinePayment %}
+            <div class="card bg-warning/10 border-2 border-warning shadow-xl mb-6">
+                <div class="card-body">
+                    <h3 class="card-title text-warning">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Importante - Completa tu Pago
+                    </h3>
+
+                    <p class="mb-4">
+                        Por favor, realiza el pago siguiendo las instrucciones del método seleccionado. Una vez que hayas completado el pago, haz clic en el botón de abajo para confirmar.
+                    </p>
+
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <p class="font-semibold">Factura #{{ invoice.invoice_number }}</p>
+                            <p class="text-sm">Monto a pagar: Bs. {{ invoice.total }}</p>
+                        </div>
+                    </div>
+
+                    <form
+                        data-request="onConfirmPayment"
+                        data-request-success="if (data.redirect) { window.location.href = data.redirect; }"
+                        data-request-flash>
+
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+
+                        <div class="form-control mb-4">
+                            <label class="label cursor-pointer justify-start gap-3">
+                                <input type="checkbox" class="checkbox checkbox-primary" required>
+                                <span class="label-text">Confirmo que he completado el pago de Bs. {{ invoice.total }}</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-lg w-full">
+                            <i class="fas fa-check-double mr-2"></i>
+                            He Completado el Pago - Activar Servicios
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+            <a href="/dashboard/clouds" class="btn btn-primary flex-1">
+                <i class="fas fa-cloud mr-2"></i>
+                Ir a Mis Servicios
+            </a>
+            <a href="/dashboard/invoices" class="btn btn-outline flex-1">
+                <i class="fas fa-file-invoice mr-2"></i>
+                Ver Facturas
+            </a>
+        </div>
+
+        <!-- Help Notice for Offline Payments -->
+        {% if isOfflinePayment %}
+            <div class="alert alert-info mt-6">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <p class="font-semibold">¿Necesitas ayuda?</p>
+                    <p class="text-sm">Si tienes problemas para realizar el pago, contacta a nuestro equipo de soporte.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

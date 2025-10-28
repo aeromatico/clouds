@@ -1,0 +1,73 @@
+<?= Form::open(['id' => 'manualForm']) ?>
+    <div class="layout-item stretch layout-column">
+        <!-- Info -->
+        <div class="callout callout-info">
+            <div class="header">
+                <i class="icon-edit"></i>
+                <h3>Create API Manually</h3>
+            </div>
+            <div class="content">
+                <p>Create an API entry manually and add endpoints later.</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-group">
+            <label>API Name <span class="required">*</span></label>
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="e.g., My Custom API"
+                required>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input
+                type="text"
+                name="category"
+                class="form-control"
+                placeholder="e.g., Payment, Weather, Social">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea
+                name="description"
+                class="form-control"
+                rows="4"
+                placeholder="Enter API description..."></textarea>
+        </div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-request="onCreateManual"
+                    data-load-indicator="Creating API...">
+                    <i class="icon-plus"></i> Create API
+                </button>
+                <span class="btn-text">
+                    After creating, you can add endpoints manually.
+                </span>
+            </div>
+        </div>
+
+        <!-- Help -->
+        <div class="callout callout-default">
+            <div class="header">
+                <h3>Next Steps</h3>
+            </div>
+            <div class="content">
+                <ol>
+                    <li>Create the API using the form above</li>
+                    <li>You'll be redirected to the edit page</li>
+                    <li>Go to the "Endpoints" tab</li>
+                    <li>Add endpoints manually (route, method, parameters, etc.)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+<?= Form::close() ?>

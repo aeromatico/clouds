@@ -1,0 +1,179 @@
+<div class="layout-item stretch layout-column">
+    <div class="control-toolbar">
+        <h4><i class="icon-bar-chart"></i> Analytics Dashboard</h4>
+        <div class="toolbar-item">
+            <a href="<?= Backend::url('aero/apihub/analytics/export') ?>" class="btn btn-primary">
+                <i class="icon-download"></i> Export Stats
+            </a>
+        </div>
+    </div>
+
+    <!-- Overview Stats -->
+    <div class="layout-row min-size">
+        <div class="scoreboard">
+            <div class="scoreboard-item">
+                <h6>Total APIs</h6>
+                <p class="metric"><?= $stats['total_apis'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Total Endpoints</h6>
+                <p class="metric"><?= $stats['total_endpoints'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Avg Endpoints/API</h6>
+                <p class="metric">
+                    <?= $stats['total_apis'] > 0 ? number_format($stats['total_endpoints'] / $stats['total_apis'], 1) : 0 ?>
+                </p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Recently Synced</h6>
+                <p class="metric"><?= $stats['recently_synced'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Needs Sync</h6>
+                <p class="metric warning"><?= $stats['needs_sync'] ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="layout-row">
+        <div class="layout-cell">
+            <div class="control-chart" data-control="chart-pie">
+                <h3>APIs by Category</h3>
+                <canvas id="categoryChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        <div class="layout-cell">
+            <div class="control-chart" data-control="chart-bar">
+                <h3>Endpoints by Method</h3>
+                <canvas id="methodChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Patterns -->
+    <?php if (!empty($commonPatterns)): ?>
+        <div class="layout-row">
+            <div class="layout-cell">
+                <div class="control-list">
+                    <h3>Common Endpoint Patterns</h3>
+                    <table class="table data">
+                        <thead>
+                            <tr>
+                                <th>Route Pattern</th>
+                                <th width="120">Used in APIs</th>
+                                <th width="120">Total Endpoints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($commonPatterns as $pattern): ?>
+                                <tr>
+                                    <td><code><?= e($pattern['route']) ?></code></td>
+                                    <td><?= $pattern['apis'] ?></td>
+                                    <td><?= $pattern['endpoints'] ?></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
+
+    <!-- Category Breakdown -->
+    <?php if (!empty($stats['by_category'])): ?>
+        <div class="layout-row">
+            <div class="layout-cell">
+                <div class="control-list">
+                    <h3>Category Breakdown</h3>
+                    <table class="table data">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th width="150">API Count</th>
+                                <th width="200">Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $total = $stats['total_apis'];
+                            foreach ($stats['by_category'] as $category => $count):
+                                $percentage = $total > 0 ? ($count / $total) * 100 : 0;
+                            ?>
+                                <tr>
+                                    <td><?= e($category) ?></td>
+                                    <td><?= $count ?></td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width: <?= $percentage ?>%">
+                                                <?= number_format($percentage, 1) ?>%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif ?>
+</div>
+
+<!-- Chart.js Integration -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    // Category Pie Chart
+    <?php if (!empty($categoryData['labels'])): ?>
+    new Chart(document.getElementById('categoryChart'), {
+        type: 'pie',
+        data: {
+            labels: <?= json_encode($categoryData['labels']) ?>,
+            datasets: [{
+                data: <?= json_encode($categoryData['data']) ?>,
+                backgroundColor: [
+                    '#007bff', '#28a745', '#ffc107', '#dc3545', '#17a2b8',
+                    '#6c757d', '#fd7e14', '#e83e8c', '#20c997', '#6f42c1'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+    <?php endif ?>
+
+    // Method Bar Chart
+    <?php if (!empty($methodData['labels'])): ?>
+    new Chart(document.getElementById('methodChart'), {
+        type: 'bar',
+        data: {
+            labels: <?= json_encode($methodData['labels']) ?>,
+            datasets: [{
+                label: 'Endpoints',
+                data: <?= json_encode($methodData['data']) ?>,
+                backgroundColor: <?= json_encode($methodData['colors']) ?>
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+    <?php endif ?>
+</script>

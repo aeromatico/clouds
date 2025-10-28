@@ -1,0 +1,52 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+        sortable: true
+        width: 80px
+
+    name:
+        label: Name
+        searchable: true
+        sortable: true
+
+    category:
+        label: Category
+        searchable: true
+        sortable: true
+        width: 150px
+
+    source:
+        label: Source
+        type: partial
+        path: $/aero/apihub/models/api/_source_badge.htm
+        searchable: false
+        sortable: true
+        width: 120px
+        align: center
+
+    endpoints_count:
+        label: Endpoints
+        relation: endpoints
+        valueFrom: count
+        sortable: false
+        width: 100px
+        align: center
+
+    synced_at:
+        label: Last Sync
+        type: date
+        format: Y-m-d H:i:s
+        sortable: true
+        width: 150px
+
+    created_at:
+        label: Created
+        type: date
+        format: Y-m-d H:i:s
+        sortable: true
+        width: 150px

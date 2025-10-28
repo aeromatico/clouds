@@ -1,0 +1,298 @@
+<div class="control-tabs master-tabs" data-control="tab">
+    <!-- Toolbar -->
+    <div class="control-toolbar">
+        <h4><i class="icon-download"></i> Import APIs (Multi-Source)</h4>
+    </div>
+
+    <!-- Statistics -->
+    <div class="layout-row min-size">
+        <div class="scoreboard">
+            <div class="scoreboard-item">
+                <h6>Total APIs</h6>
+                <p class="metric"><?= $stats['total_apis'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>APIs.guru</h6>
+                <p class="metric success"><?= $sourceStats['apis_guru'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Apify</h6>
+                <p class="metric primary"><?= $sourceStats['apify'] ?></p>
+            </div>
+            <div class="scoreboard-item">
+                <h6>Manual</h6>
+                <p class="metric warning"><?= $sourceStats['manual'] ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Headers -->
+    <ul class="nav nav-tabs">
+        <li>
+            <a href="#tab-test" data-toggle="tab" style="background: #ff9800; color: white;">
+                <i class="icon-flask"></i> 🧪 TEST (Click aquí primero)
+            </a>
+        </li>
+        <li class="active">
+            <a href="#tab-apiguru" data-toggle="tab">
+                <i class="icon-cloud"></i> APIs.guru (Free)
+            </a>
+        </li>
+        <li>
+            <a href="#tab-apify" data-toggle="tab">
+                <i class="icon-search"></i> RapidAPI via Apify
+            </a>
+        </li>
+        <li>
+            <a href="#tab-manual" data-toggle="tab">
+                <i class="icon-edit"></i> Manual Entry
+            </a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Test Tab -->
+        <div class="tab-pane" id="tab-test">
+            <?= $this->makePartial('test') ?>
+        </div>
+
+        <!-- APIs.guru Tab -->
+        <div class="tab-pane active" id="tab-apiguru">
+            <?= $this->makePartial('tab_apiguru') ?>
+        </div>
+
+        <!-- Apify Tab -->
+        <div class="tab-pane" id="tab-apify">
+            <?= $this->makePartial('tab_apify') ?>
+        </div>
+
+        <!-- Manual Tab -->
+        <div class="tab-pane" id="tab-manual">
+            <?= $this->makePartial('tab_manual') ?>
+        </div>
+    </div>
+</div>
+
+<!-- Apify Polling Script (loaded globally) -->
+<script>
+(function() {
+    console.log('[Apify Global] Script loading...');
+
+    let apifyPolling = null;
+
+    // Wait for DOM ready
+    $(document).ready(function() {
+        console.log('[Apify Global] DOM ready, initializing...');
+
+        // UNIVERSAL AJAX LOGGER - logs ALL AJAX requests on this page
+        $(document).on('ajaxSetup', function(event, context) {
+            console.log('[Universal AJAX] 🚀 Request starting:', {
+                handler: context.handler,
+                element: event.target.tagName + (event.target.id ? '#' + event.target.id : ''),
+                options: context.options
+            });
+        });
+
+        $(document).on('ajaxSuccess', function(event, context, data) {
+            console.log('[Universal AJAX] ✅ Success:', {
+                handler: context.handler,
+                data_keys: data ? Object.keys(data) : null,
+                data: data
+            });
+        });
+
+        $(document).on('ajaxComplete', function(event, context, textStatus, jqXHR) {
+            console.log('[Universal AJAX] ✔ Complete:', {
+                handler: context.handler,
+                status: textStatus,
+                httpStatus: jqXHR.status
+            });
+        });
+
+        $(document).on('ajaxError', function(event, context, textStatus, jqXHR) {
+            console.error('[Universal AJAX] ❌ Error:', {
+                handler: context.handler,
+                status: textStatus,
+                httpStatus: jqXHR.status,
+                response: jqXHR.responseText
+            });
+        });
+
+        // Log when button is clicked
+        $(document).on('click', '#apifySearchBtn', function() {
+            console.log('[Apify Global] Search button clicked!');
+            console.log('[Apify Global] Button attributes:', {
+                'data-request': $(this).data('request'),
+                'data-request-update': $(this).data('request-update'),
+                'disabled': $(this).prop('disabled')
+            });
+        });
+
+        // AJAX Setup - fires when AJAX is about to start
+        $(document).on('ajaxSetup', '#apifySearchBtn', function(event, context) {
+            console.log('[Apify Global] 🚀 AJAX Setup - Request is starting!');
+            console.log('[Apify Global] Context:', context);
+        });
+
+        // AJAX Promise - fires when promise is created
+        $(document).on('ajaxPromise', '#apifySearchBtn', function(event, context) {
+            console.log('[Apify Global] 🔄 AJAX Promise created');
+        });
+
+        // When search AJAX completes successfully
+        $(document).on('ajaxSuccess', '#apifySearchBtn', function(event, context, data) {
+            const searchTerm = $('#apifySearchInput').val();
+
+            console.log('[Apify Global] ✅ AJAX Success!');
+            console.log('[Apify Global] Search term:', searchTerm);
+            console.log('[Apify Global] Response data:', data);
+
+            // Check if response has the HTML update
+            if (data && data['#apifyResults']) {
+                console.log('[Apify Global] Response has #apifyResults, updating...');
+                $('#apifyResults').html(data['#apifyResults']);
+            }
+
+            if (!searchTerm) {
+                console.log('[Apify Global] No search term, aborting polling');
+                return;
+            }
+
+            console.log('[Apify Global] Starting polling (checks every 3 seconds for 2 minutes)...');
+
+            // Stop any existing polling
+            if (apifyPolling) {
+                console.log('[Apify Global] Clearing previous poll interval');
+                clearInterval(apifyPolling);
+                apifyPolling = null;
+            }
+
+            let pollCount = 0;
+            const maxPolls = 40; // 2 minutes (40 * 3 seconds)
+
+            apifyPolling = setInterval(function() {
+                pollCount++;
+                console.log('[Apify Global] Poll attempt', pollCount, 'of', maxPolls);
+
+                // Stop after max polls
+                if (pollCount > maxPolls) {
+                    console.log('[Apify Global] ⏱ Polling timeout reached');
+                    clearInterval(apifyPolling);
+                    apifyPolling = null;
+                    $('#apifyResults').html(
+                        '<div class="callout callout-warning">' +
+                        '<h4>⏱ Timeout</h4>' +
+                        '<p>La búsqueda tomó demasiado tiempo. Intenta de nuevo.</p>' +
+                        '</div>'
+                    );
+                    return;
+                }
+
+                // Check for results
+                $.request('onCheckApifyResults', {
+                    data: { search_term: searchTerm },
+                    success: function(response) {
+                        console.log('[Apify Global] Poll response:', response);
+                        console.log('[Apify Global] Status:', response.status);
+
+                        if (response.status === 'completed') {
+                            console.log('[Apify Global] ✅ Search completed!');
+                            clearInterval(apifyPolling);
+                            apifyPolling = null;
+
+                            // Update results div
+                            if (response['#apifyResults']) {
+                                console.log('[Apify Global] Updating results div');
+                                $('#apifyResults').html(response['#apifyResults']);
+                            }
+
+                            // Scroll to results
+                            setTimeout(function() {
+                                $('html, body').animate({
+                                    scrollTop: $('#apifyResults').offset().top - 100
+                                }, 500);
+                            }, 300);
+
+                        } else if (response.status === 'failed') {
+                            console.log('[Apify Global] ❌ Search failed!');
+                            clearInterval(apifyPolling);
+                            apifyPolling = null;
+
+                            // Update results div with error
+                            if (response['#apifyResults']) {
+                                console.log('[Apify Global] Updating results with error');
+                                $('#apifyResults').html(response['#apifyResults']);
+                            }
+
+                            // Scroll to error
+                            setTimeout(function() {
+                                $('html, body').animate({
+                                    scrollTop: $('#apifyResults').offset().top - 100
+                                }, 500);
+                            }, 300);
+
+                        } else {
+                            console.log('[Apify Global] ⏳ Still processing... (' + (pollCount * 3) + 's)');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('[Apify Global] ❌ Poll request error!');
+                        console.error('[Apify Global] Error:', textStatus, errorThrown);
+                        console.error('[Apify Global] Response:', jqXHR.responseText);
+                    }
+                });
+            }, 3000); // Check every 3 seconds
+        });
+
+        // AJAX fail handler
+        $(document).on('ajaxFail', '#apifySearchBtn', function(event, context, textStatus, jqXHR) {
+            console.error('[Apify Global] ❌ AJAX FAIL!');
+            console.error('[Apify Global] Text Status:', textStatus);
+            console.error('[Apify Global] HTTP Status:', jqXHR.status);
+            console.error('[Apify Global] Response Text:', jqXHR.responseText);
+            console.error('[Apify Global] Full jqXHR:', jqXHR);
+        });
+
+        // AJAX error handler
+        $(document).on('ajaxError', '#apifySearchBtn', function(event, context, textStatus, jqXHR) {
+            console.error('[Apify Global] ❌ AJAX ERROR!');
+            console.error('[Apify Global] Status:', textStatus);
+            console.error('[Apify Global] Response:', jqXHR.responseText);
+            console.error('[Apify Global] Response JSON:', jqXHR.responseJSON);
+        });
+
+        // AJAX complete handler
+        $(document).on('ajaxComplete', '#apifySearchBtn', function(event, context, textStatus, jqXHR) {
+            console.log('[Apify Global] ✅ AJAX Complete!');
+            console.log('[Apify Global] Status:', textStatus);
+            console.log('[Apify Global] HTTP Status:', jqXHR.status);
+
+            // Only log first 500 chars to avoid console spam
+            const responsePreview = jqXHR.responseText ? jqXHR.responseText.substring(0, 500) : 'null';
+            console.log('[Apify Global] Response Preview:', responsePreview);
+
+            // Try to parse response manually as fallback
+            if (jqXHR.status === 200 && jqXHR.responseText) {
+                try {
+                    const parsed = JSON.parse(jqXHR.responseText);
+                    console.log('[Apify Global] Parsed Response keys:', Object.keys(parsed));
+
+                    // Manually update if needed (fallback if ajaxSuccess doesn't fire)
+                    if (parsed && parsed['#apifyResults']) {
+                        console.log('[Apify Global] ⚠️ Fallback: Manual update of #apifyResults');
+                        console.log('[Apify Global] HTML length:', parsed['#apifyResults'].length);
+                        $('#apifyResults').html(parsed['#apifyResults']);
+                    }
+                } catch (e) {
+                    console.error('[Apify Global] ❌ Failed to parse response:', e);
+                }
+            }
+        });
+
+        console.log('[Apify Global] ✅ All event handlers initialized');
+    });
+
+    console.log('[Apify Global] Script loaded successfully');
+})();
+</script>

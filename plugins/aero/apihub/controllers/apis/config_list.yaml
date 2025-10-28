@@ -1,0 +1,24 @@
+# ===================================
+#  List Behavior Config
+# ===================================
+
+title: APIs
+list: $/aero/apihub/models/api/columns.yaml
+modelClass: Aero\ApiHub\Models\Api
+recordUrl: aero/apihub/apis/update/:id
+
+# Toolbar
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: Search APIs
+
+# Display options
+recordsPerPage: 20
+showCheckboxes: true
+defaultSort:
+    column: created_at
+    direction: desc
+
+# Filters
+filter: config_filter.yaml

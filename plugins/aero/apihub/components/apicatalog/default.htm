@@ -1,0 +1,62 @@
+<div class="api-catalog" x-data="{ search: '', category: '' }">
+    <!-- Search and Filters -->
+    {% if showSearch or showFilters %}
+    <div class="api-catalog-filters mb-6">
+        <div class="flex gap-4">
+            {% if showSearch %}
+            <div class="flex-1">
+                <input
+                    type="text"
+                    x-model="search"
+                    placeholder="Search APIs..."
+                    class="input input-bordered w-full"
+                    @input.debounce.500ms="$wire.onSearch({ search: search })"
+                >
+            </div>
+            {% endif %}
+
+            {% if showFilters %}
+            <div class="w-64">
+                <select
+                    x-model="category"
+                    class="select select-bordered w-full"
+                    @change="$wire.onFilter({ category: category })">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Results -->
+    <div id="apiCatalog">
+        {{ partial('@results') }}
+    </div>
+
+    <!-- Pagination -->
+    {% if totalPages > 1 %}
+    <div class="api-catalog-pagination mt-6">
+        <div class="btn-group">
+            {% if currentPage > 1 %}
+            <a href="?page={{ currentPage - 1 }}" class="btn">Previous</a>
+            {% endif %}
+
+            {% for i in 1..totalPages %}
+            <a
+                href="?page={{ i }}"
+                class="btn {% if i == currentPage %}btn-active{% endif %}">
+                {{ i }}
+            </a>
+            {% endfor %}
+
+            {% if currentPage < totalPages %}
+            <a href="?page={{ currentPage + 1 }}" class="btn">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>

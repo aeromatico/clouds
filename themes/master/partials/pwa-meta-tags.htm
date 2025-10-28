@@ -1,7 +1,6 @@
-==
 {# PWA Meta Tags Partial #}
 {# Configuration from Settings plugin aero/clouds #}
-
+<?php
 function onStart() {
     try {
         $this['settings'] = \Aero\Clouds\Models\Setting::getCurrentSettings();
@@ -9,7 +8,7 @@ function onStart() {
         $this['settings'] = null;
     }
 }
-==
+?>
 {% set pwaEnabled = settings ? settings.pwa_enabled : true %}
 {% set pwaName = settings ? settings.pwa_name : 'Clouds Hosting' %}
 {% set pwaThemeColor = settings ? settings.pwa_theme_color : '#0ea5e9' %}

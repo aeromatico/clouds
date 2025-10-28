@@ -1,0 +1,96 @@
+subject = "[Clouds] Factura #{{ invoice_number }} Pagada - {{ user.email }}"
+description = "Notificación para administradores de pago recibido"
+==
+Nueva factura pagada en Clouds.com.bo
+
+Cliente: {{ user.first_name }} {{ user.last_name }} ({{ user.email }})
+Número de Factura: {{ invoice_number }}
+Monto: Bs. {{ amount }}
+Método de Pago: {{ payment_method }}
+Fecha: {{ "now"|date("d/m/Y H:i") }}
+
+Panel de administración: https://clouds.com.bo/backend
+
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background-color: #10b981; color: white; padding: 15px; border-radius: 5px;">
+            <h2 style="margin: 0;">✓ Pago Recibido</h2>
+            <p style="margin: 5px 0 0 0; font-size: 0.9em;">Nueva factura pagada en Clouds.com.bo</p>
+        </div>
+
+        <div style="background-color: #f9fafb; padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #374151;">Información del Pago</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 5px 0; width: 140px;"><strong>Cliente:</strong></td>
+                    <td style="padding: 5px 0;">{{ user.first_name }} {{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Email:</strong></td>
+                    <td style="padding: 5px 0;"><a href="mailto:{{ user.email }}" style="color: #0ea5e9;">{{ user.email }}</a></td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Factura:</strong></td>
+                    <td style="padding: 5px 0;">{{ invoice_number }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Monto:</strong></td>
+                    <td style="padding: 5px 0; color: #10b981; font-size: 1.1em;"><strong>Bs. {{ amount }}</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Método de Pago:</strong></td>
+                    <td style="padding: 5px 0;">{{ payment_method }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Fecha de Pago:</strong></td>
+                    <td style="padding: 5px 0;">{{ "now"|date("d/m/Y H:i") }}</td>
+                </tr>
+            </table>
+        </div>
+
+        {% if invoice.items %}
+        <div style="margin: 20px 0;">
+            <h3 style="color: #374151;">Detalles de la Factura</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                <thead>
+                    <tr style="background-color: #f9fafb;">
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: left;">Descripción</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">Cant.</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in invoice.items %}
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">{{ item.description }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">{{ item.quantity }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Bs. {{ item.unit_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="https://clouds.com.bo/backend/aero/clouds/invoices/update/{{ invoice_id }}"
+               style="display: inline-block; background-color: #0ea5e9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                Ver Factura en el Panel
+            </a>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+        <p style="color: #6b7280; font-size: 0.9em; text-align: center;">
+            Sistema de Gestión Clouds.com.bo<br>
+            <a href="https://clouds.com.bo/backend" style="color: #0ea5e9;">Panel de Administración</a>
+        </p>
+    </div>
+</body>
+</html>

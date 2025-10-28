@@ -1,0 +1,118 @@
+<?= Form::open(['id' => 'apisGuruForm']) ?>
+    <div class="layout-item stretch layout-column">
+        <!-- Connection Status -->
+        <?php if ($guruConnected): ?>
+            <div class="callout callout-success">
+                <div class="header">
+                    <i class="icon-check-circle"></i>
+                    <h3>✅ Connected to APIs.guru</h3>
+                </div>
+                <div class="content">
+                    <p><strong>~2500+ free APIs</strong> with complete OpenAPI specifications</p>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="callout callout-warning">
+                <div class="header">
+                    <i class="icon-exclamation-triangle"></i>
+                    <h3>⚠️ Connection Issue</h3>
+                </div>
+                <div class="content">
+                    <p>Unable to connect to APIs.guru</p>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <!-- Important Notice -->
+        <div class="callout callout-warning">
+            <div class="header">
+                <i class="icon-exclamation-triangle"></i>
+                <h4>⚠️ IMPORTANTE: Muchas APIs tienen especificaciones rotas</h4>
+            </div>
+            <div class="content">
+                <p><strong>APIs.guru tiene ~2500 APIs, pero muchas tienen links rotos (404).</strong></p>
+                <p><strong style="color: #27ae60;">✅ APIs VERIFICADAS que SÍ FUNCIONAN:</strong></p>
+                <ul style="columns: 2;">
+                    <li><code>slack</code> - Slack Web API</li>
+                    <li><code>trello</code> - Trello API</li>
+                    <li><code>stripe</code> - Stripe API (ya importado)</li>
+                    <li><code>notion</code> - Notion API (ya importado)</li>
+                </ul>
+                <p class="text-muted"><small>Si ves "❌ Broken OpenAPI specification link (404)", significa que el API tiene el spec roto en APIs.guru - no es culpa del sistema.</small></p>
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="form-group">
+            <label>Search APIs.guru Catalog</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="search_term"
+                    id="searchTermInput"
+                    class="form-control"
+                    placeholder="Prueba: slack, trello (verificados ✓)"
+                    value="">
+                <span class="input-group-btn">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-request="onSearch"
+                        data-request-update="'search_results': '#searchResults'">
+                        <i class="icon-search"></i> Search
+                    </button>
+                </span>
+            </div>
+            <p class="help-block"><strong>Abre la consola (F12) para ver mensajes de debug.</strong></p>
+        </div>
+
+        <!-- Quick Import -->
+        <div class="form-group">
+            <label>Quick Import by Category (top 5)</label>
+            <div class="btn-group">
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    data-request="onImportPopular"
+                    data-request-data="category: 'financial', limit: 5"
+                    data-request-confirm="Import 5 popular Financial APIs?">
+                    <i class="icon-dollar"></i> Financial
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    data-request="onImportPopular"
+                    data-request-data="category: 'social', limit: 5"
+                    data-request-confirm="Import 5 popular Social APIs?">
+                    <i class="icon-users"></i> Social
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    data-request="onImportPopular"
+                    data-request-data="category: 'cloud', limit: 5"
+                    data-request-confirm="Import 5 popular Cloud APIs?">
+                    <i class="icon-cloud"></i> Cloud
+                </button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="searchResults" class="layout-item stretch" style="margin-top: 20px;">
+            <?= $this->makePartial('search_results', ['results' => []]) ?>
+        </div>
+    </div>
+<?= Form::close() ?>
+
+<script>
+$(document).ready(function() {
+    // Scroll to results when they appear
+    $(document).on('ajaxSuccess', '[data-request="onSearch"]', function() {
+        setTimeout(function() {
+            $('html, body').animate({
+                scrollTop: $('#searchResults').offset().top - 100
+            }, 500);
+        }, 300);
+    });
+});
+</script>

@@ -135,27 +135,15 @@ function onCheckout()
         $order->invoice_id = $invoice->id;
         $order->save();
 
-        // Determinar redirección según tipo de pago
-        if ($gateway->isOfflinePayment()) {
-            // Pago offline: redirigir a instrucciones de pago
-            Flash::success('Orden creada exitosamente. Por favor, completa el pago siguiendo las instrucciones.');
+        // Redirigir a la página de procesamiento de pago
+        Flash::success('Orden creada exitosamente.');
 
-            return [
-                'redirect' => '/dashboard/invoices',
-                'clear_cart' => true,
-                'order_id' => $order->id,
-                'invoice_id' => $invoice->id
-            ];
-        } else {
-            // Pago online: redirigir a la pasarela (futuro)
-            Flash::success('Redirigiendo a la pasarela de pago...');
-
-            return [
-                'redirect' => '/payment/process/' . $order->id,
-                'clear_cart' => true,
-                'order_id' => $order->id
-            ];
-        }
+        return [
+            'redirect' => '/payment/process/' . $order->id,
+            'clear_cart' => true,
+            'order_id' => $order->id,
+            'invoice_id' => $invoice->id
+        ];
 
     } catch (\Exception $e) {
         \Log::error('Checkout error: ' . $e->getMessage());
@@ -206,13 +194,13 @@ function onCheckout()
     },
     get buttonText() {
         return this.isOfflinePayment
-            ? 'He completado el pago, verificar'
-            : 'Completar Orden';
+            ? 'Crear Orden y Ver Instrucciones'
+            : 'Proceder al Pago';
     },
     get buttonIcon() {
         return this.isOfflinePayment
-            ? 'fa-check-double'
-            : 'fa-check-circle';
+            ? 'fa-file-invoice'
+            : 'fa-credit-card';
     },
     submitCheckout(event) {
         event.preventDefault();

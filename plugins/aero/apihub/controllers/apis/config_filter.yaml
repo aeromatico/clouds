@@ -1,0 +1,17 @@
+# ===================================
+#  Filter Scope Definitions
+# ===================================
+
+scopes:
+    category:
+        label: Category
+        type: group
+        conditions: category = :value
+
+    synced:
+        label: Sync Status
+        type: group
+        conditions: synced_at IS NOT NULL
+        options:
+            synced: Recently Synced
+            needs_sync: Needs Sync

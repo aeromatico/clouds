@@ -1,0 +1,10 @@
+1.0.0:
+    - 'Initialize plugin'
+    - create_apis_table.php
+    - create_endpoints_table.php
+1.0.1:
+    - 'Add seeder data'
+    - seed_example_apis.php
+1.0.2:
+    - 'Add multi-source import support'
+    - add_source_to_apis.php

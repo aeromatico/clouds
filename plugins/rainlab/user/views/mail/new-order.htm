@@ -1,0 +1,113 @@
+subject = "Nuevo Pedido #{{ order_number }} - Clouds.com.bo"
+description = "Notificación de nuevo pedido recibido"
+==
+Hola {{ user.name }},
+
+Hemos recibido tu pedido correctamente.
+
+Detalles del Pedido:
+- Número de Pedido: {{ order_id }}
+- Fecha: {{ order_date }}
+- Estado: {{ status }}
+- Total: Bs. {{ total }}
+
+Productos/Servicios:
+{% for item in items %}
+- {{ item.name }} - Cantidad: {{ item.quantity }} - Precio: Bs. {{ item.price }}
+{% endfor %}
+
+Tu pedido está siendo procesado y recibirás una notificación cuando esté listo.
+
+Para ver los detalles completos de tu pedido, ingresa a tu cuenta en clouds.com.bo
+
+Gracias por tu preferencia,
+Equipo de Clouds
+
+==
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #0ea5e9; margin-bottom: 10px;">¡Pedido Recibido!</h1>
+            <p style="color: #6b7280; font-size: 1.1em;">Gracias por tu compra</p>
+        </div>
+
+        <p>Hola <strong>{{ user.name }}</strong>,</p>
+
+        <p>Hemos recibido tu pedido correctamente y estamos trabajando en procesarlo.</p>
+
+        <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3 style="margin-top: 0; color: #0ea5e9;">Detalles del Pedido</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Número de Pedido:</strong></td>
+                    <td style="padding: 5px 0;">#{{ order_id }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Fecha:</strong></td>
+                    <td style="padding: 5px 0;">{{ order_date }}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px 0;"><strong>Estado:</strong></td>
+                    <td style="padding: 5px 0;"><span style="background-color: #fbbf24; color: white; padding: 3px 10px; border-radius: 3px; font-size: 0.9em;">{{ status }}</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <h3 style="color: #0ea5e9;">Productos/Servicios</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb;">
+                <thead>
+                    <tr style="background-color: #f9fafb;">
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: left;">Producto</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">Cantidad</th>
+                        <th style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb;">{{ item.name }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: center;">{{ item.quantity }}</td>
+                        <td style="padding: 10px; border: 1px solid #e5e7eb; text-align: right;">Bs. {{ item.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="background-color: #eff6ff; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: right;">
+            <p style="font-size: 1.3em; margin: 0;">
+                <strong style="color: #0ea5e9;">Total: Bs. {{ total }}</strong>
+            </p>
+        </div>
+
+        <div style="background-color: #dbeafe; border-left: 4px solid #0ea5e9; padding: 15px; margin: 20px 0;">
+            <p style="margin: 0;"><strong>Próximos pasos:</strong></p>
+            <ul style="margin: 10px 0;">
+                <li>Tu pedido está siendo procesado</li>
+                <li>Recibirás una factura por correo electrónico</li>
+                <li>Te notificaremos cuando tu servicio esté listo</li>
+            </ul>
+        </div>
+
+        <p>Para ver los detalles completos de tu pedido, <a href="https://clouds.com.bo" style="color: #0ea5e9;">ingresa a tu cuenta</a> en clouds.com.bo</p>
+
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+        <p style="color: #6b7280; font-size: 0.9em;">
+            Gracias por tu preferencia,<br>
+            <strong>Equipo de Clouds</strong><br>
+            <a href="https://clouds.com.bo" style="color: #0ea5e9;">clouds.com.bo</a>
+        </p>
+
+        <p style="color: #9ca3af; font-size: 0.8em; margin-top: 30px;">
+            Si tienes alguna pregunta sobre tu pedido, no dudes en contactarnos.
+        </p>
+    </div>
+</body>
+</html>

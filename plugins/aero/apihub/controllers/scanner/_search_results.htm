@@ -1,0 +1,183 @@
+<?php if (empty($results)): ?>
+    <div class="callout callout-info">
+        <div class="header">
+            <i class="icon-info-circle"></i>
+            <h3>No Results Yet</h3>
+        </div>
+        <div class="content">
+            <p>Enter a search term above to find APIs on APIs.guru.</p>
+            <p class="text-muted"><small><strong>Try searching for:</strong> github, stripe, twitter, slack, openai, google, aws, azure</small></p>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="callout callout-success">
+        <div class="header">
+            <i class="icon-check"></i>
+            <h3>Search Results (<?= count($results) ?>)</h3>
+        </div>
+        <div class="content">
+            <p>Review the APIs below and click <strong>Import</strong> on each one you want to add to your API Hub.</p>
+            <p class="text-muted"><small>Each import is processed in the background and may take a few moments.</small></p>
+        </div>
+    </div>
+    <div class="control-list">
+        <table class="table data">
+            <thead>
+                <tr>
+                    <th width="20%">API Title</th>
+                    <th width="15%">Provider</th>
+                    <th width="12%">Category</th>
+                    <th width="40%">Description</th>
+                    <th width="13%" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($results as $api): ?>
+                    <tr>
+                        <td>
+                            <strong><?= e($api['title']) ?></strong>
+                            <br>
+                            <small class="text-muted">v<?= e($api['version']) ?></small>
+                        </td>
+                        <td>
+                            <code><?= e($api['provider']) ?></code>
+                        </td>
+                        <td>
+                            <span class="label label-info"><?= e($api['category']) ?></span>
+                        </td>
+                        <td class="description-cell" style="max-width: 300px;">
+                            <small><?= e(substr($api['description'], 0, 150)) ?><?= strlen($api['description']) > 150 ? '...' : '' ?></small>
+                        </td>
+                        <td class="text-center">
+                            <?php
+                                // Clean description: remove newlines and control characters
+                                $cleanDescription = preg_replace('/[\x00-\x1F\x7F]/u', ' ', $api['description']);
+                                $cleanDescription = str_replace(["\r", "\n", "\t"], ' ', $cleanDescription);
+                                $cleanDescription = trim(preg_replace('/\s+/', ' ', $cleanDescription));
+
+                                $requestData = [
+                                    'provider' => $api['provider'],
+                                    'version' => $api['version'],
+                                    'title' => $api['title'],
+                                    'description' => $cleanDescription,
+                                    'category' => $api['category']
+                                ];
+
+                                $rowId = 'api-row-' . md5($api['title']);
+                            ?>
+                            <div id="<?= $rowId ?>">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary import-api-btn"
+                                    data-api-title="<?= e($api['title']) ?>"
+                                    data-row-id="<?= $rowId ?>"
+                                    data-request="onImport"
+                                    data-request-data="<?= e(json_encode($requestData)) ?>"
+                                    title="Click to import this API">
+                                    <i class="icon-download"></i> Import
+                                </button>
+                                <div class="import-status" style="margin-top: 5px; font-size: 12px;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+
+        <div style="margin-top: 15px; padding: 10px; background: #f5f5f5; border-left: 3px solid #3498db;">
+            <p class="text-muted" style="margin: 0;">
+                <i class="icon-info-circle"></i>
+                <strong>Showing <?= count($results) ?> result(s).</strong>
+                Click <strong>Import</strong> button on any API to add it to your hub.
+                Imports are processed in the background.
+            </p>
+        </div>
+    </div>
+<?php endif ?>
+
+<script>
+(function() {
+    console.log('[Search Results] Script loaded');
+
+    // Add Enter key support for search
+    $(document).ready(function() {
+        $('#searchTermInput').on('keypress', function(e) {
+            if (e.which === 13) {
+                e.preventDefault();
+                $(this).closest('form').find('[data-request="onSearch"]').click();
+            }
+        });
+
+        console.log('[Search Results] Enter key support added');
+    });
+
+    // Track import status - use document delegation to work with dynamically loaded content
+    $(document).on('click', '.import-api-btn', function(e) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        const rowId = $btn.data('row-id');
+        const $status = $('#' + rowId + ' .import-status');
+
+        console.log('[Import] Button clicked for:', apiTitle);
+
+        // Show immediate feedback
+        $status.html('<span class="text-muted">⏳ Encolando...</span>');
+    });
+
+    $(document).on('ajaxPromise', '.import-api-btn', function(event, context) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        console.log('[Import] AJAX Promise created for:', apiTitle);
+    });
+
+    $(document).on('ajaxError', '.import-api-btn', function(event, context, textStatus, jqXHR) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        console.error('[Import] AJAX Error for:', apiTitle, 'Status:', textStatus);
+        console.error('[Import] Response:', jqXHR.responseText);
+    });
+
+    $(document).on('ajaxComplete', '.import-api-btn', function(event, context, textStatus, jqXHR) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        console.log('[Import] AJAX Complete for:', apiTitle, 'Status:', textStatus, 'HTTP Status:', jqXHR.status);
+    });
+
+    $(document).on('ajaxSuccess', '.import-api-btn', function(event, context, data) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        const rowId = $btn.data('row-id');
+        const $status = $('#' + rowId + ' .import-status');
+
+        console.log('[Import] ✅ AJAX Success! Import queued for:', apiTitle);
+
+        // Disable button and show simple feedback
+        $btn.prop('disabled', true)
+            .html('<i class="icon-check"></i> Encolado')
+            .removeClass('btn-primary')
+            .addClass('btn-default');
+
+        $status.html(
+            '<div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 8px; border-radius: 4px; margin-top: 5px;">' +
+            '<strong style="color: #155724;">✓ Importación en proceso</strong><br>' +
+            '<small style="color: #155724;">Procesando en segundo plano (~15 seg)<br>' +
+            'Ve a <a href="' + window.location.origin + '/backend/aero/apihub/apis" target="_blank" style="color: #155724; text-decoration: underline;">Lista de APIs</a> para ver el resultado</small>' +
+            '</div>'
+        );
+
+        console.log('[Import] Feedback shown. Check APIs list in ~15 seconds.');
+    });
+
+    $(document).on('ajaxFail', '.import-api-btn', function(event, context, textStatus, jqXHR) {
+        const $btn = $(this);
+        const apiTitle = $btn.data('api-title');
+        const rowId = $btn.data('row-id');
+        const $status = $('#' + rowId + ' .import-status');
+
+        console.error('[Import] AJAX Failed for:', apiTitle, textStatus);
+        $status.html('<span class="text-danger">❌ Error: ' + textStatus + '</span>');
+    });
+
+    console.log('[Search Results] Import tracking initialized');
+})();
+</script>

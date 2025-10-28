@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title></title>
+		<link></link>
+		<description></description>
+		<atom:link href="/rss.xml" rel="self" type="application/rss+xml" />
+
+		<item>
+			<title>El Poder Oculto de las Funciones Matemáticas en CSS: Explorando `cos()`, `sin()` y la Aritmética Tipada</title>
+			<link>/el-poder-oculto-de-las-funciones-matematicas-en-css-explorando-cos-sin-y-la-aritmetica-tipada</link>
+			<guid>/el-poder-oculto-de-las-funciones-matematicas-en-css-explorando-cos-sin-y-la-aritmetica-tipada</guid>
+			<pubDate>Tue, 21 Oct 2025 21:22:56 +0000</pubDate>
+			<description></description>
+		</item>
+	</channel>
+</rss>
