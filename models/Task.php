@@ -63,7 +63,7 @@ class Task extends Model
     /**
      * @var array Soft delete dates
      */
-    protected $dates = ['deleted_at', 'due_date', 'completed_at', 'archived_at'];
+    protected $dates = ['deleted_at'];
 
     /**
      * @var array Relations

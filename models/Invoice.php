@@ -227,4 +227,58 @@ class Invoice extends Model
             && $this->status !== 'cancelled'
             && $this->due_date < now();
     }
+
+    /**
+     * After update - detect status change to 'paid' and send email
+     */
+    public function afterUpdate()
+    {
+        // Verificar si el status cambió a 'paid'
+        if ($this->wasChanged('status') && $this->status === 'paid') {
+            // Load user relation if not loaded
+            if (!$this->user) {
+                $this->load('user');
+            }
+
+            // Load orders relation to get order details
+            $orders = $this->orders;
+            $order = $orders->first();
+
+            // Preparar el contexto para el email
+            $context = [
+                'invoice_id' => $this->id,
+                'invoice_number' => $this->invoice_number,
+                'order_id' => $order ? $order->id : null,
+                'user' => [
+                    'name' => $this->user->full_name ?? $this->user->email,
+                    'email' => $this->user->email,
+                    'first_name' => $this->user->first_name ?? '',
+                ],
+                // Send DateTime objects for Twig to format
+                'invoice_date' => $this->invoice_date,
+                'invoice_date_formatted' => $this->invoice_date->format('d/m/Y'),
+                'due_date' => $this->due_date,
+                'due_date_formatted' => $this->due_date->format('d/m/Y'),
+                'payment_date' => now(),
+                'payment_date_formatted' => now()->format('d/m/Y'),
+                // Send both numeric and formatted amounts
+                'subtotal' => $this->subtotal,
+                'subtotal_formatted' => number_format($this->subtotal, 2),
+                'tax' => $this->tax,
+                'tax_formatted' => number_format($this->tax, 2),
+                'total' => $this->total,
+                'total_formatted' => number_format($this->total, 2),
+                'amount' => $this->total,
+                'amount_formatted' => number_format($this->total, 2),
+                'items' => $this->items,
+                'status' => $this->status,
+                'payment_method' => $this->payment_gateway ? $this->payment_gateway->name : 'Manual',
+                // Add invoice object for template flexibility
+                'invoice' => $this,
+            ];
+
+            // Disparar el evento de email
+            EmailEvent::fire('invoice_paid', $context, $this->user);
+        }
+    }
 }

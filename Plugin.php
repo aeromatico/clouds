@@ -261,6 +261,14 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerMailTemplates()
+    {
+        return [
+            'user:invoice-paid' => 'rainlab.user::mail.invoice-paid',
+            'backend:invoice-paid' => 'rainlab.user::mail.invoice-paid-admin',
+        ];
+    }
+
     public function boot()
     {
         // Cargar rutas de la API

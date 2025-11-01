@@ -237,13 +237,21 @@ class Order extends Model
 
     public function afterCreate()
     {
-        // Auto-generate invoice after order is created
-        $this->generateInvoice();
+        // Send order created notification immediately
+        $this->sendOrderCreatedNotification();
 
-        // If order is created with "processing" status, send notification
+        // Auto-generate invoice after order is created
+        $invoice = $this->generateInvoice();
+
+        // Send invoice created notification after generating invoice
+        // Pass the invoice directly to avoid loading issues
+        if ($invoice) {
+            $this->sendInvoiceCreatedNotification($invoice);
+        }
+
+        // If order is created with "processing" status, provision servers
         if ($this->status === 'processing') {
             $this->provisionCloudServers();
-            $this->sendInvoiceCreatedNotification();
         }
     }
 
@@ -251,7 +259,7 @@ class Order extends Model
     {
         // Don't create invoice if one already exists
         if ($this->invoice_id) {
-            return;
+            return null;
         }
 
         // Map order items to invoice items
@@ -299,6 +307,9 @@ class Order extends Model
         // Link the invoice to the order
         $this->invoice_id = $invoice->id;
         $this->save();
+
+        // Return the created invoice
+        return $invoice;
     }
 
     /**
@@ -308,26 +319,77 @@ class Order extends Model
     {
         // Check if status changed to 'processing'
         if ($this->status === 'processing' && $this->getOriginal('status') !== 'processing') {
+            // Provision cloud servers
             $this->provisionCloudServers();
 
-            // Send invoice created notification
+            // Send notifications (only if they weren't sent during creation)
+            // Note: These will only send if the EmailEvent records exist and are enabled
+            $this->sendOrderCreatedNotification();
             $this->sendInvoiceCreatedNotification();
         }
     }
 
     /**
-     * Send invoice created notification email
+     * Send order created notification email
      */
-    protected function sendInvoiceCreatedNotification()
+    protected function sendOrderCreatedNotification()
     {
-        // Make sure we have an invoice
-        if (!$this->invoice_id) {
+        // Load user relation
+        if (!$this->user) {
             return;
         }
 
-        // Load the invoice with user
-        $invoice = $this->invoice()->with('user')->first();
+        // Prepare context data for email template
+        $context = [
+            'order_id' => $this->id,
+            'user' => [
+                'name' => $this->user->full_name ?? $this->user->email,
+                'email' => $this->user->email,
+                'first_name' => $this->user->first_name ?? '',
+            ],
+            // Send DateTime object for Twig to format
+            'order_date' => $this->order_date,
+            'order_date_formatted' => $this->order_date->format('d/m/Y'),
+            'status' => $this->status,
+            // Send both numeric and formatted amounts
+            'total_amount' => $this->total_amount,
+            'total_amount_formatted' => number_format($this->total_amount, 2),
+            'items' => $this->items,
+            'domains' => $this->domains,
+            // Add order object for template flexibility
+            'order' => $this,
+        ];
+
+        // Trigger the email event
+        EmailEvent::fire('order_created', $context, $this->user);
+    }
+
+    /**
+     * Send invoice created notification email
+     * @param Invoice|null $invoice Optional invoice object to avoid reloading
+     */
+    protected function sendInvoiceCreatedNotification($invoice = null)
+    {
+        // If invoice is not passed, try to load it
         if (!$invoice) {
+            // Make sure we have an invoice
+            if (!$this->invoice_id) {
+                return;
+            }
+
+            // Load the invoice with user
+            $invoice = $this->invoice()->with('user')->first();
+            if (!$invoice) {
+                return;
+            }
+        }
+
+        // Make sure the invoice has a user loaded
+        if (!$invoice->user) {
+            $invoice->load('user');
+        }
+
+        if (!$invoice->user) {
             return;
         }
 
@@ -341,13 +403,22 @@ class Order extends Model
                 'email' => $invoice->user->email,
                 'first_name' => $invoice->user->first_name ?? '',
             ],
-            'invoice_date' => $invoice->invoice_date->format('d/m/Y'),
-            'due_date' => $invoice->due_date->format('d/m/Y'),
-            'subtotal' => number_format($invoice->subtotal, 2),
-            'tax' => number_format($invoice->tax, 2),
-            'total' => number_format($invoice->total, 2),
+            // Send DateTime objects for Twig to format
+            'invoice_date' => $invoice->invoice_date,
+            'invoice_date_formatted' => $invoice->invoice_date->format('d/m/Y'),
+            'due_date' => $invoice->due_date,
+            'due_date_formatted' => $invoice->due_date->format('d/m/Y'),
+            // Send both numeric and formatted amounts
+            'subtotal' => $invoice->subtotal,
+            'subtotal_formatted' => number_format($invoice->subtotal, 2),
+            'tax' => $invoice->tax,
+            'tax_formatted' => number_format($invoice->tax, 2),
+            'total' => $invoice->total,
+            'total_formatted' => number_format($invoice->total, 2),
             'items' => $invoice->items,
             'status' => $invoice->status,
+            // Add invoice object for template flexibility
+            'invoice' => $invoice,
         ];
 
         // Trigger the email event

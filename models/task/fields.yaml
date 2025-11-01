@@ -56,6 +56,7 @@ tabs:
             label: Due Date
             type: datepicker
             mode: datetime
+            useTimezone: true
             span: left
             tab: Assignment
             comment: When should this task be completed?

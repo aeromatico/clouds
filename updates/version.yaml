@@ -137,3 +137,12 @@
 2.4.5:
     - Add timestamps to task_user pivot table
     - add_timestamps_to_task_user_pivot.php
+2.4.6:
+    - Fix tasks date columns to datetime type for proper time storage
+    - fix_tasks_datetime_columns.php
+2.5.0:
+    - Seed default payment gateways for Bolivia
+    - seed_payment_gateways.php
+2.5.1:
+    - Fix task status enum to match model (todo, doing, done)
+    - fix_task_status_enum.php
